@@ -1,0 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@1&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+    box-sizing: border-box;
+    font-family: 'Open Sans', sans-serif;
+}
+
+/*Body of the home page*/
+
+body {
+    background-size: cover;
+    background: url("images/ubc.png") no-repeat center;
+    background-position: 100% auto;
+    min-height: 100%;
+    background-position: center top;
+}
+
+/* Navigation bar style */
+.navsearch {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-end;
+}
+
+/* Welcome text positioning */
+
+.welcome {
+    position: absolute;
+    left: 50%;
+    top: 25%;
+    transform: translate(-50%, -25%);
+    text-align: center;
+    width: 100%;
+}
+
+/* Welcome text style */
+
+h1 {
+    border-right: solid 3px rgba(0,255,0,.75);
+    white-space: nowrap;
+    overflow: hidden;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 50px;
+    color: #000000;
+    margin: 0 auto;
+}
+
+/* Animation */
+h1 {
+    animation: animated-text 3s steps(29,end) 1s 1 normal both, animated-cursor 600ms steps(29,end) infinite;
+}
+
+/* text animation */
+
+@keyframes animated-text {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 500px;
+    }
+}
+
+/* cursor animations */
+
+@keyframes animated-cursor {
+    from {
+        border-right-color: rgba(0,0,0,0.6);
+    }
+
+    to {
+        border-right-color: transparent;
+    }
+}
+
+/* Search bar */
+
+.wrapper{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background:rgba(0,0,0,0.5);
+    max-width: 550px;
+    width: 100%;
+    padding: 8px;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+/* Search bar input */
+
+.wrapper .input{
+    width: 88.5%;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    background:rgba(255,255,255,0.8);
+}
+
+/* Search button */
+
+.searchbtn {
+    background: #002145;
+    width: 10%;
+    border-radius: 5px;
+    position: relative;
+    cursor: pointer;
+    transition-duration: 0.2s;
+}
+
+/* Search button icon */
+
+.searchbtn {
+    color: white;
+    height: 2.5em;
+    width: 10%;
+    font-size: 18px;
+    border: none;
+}
+
+.searchbtn:hover {
+    background-color: #97D4EA;
+    color: black;
+}
+
+.footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 18%;
+    background-color: #002145;
+    color: white;
+    text-align: center;
+}
+
+.footer .footertext{
+    bottom:50px;
+}
