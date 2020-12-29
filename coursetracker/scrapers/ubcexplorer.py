@@ -28,6 +28,7 @@ allCourseData = {}
 #   "link": "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=MATH&course=210"
 # }
 def course_info_with_prereq_tree(subject, course, isFirstCall=None):
+    global allCourseData
     # resetting allCourseData every call
     if isFirstCall is not None:
         allCourseData = {}
