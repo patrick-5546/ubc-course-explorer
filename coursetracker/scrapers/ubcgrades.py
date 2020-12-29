@@ -37,7 +37,7 @@ def course_statistics(subject, course):
 #   "subject":"SCIE",
 #   "year":"2019"
 # }
-def distributions(subject, course, year):
+def distributions(subject, course):
     caps_subject = subject.upper() + '/'
     url = apiV2 + 'distributions/' + campus + caps_subject + course
     j = check_json(requests.get(url).json())
