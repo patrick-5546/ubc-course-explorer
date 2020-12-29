@@ -6,7 +6,7 @@ import requests
 api = 'https://ubcexplorer.io/'
 allCourseData = {}
 
-# TODO: consider restricting search depth, or storing all required information in txt file, if too slow
+# TODO: consider storing all required information (especially preq) in global variable to increase speed
 # TODO: modify to save node -- [node [child1, [child2, [child21, child22]], child3]
 #       Currently, only saves leaf nodes -- [child1, child21, child22, child3]
 
