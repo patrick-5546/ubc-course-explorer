@@ -17,3 +17,5 @@ python manage.py runserver
 5. To load changes: save changes and refresh tab
 
 6. Access the admin page to view and edit `Course` instances: [Introducing the Django Admin](https://docs.djangoproject.com/en/3.1/intro/tutorial02/#introducing-the-django-admin)
+
+7. Stop running server: CTRL + C (for Windows systems) in the terminal where step 3 was executed
