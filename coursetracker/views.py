@@ -1,11 +1,9 @@
 from django.shortcuts import redirect, render
 
 from .models import Course
-# TODO: next line dramatically slows down actions because it has to generate professor
+# TODO: commented out import dramatically slows down actions because it has to generate professor
 # list every time --> need to work around this, perhaps store in txt file
-# from .scrapers.ratemyprof import ubcProfs
-from .scrapers import ubcexplorer as ex
-from .scrapers import ubcgrades as gr
+from .scrapers import ubcexplorer as ex, ubcgrades as gr#, ratemyprof as rmp
 
 # search works as a "buffer" for when we are obtaining data
 def search(request):
@@ -39,7 +37,9 @@ def course(request, pk):
             stdev = stats['stdev']
 
             distributions = gr.distributions(subject, course)  # need to process this, turn into graph
-            profs = gr.teaching_team(subject, course)  # need to process this, sort by rating and tNumRatings
+            
+            # profsList = gr.teaching_team(subject, course)
+            # profs = rmp.ubcProfs.professors_info(profsList)
 
             exp = ex.course_info_with_prereq_tree(subject, course, True)
             preq = exp['preq']  # need to process this, turn into tree
