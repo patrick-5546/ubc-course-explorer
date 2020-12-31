@@ -67,4 +67,4 @@ class RateMyProfScraper:
         else:
             return self.professorlist[self.indexnumber]
 
-ubc = RateMyProfScraper(1413)  # 1413 is the school ID for UBC on Rate My Prof
+ubcProfs = RateMyProfScraper(1413)  # 1413 is the school ID for UBC on Rate My Prof
