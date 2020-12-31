@@ -67,4 +67,12 @@ class RateMyProfScraper:
         else:
             return self.professorlist[self.indexnumber]
 
+    def professors_info(self, profsList):
+        professorsInfoDict = {}
+        for prof in profsList:
+            profInfo = self.professor_info(prof)
+            if profInfo:
+                professorsInfoDict[prof] = [profInfo['overall_rating'], profInfo['tNumRatings']]
+        return professorsInfoDict
+
 ubcProfs = RateMyProfScraper(1413)  # 1413 is the school ID for UBC on Rate My Prof
