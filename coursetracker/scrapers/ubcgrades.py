@@ -42,19 +42,12 @@ def distributions(subject, course):
     url = apiV2 + 'distributions/' + campus + caps_subject + course
     return check_json(requests.get(url).json())
 
-# return example element for Yurika Aonuki of LING 100 (returns array where each element is a person):
-# {
-#   "campus":"UBCV",
-#   "course":"100",
-#   "detail":"",
-#   "name":"Yurika Aonuki",
-#   "subject":"LING",
-#   "yearsessions":{"2020S":1}
-# }
+# returns a list of all the named educators (profs and TAs) who have taught the course
 def teaching_team(subject, course):
     caps_subject = subject.upper() + '/'
     url = apiV2 + 'teaching-team/' + campus + caps_subject + course
-    return check_json(requests.get(url).json())
+    allProfsInfo = check_json(requests.get(url).json())
+    return [profInfo['name'] for profInfo in allProfsInfo if profInfo['name']] if allProfsInfo else {}
 
 def check_json(j):
     return {} if 'error' in json.dumps(j) else j
