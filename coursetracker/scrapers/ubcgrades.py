@@ -40,9 +40,7 @@ def course_statistics(subject, course):
 def distributions(subject, course):
     caps_subject = subject.upper() + '/'
     url = apiV2 + 'distributions/' + campus + caps_subject + course
-    j = check_json(requests.get(url).json())
-    if j:
-        return j
+    return check_json(requests.get(url).json())
 
 # return example element for Yurika Aonuki of LING 100 (returns array where each element is a person):
 # {
@@ -59,40 +57,23 @@ def teaching_team(subject, course):
     return check_json(requests.get(url).json())
 
 def check_json(j):
-    if 'error' in json.dumps(j):
-        return []
-    else:
-        return j
+    return {} if 'error' in json.dumps(j) else j
 
-# TODO: decide whether to implement this
-"""
-# methods for the drop down menus ---------------------
+# TODO: decide whether to implement drop down menus
+
 
 apiV1 = 'https://ubcgrades.com/api/v1/'
 
-# returns all the sections of a course
-def sections(term, subject, course):
-    url = apiV1 + 'sections/' + term + '/' + subject + '/' + course
-    r = requests.get(url)
-    return r.json()
+# checks if given subject is valid
+def subject_is_valid(subject):
+    caps_subject = subject.upper()
+    url = apiV1 + 'subjects/UBCV'
+    allSubjects = requests.get(url).json()
+    return True if caps_subject in [subjectInfo['subject'] for subjectInfo in allSubjects] else False
 
-# returns all the courses for a subject
-def courses(term, subject):
-    url = apiV1 + 'courses/' + term + '/' + subject
-    r = requests.get(url)
-    return r.json()
-
-# returns all the subjects for a term
-def subjects(term):
-    url = apiV1 + 'subjects/' + term
-    r = requests.get(url)
-    return r.json()
-
-# returns all the terms
-def years():
-    url = apiV1 + 'yearsessions'
-    r = requests.get(url)
-    return r.json()
-
-# -----------------------------------------------------------
-"""
+# checks if given course is valid
+def course_is_valid(subject, course):
+    caps_subject = subject.upper()
+    url = apiV1 + 'courses/' + campus + caps_subject
+    allCourses = requests.get(url).json()
+    return True if course in [courseInfo['course'] for courseInfo in allCourses] else False

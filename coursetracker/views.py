@@ -3,7 +3,7 @@ from django.shortcuts import redirect, render
 from .models import Course
 # TODO: next line dramatically slows down actions because it has to generate professor
 # list every time --> need to work around this, perhaps store in txt file
-# from .scrapers.ratemyprof import ubc
+# from .scrapers.ratemyprof import ubcProfs
 from .scrapers import ubcexplorer as ex
 from .scrapers import ubcgrades as gr
 
@@ -21,10 +21,18 @@ def course(request, pk):
             c = Course.objects.get(course_name__iexact=pk)
             #print("getting course")
         except Course.DoesNotExist:
-            subAndCourse = str(pk).split(" ")
-            subject = subAndCourse[0]
-            course = subAndCourse[1]
+            subAndCourse = pk.split(' ')
+            if len(subAndCourse) == 2:
+                subject = subAndCourse[0]
+                course = subAndCourse[1]
+            else:
+                subject = pk[0:-3] 
+                course = pk[-3:]
 
+            if not gr.subject_is_valid(subject) or not gr.course_is_valid(subject, course):
+                return render(request, 'coursetracker/404.html')
+
+            # TODO: decide whether to get term grade statistics (for high, low, pass, fail, etc.)
             stats = gr.course_statistics(subject, course)
             avg = stats['average']
             avg5 = stats['average_past_5_yrs']
