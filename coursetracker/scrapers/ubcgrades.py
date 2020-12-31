@@ -60,7 +60,7 @@ def teaching_team(subject, course):
 
 def check_json(j):
     if 'error' in json.dumps(j):
-        return {}
+        return []
     else:
         return j
 
