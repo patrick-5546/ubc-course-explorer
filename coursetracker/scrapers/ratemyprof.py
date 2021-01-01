@@ -1,4 +1,4 @@
-import requests, json, math
+import requests, json, math, pickle
 
 # Adapted from https://github.com/Rodantny/Rate-My-Professor-Scraper-and-Search
 
@@ -74,5 +74,9 @@ class RateMyProfScraper:
             if profInfo:
                 professorsInfoDict[prof] = [profInfo['overall_rating'], profInfo['tNumRatings']]
         return professorsInfoDict
+    
+    def write_to_json(self):
+        with open('ratemyprofubcproflist.txt', 'w') as outfile:
+            json.dump(self.professorlist, outfile)
 
-ubcProfs = RateMyProfScraper(1413)  # 1413 is the school ID for UBC on Rate My Prof
+# ubcProfs = RateMyProfScraper(1413)  # 1413 is the school ID for UBC on Rate My Prof
