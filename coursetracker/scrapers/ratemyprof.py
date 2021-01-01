@@ -20,12 +20,13 @@ import requests, json, math
 #   'categoryType': 'PROFESSOR',
 #   'overall_rating': '3.7'
 # }
-
 class RateMyProfScraper:
+
     def __init__(self, schoolid):
         self.UniversityId = schoolid
         self.professorlist = self.create_professor_list()
         self.indexnumber = False
+        self.file_to_save_rmp_data = 'coursetracker/scrapers/rmp_ubc_profs_list.txt'
 
     def create_professor_list(self):  # creates List object that include basic information on all Professors from the IDed University
         tempprofessorlist = []
@@ -51,28 +52,15 @@ class RateMyProfScraper:
                             'remaining'] + 20  # get the number of professors
         return num_of_prof
     
-    def professor_info(self, ProfessorName):
-        self.indexnumber = self.GetProfessorIndex(ProfessorName)
-        return self.GetProfessorInfo()
+    # To update rmp data:
+    #   - cd to root directory of project
+    #   - python
+    #   - import coursetracker.scrapers.ratemyprof as rmp (will take a long time before finished)
+    #   - rmp.ubcProfs.update_rmp_data()
+    #   - exit()
+    def update_rmp_data(self):
+        with open(self.file_to_save_rmp_data, 'w') as outfile:
+            json.dump(self.professorlist, outfile)
 
-    def GetProfessorIndex(self, ProfessorName):  # function searches for professor in list
-        for i in range(0, len(self.professorlist)):
-            if (ProfessorName == (self.professorlist[i]['tFname'] + " " + self.professorlist[i]['tLname'])):
-                return i
-        return False  # Return False is not found
-
-    def GetProfessorInfo(self):  # print search professor's name and RMP score
-        if self.indexnumber == False:
-            return {}
-        else:
-            return self.professorlist[self.indexnumber]
-
-    def professors_info(self, profsList):
-        professorsInfoDict = {}
-        for prof in profsList:
-            profInfo = self.professor_info(prof)
-            if profInfo:
-                professorsInfoDict[prof] = [profInfo['overall_rating'], profInfo['tNumRatings']]
-        return professorsInfoDict
 
 ubcProfs = RateMyProfScraper(1413)  # 1413 is the school ID for UBC on Rate My Prof
