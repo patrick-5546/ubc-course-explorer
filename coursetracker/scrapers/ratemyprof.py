@@ -56,5 +56,13 @@ class RateMyProfScraper:
         with open(self.file_to_save_rmp_data, 'w') as outfile:
             json.dump(self.professorlist, outfile)
 
-
-ubcProfs = RateMyProfScraper(1413)  # 1413 is the school ID for UBC on Rate My Prof
+# Returns the rating and number of ratings for each professor in a list
+# ubcProfs - instance of RateMyProfScraper
+# profsList - list of professor names to get info for
+def get_profs_info(ubcProfs, profsList):
+    profs_info = {}
+    for prof in profsList:
+        for profInfo in ubcProfs:
+            if prof == profInfo['tFname'] + ' ' + profInfo['tLname']:
+                profs_info[prof] = [profInfo['overall_rating'], profInfo['tNumRatings']]
+    return profs_info
