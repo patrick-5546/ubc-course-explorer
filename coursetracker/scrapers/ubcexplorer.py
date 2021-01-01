@@ -48,7 +48,7 @@ def nested_preq_helper(code):
             allCourseData[code] = nestedPreqs
             return nestedPreqs
     else:
-        return None
+        return {}
 
 def course_info(subject, course):
     caps_subject = subject.upper()

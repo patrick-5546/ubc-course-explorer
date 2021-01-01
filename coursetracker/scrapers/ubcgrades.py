@@ -40,7 +40,17 @@ def course_statistics(subject, course):
 def distributions(subject, course):
     caps_subject = subject.upper() + '/'
     url = apiV2 + 'distributions/' + campus + caps_subject + course
-    return check_json(requests.get(url).json())
+    j = check_json(requests.get(url).json())
+    if j:
+        # prefer winter term distribution
+        i = len(j) - 1
+        dis = j[i]
+        while dis['session'] != 'W' and i > 1:
+            i -= 1
+            dis = j[i]
+        return j[len(j) - 1] if i == 0 else dis
+    else:
+        return j
 
 # returns a list of all the named educators (profs and TAs) who have taught the course
 def teaching_team(subject, course):

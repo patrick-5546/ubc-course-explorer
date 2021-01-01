@@ -1,1 +1,67 @@
-<h1>{{ course.course_name }}</h1>
+{% extends 'homepage/main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<!--Course details-->
+<div class="course-row"></div>
+
+    <div class="card text-center mb-5 text-white" id="course-details">
+        <div class= "card-header">
+            <h2 class="card-title">{{ course.course_name }}</h2>
+        </div>
+        <div class="card-body">
+            <p>{{ course.course_description }}</p>
+            <p>{{ course.prerequistes_description }}</p>
+            <p>{{ course.corequisites_description }}</p>
+        </div>
+    </div>
+
+</div>
+
+<!--prereq-->
+<div class="course-row">
+
+    <div class="course-col">
+        <div class="card text-center mb-3" id="prereq">
+            <div class= "card-header">
+                <h3 class="card-title">Course Grade Profile</h3>
+            </div>
+            <div class="card-body">
+                
+            </div>
+        </div>
+    </div>
+
+    <!--ratemyprof-->
+    <div class="course-col">
+        <div class="card text-center mb-3" id="rmp">
+            <div class="card-header">
+                <h3 class="card-title">Course Professor</h3>
+            </div>
+            <div class="card-body">
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="course-col">
+        <div class="card text-center mb-3">
+            <div class= "card-header">
+                <h3 class="card-title">Course Grade Distribution for {{ course.distribution_term }}</h3>
+            </div>
+            <div class="card-body">
+                <!--grade distribution-->
+                {% include 'coursetracker/chart.html' with chartData=course.distribution %}
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<br>
+
+{% endblock %}
+
