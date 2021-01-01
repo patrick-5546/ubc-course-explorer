@@ -1,9 +1,13 @@
+import json
+
 from django.shortcuts import redirect, render
 
 from .models import Course
 # TODO: commented out import dramatically slows down actions because it has to generate professor
 # list every time --> need to work around this, perhaps store in txt file
-from .scrapers import ubcexplorer as ex, ubcgrades as gr#, ratemyprof as rmp
+from .scrapers import ubcexplorer as ex, ubcgrades as gr
+
+path_to_rmp_data = 'coursetracker/scrapers/rmp_ubc_profs_list.txt'
 
 # search works as a "buffer" for when we are obtaining data
 def search(request):
@@ -38,8 +42,20 @@ def course(request, pk):
 
             distributions = gr.distributions(subject, course)  # need to process this, turn into graph
             
-            # profsList = gr.teaching_team(subject, course)
-            # profs = rmp.ubcProfs.professors_info(profsList)
+            profsList = gr.teaching_team(subject, course)
+            
+            ubcProfs = []
+            try:
+                with open(path_to_rmp_data) as json_file:
+                    ubcProfs = json.load(json_file)
+            except OSError:
+                return render(request, 'coursetracker/404.html')
+            
+            profs = {}
+            for prof in profsList:
+                for profInfo in ubcProfs:
+                    if prof == profInfo['tFname'] + ' ' + profInfo['tLname']:
+                        profs[prof] = [profInfo['overall_rating'], profInfo['tNumRatings']]
 
             exp = ex.course_info_with_prereq_tree(subject, course, True)
             preq = exp['preq']  # need to process this, turn into tree
