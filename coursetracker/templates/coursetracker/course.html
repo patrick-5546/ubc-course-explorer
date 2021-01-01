@@ -1,1 +1,75 @@
-<h1>{{ course.course_name }}</h1>
+{% extends 'main.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<!--Course details-->
+<div class="course-row"></div>
+
+    <div class="card text-center mb-5 text-white" id="course-details">
+        <div class= "card-header">
+            <h2 class="card-title">{{ courseData.code }}</h2>
+        </div>
+        <div class="card-body">
+            <p>{{ courseData.desc }}</p>
+            <p>{{ courseData.prer }}</p>
+        </div>
+    </div>
+
+</div>
+
+<!--prereq-->
+<div class="course-row">
+
+    <div class="course-col">
+        <div class="card text-center mb-3" id="prereq">
+            <div class= "card-header">
+                <h3 class="card-title">Course Grade Profile</h3>
+            </div>
+            <div class="card-body">
+                {% for key, val in courseData.stats.items %}
+                <h3 class="grade-info">
+                    <span class="info-key">{{ key.capitalize }}: </span>
+                    <span class="info-details">{{ val }}</span>
+                </h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <!--ratemyprof-->
+    <div class="course-col">
+        <div class="card text-center mb-3" id="rmp">
+            <div class="card-header">
+                <h3 class="card-title">Course Professor</h3>
+            </div>
+            <div class="card-body">
+                {% for key, val in courseData.instructor.items %}
+                <h3 class="grade-info">
+                    <span class="info-key info-key-sm">{{ key.capitalize }}: </span>
+                    <span class="info-details">{{ val }}</span>
+                </h3>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="course-col">
+        <div class="card text-center mb-3">
+            <div class= "card-header">
+                <h3 class="card-title">Course Grade Distribution</h3>
+            </div>
+            <div class="card-body">
+                <!--grade distribution-->
+                {% include 'coursetracker/chart.html' with chartData=courseData.distributions %}
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<br>
+
+{% endblock %}
