@@ -39,7 +39,10 @@ def course(request, pk):
             avg5 = stats['average_past_5_yrs']
             stdev = stats['stdev']
 
-            distributions = gr.distributions(subject, course)  # need to process this, turn into graph
+            # TODO: consider differentiating between no data and 0
+            disInfo = gr.distributions(subject, course)
+            distribution = [grade if grade else 0 for grade in list(disInfo['grades'].values())]
+            disTerm = disInfo['year'] + disInfo['session']
             
             profsList = gr.teaching_team(subject, course)
             
@@ -67,8 +70,8 @@ def course(request, pk):
             crer = "n/a" if 'crer' not in exp else exp['crer']
             link = exp['link']
 
-            c = Course(course_name=pk, average=avg, five_year_average=avg5, standard_deviation=stdev,
-                       distributions=distributions, professors=profs, prerequisites=preq, corequisites=creq,
+            c = Course(course_name=subject + ' ' + course, average=avg, five_year_average=avg5, standard_deviation=stdev,
+                       distribution=distribution, distribution_term=disTerm, professors=profs, prerequisites=preq, corequisites=creq,
                        dependencies=depn, name=name, number_of_credits=cred, course_description=desc,
                        prerequistes_description=prer, corequisites_description=crer, link=link)
             c.save()
