@@ -27,32 +27,28 @@ allCourseData = {}
 #   "crer": "One of MATH 215, MATH 255, MATH 256, MATH 258 and one of MATH 152, MATH 221, MATH 223.",
 #   "link": "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=MATH&course=210"
 # }
-def course_info_with_prereq_tree(subject, course, isFirstCall=None):
-    global allCourseData
-    # resetting allCourseData every call
-    if isFirstCall is not None:
-        allCourseData = {}
-
-    # obtain information on the course
+def course_info_with_prereq_tree(subject, course):
     courseInfo = course_info(subject, course)
-    if courseInfo:
-        preq = []
-        for pr in courseInfo['preq']:
-            subAndCourse = pr.split(" ")
-            info = course_info(subAndCourse[0], subAndCourse[1])['preq']
-            if info:
-                if pr in allCourseData:
-                    prereqInfo = allCourseData[pr]
-                else:
-                    prereqInfo = preq.append(course_info_with_prereq_tree(subject=subAndCourse[0], course=subAndCourse[1])['preq'])
-                    # cache information so we don't need to query the same course
-                    allCourseData[pr] = prereqInfo
-            else:
-                preq.append(pr)
-
-        courseInfo['preq'] = preq
+    code = subject + ' ' + course
+    courseInfo['preq'] = nested_preq_helper(code)
     
     return courseInfo
+
+def nested_preq_helper(code):
+    global allCourseData
+    subAndCourse = code.split(' ')
+    preq = course_info(subAndCourse[0], subAndCourse[1])['preq']
+    if preq:
+        if code in allCourseData:  # load from cache to save time
+            return allCourseData[code]
+        else:
+            nestedPreqs = {}
+            for course in preq:
+                nestedPreqs[course] = nested_preq_helper(course)
+            allCourseData[code] = nestedPreqs
+            return nestedPreqs
+    else:
+        return None
 
 def course_info(subject, course):
     caps_subject = subject.upper()
