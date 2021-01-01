@@ -3,8 +3,6 @@ from django.shortcuts import redirect, render
 from .models import Course
 from .scrapers import ubcexplorer as ex, ubcgrades as gr, ratemyprof as rmp
 
-path_to_rmp_data = 'coursetracker/scrapers/rmp_ubc_profs_list.txt'
-
 # search works as a "buffer" for when we are obtaining data
 def search(request):
     if request.method == 'GET':
@@ -48,15 +46,11 @@ def create_course(searchedString):
     distribution = [grade if grade else 0 for grade in list(disInfo['grades'].values())]
     disTerm = disInfo['year'] + disInfo['session']
     
-    ubcProfs = []
-    try:
-        with open(path_to_rmp_data) as json_file:
-            ubcProfs = json.load(json_file)
-    except OSError:
-        return None
-    
     profsList = gr.teaching_team(subject, course)
-    profs = rmp.get_profs_info(ubcProfs, profsList)
+    profs = rmp.get_profs_info(profsList)
+    if not profs:
+        print('Unable to read rmp data from file')  # TODO: make separate html page for this
+        return None
 
     exp = ex.course_info_with_prereq_tree(subject, course)
     preq = exp['preq'] 

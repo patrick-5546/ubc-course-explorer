@@ -57,9 +57,15 @@ class RateMyProfScraper:
             json.dump(self.professorlist, outfile)
 
 # Returns the rating and number of ratings for each professor in a list
-# ubcProfs - instance of RateMyProfScraper
 # profsList - list of professor names to get info for
-def get_profs_info(ubcProfs, profsList):
+def get_profs_info(profsList):
+    ubcProfs = []
+    try:
+        with open('coursetracker/scrapers/rmp_ubc_profs_list.txt') as json_file:
+            ubcProfs = json.load(json_file)
+    except OSError:
+        return None
+        
     profs_info = {}
     for prof in profsList:
         for profInfo in ubcProfs:

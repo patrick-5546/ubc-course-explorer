@@ -1,6 +1,6 @@
 #To test nested prereq tree: 256 -> 223 -> 121 -> 120, 100, ...
 # import ubcexplorer as exp
-# print(exp.nested_preq_helper("math 100"))
+# print(exp.nested_preq_helper("math 256"))
 # print(len(exp.allCourseData))
 # print(exp.count)
 # print(exp.course_info("math", "256")['preq'])
