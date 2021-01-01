@@ -26,7 +26,7 @@ def course_statistics(subject, course):
     url = apiV2 + campus + caps_subject + course
     return check_json(requests.get(url).json())
 
-# return example element for 2019W of SCIE 001 (returns array where each element is a term):
+# return example for 2019W of SCIE 001:
 # {
 #   "campus":"UBCV",
 #   "course":"001",
@@ -37,7 +37,7 @@ def course_statistics(subject, course):
 #   "subject":"SCIE",
 #   "year":"2019"
 # }
-def distributions(subject, course):
+def latest_distribution_info(subject, course):
     caps_subject = subject.upper() + '/'
     url = apiV2 + 'distributions/' + campus + caps_subject + course
     j = check_json(requests.get(url).json())
