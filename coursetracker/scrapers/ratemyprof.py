@@ -52,12 +52,6 @@ class RateMyProfScraper:
                             'remaining'] + 20  # get the number of professors
         return num_of_prof
     
-    # To update rmp data:
-    #   - cd to root directory of project
-    #   - python
-    #   - import coursetracker.scrapers.ratemyprof as rmp (will take a long time before finished)
-    #   - rmp.ubcProfs.update_rmp_data()
-    #   - exit()
     def update_rmp_data(self):
         with open(self.file_to_save_rmp_data, 'w') as outfile:
             json.dump(self.professorlist, outfile)

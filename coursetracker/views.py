@@ -56,7 +56,7 @@ def course(request, pk):
                     if prof == profInfo['tFname'] + ' ' + profInfo['tLname']:
                         profs[prof] = [profInfo['overall_rating'], profInfo['tNumRatings']]
 
-            exp = ex.course_info_with_prereq_tree(subject, course, True)
+            exp = ex.course_info_with_prereq_tree(subject, course)
             preq = exp['preq']  # need to process this, turn into tree
             creq = exp['creq']
             depn = exp['depn']
