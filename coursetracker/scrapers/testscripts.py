@@ -1,8 +1,8 @@
 import ubcexplorer as exp, ubcgrades as gr, ratemyprof as rmp
 
 # #To test nested prereq tree: 256 -> 223 -> 121 -> 120, 100, ...
-print(exp.nested_preq_helper("math 256"))
-print(len(exp.allCourseData))
+# print(exp.nested_preq_helper("math 256"))
+# print(len(exp.allCourseData))
 # print(exp.course_info("math", "256")['preq'])
 
 # #To test distributions
