@@ -6,7 +6,7 @@ import requests, json
 allCourseData = {}
 expData = []
 try:
-    with open('coursetracker/scrapers/local_data/exp_all_course_preqs.txt') as json_file:
+    with open('coursetracker/scrapers/local_data/exp_courses_list.txt') as json_file:
         expData = json.load(json_file)
 except OSError:
     pass

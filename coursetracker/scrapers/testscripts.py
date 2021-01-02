@@ -6,12 +6,17 @@ import ubcexplorer as exp, ubcgrades as gr, ratemyprof as rmp
 # print(exp.course_info("math", "256")['preq'])
 
 # #To test distributions
-# disInfo = gr.distributions("math", "101")
+# disInfo = gr.latest_distribution_info("math", "101")
 # print([grade if grade else 0 for grade in list(disInfo['grades'].values())])
 
 # #To test course retrieval
 # print(gr.get_subjects())
 # print(gr.get_courses('cpen'))
+
+# #To ubcgrades local data retrieval
+# print(gr.course_statistics("math", "256"))
+# print(gr.latest_distribution_info("math", "256"))
+print(gr.teaching_team("math", "256"))
 
 # #To test valid
 # print(gr.subject_is_valid('cpen'))  # true
