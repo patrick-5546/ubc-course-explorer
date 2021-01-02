@@ -22,8 +22,19 @@ campus = 'UBCV/'
 #   "subject_title":"English"
 # }
 def course_statistics(subject, course):
-    caps_subject = subject.upper() + '/'
-    url = apiV2 + campus + caps_subject + course
+    subjectCourseInfo = []
+    try:
+        with open('coursetracker/scrapers/local_data/gr_course-statistics/' + subject.upper() + '.txt') as json_file:
+            subjectCourseInfo = json.load(json_file)
+    except OSError:
+        pass
+    for courseInfo in subjectCourseInfo:
+        if courseInfo['course'] == course:
+            return courseInfo
+    return {}
+
+def all_course_statistics(subject):
+    url = apiV2 + campus + subject.upper()
     return check_json(requests.get(url).json())
 
 # return example for 2019W of SCIE 001:
@@ -38,26 +49,48 @@ def course_statistics(subject, course):
 #   "year":"2019"
 # }
 def latest_distribution_info(subject, course):
-    caps_subject = subject.upper() + '/'
-    url = apiV2 + 'distributions/' + campus + caps_subject + course
-    j = check_json(requests.get(url).json())
-    if j:
+    subjectCourseInfo = []
+    try:
+        with open('coursetracker/scrapers/local_data/gr_distributions/' + subject.upper() + '.txt') as json_file:
+            subjectCourseInfo = json.load(json_file)
+    except OSError:
+        pass
+    availableDistributions = []
+    for courseInfo in subjectCourseInfo:
+        if courseInfo['course'] == course:
+            availableDistributions.append(courseInfo)
+    if availableDistributions:
         # prefer winter term distribution
-        i = len(j) - 1
-        dis = j[i]
+        i = len(availableDistributions) - 1
+        dis = availableDistributions[i]
         while dis['session'] != 'W' and i > 1:
             i -= 1
-            dis = j[i]
-        return j[len(j) - 1] if i == 0 else dis
+            dis = availableDistributions[i]
+        return availableDistributions[len(availableDistributions) - 1] if i == 0 else dis
     else:
-        return j
+        return availableDistributions
+
+def all_distribution_info(subject):
+    url = apiV2 + 'distributions/' + campus + subject.upper()
+    return check_json(requests.get(url).json())
 
 # returns a list of all the named educators (profs and TAs) who have taught the course
 def teaching_team(subject, course):
-    caps_subject = subject.upper() + '/'
-    url = apiV2 + 'teaching-team/' + campus + caps_subject + course
-    allProfsInfo = check_json(requests.get(url).json())
+    subjectCourseInfo = []
+    try:
+        with open('coursetracker/scrapers/local_data/gr_teaching-team/' + subject.upper() + '.txt') as json_file:
+            subjectCourseInfo = json.load(json_file)
+    except OSError:
+        pass
+    allProfsInfo = []
+    for courseInfo in subjectCourseInfo:
+        if courseInfo['course'] == course:
+            allProfsInfo.append(courseInfo)
     return [profInfo['name'] for profInfo in allProfsInfo if profInfo['name']] if allProfsInfo else {}
+
+def all_teaching_team(subject):
+    url = apiV2 + 'teaching-team/' + campus + subject.upper()
+    return check_json(requests.get(url).json())
 
 def check_json(j):
     return {} if 'error' in json.dumps(j) else j
