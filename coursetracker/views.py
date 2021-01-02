@@ -53,15 +53,15 @@ def create_course(searchedString):
         return None
 
     exp = ex.course_info_with_prereq_tree(subject, course)
-    preq = exp['preq'] 
-    creq = exp['creq']
-    depn = exp['depn']
-    name = exp['name']
-    cred = exp['cred']
-    desc = exp['desc']
+    preq = "n/a" if 'preq' not in exp else exp['preq'] 
+    creq = "n/a" if 'creq' not in exp else exp['creq']
+    depn = "n/a" if 'depn' not in exp else exp['depn']
+    name = "n/a" if 'name' not in exp else exp['name']
+    cred = "n/a" if 'cred' not in exp else exp['cred']
+    desc = "n/a" if 'desc' not in exp else exp['desc']
     prer = "n/a" if 'prer' not in exp else exp['prer']
     crer = "n/a" if 'crer' not in exp else exp['crer']
-    link = exp['link']
+    link = "n/a" if 'link' not in exp else exp['link']
 
     c = Course(course_name=subject + ' ' + course, average=avg, five_year_average=avg5, standard_deviation=stdev,
                 distribution=distribution, distribution_term=disTerm, professors_info=profs, prerequisites=preq, corequisites=creq,

@@ -1,4 +1,4 @@
-import requests
+import requests, json
 
 # Gets relevant statistics from ubcexplorer.io. If invalid course, returns:
 #   "Course not found", or "An error has occurred:" + error --> return empty dictionary
@@ -29,15 +29,24 @@ allCourseData = {}
 # }
 def course_info_with_prereq_tree(subject, course):
     courseInfo = course_info(subject, course)
-    code = subject + ' ' + course
+    code = subject.upper() + ' ' + course
     courseInfo['preq'] = nested_preq_helper(code)
     
     return courseInfo
 
-def nested_preq_helper(code):
+def nested_preq_helper(str):
     global allCourseData
-    subAndCourse = code.split(' ')
-    preq = course_info(subAndCourse[0], subAndCourse[1])['preq']
+    subAndCourse = str.split(' ')
+    code = subAndCourse[0].upper() + ' ' + subAndCourse[1]
+
+    subjectCoursesPreqs = {}
+    try:
+        with open('coursetracker/scrapers/exp_all_course_preqs/' + subAndCourse[0].upper() + '.txt') as json_file:
+            subjectCoursesPreqs = json.load(json_file)
+    except OSError:
+        pass
+    
+    preq = subjectCoursesPreqs[code] if subjectCoursesPreqs else {}
     if preq:
         if code in allCourseData:  # load from cache to save time
             return allCourseData[code]

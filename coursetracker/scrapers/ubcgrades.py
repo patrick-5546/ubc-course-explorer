@@ -70,13 +70,23 @@ apiV1 = 'https://ubcgrades.com/api/v1/'
 # checks if given subject is valid
 def subject_is_valid(subject):
     caps_subject = subject.upper()
-    url = apiV1 + 'subjects/UBCV'
-    allSubjects = requests.get(url).json()
-    return True if caps_subject in [subjectInfo['subject'] for subjectInfo in allSubjects] else False
+    allSubjects = get_subjects()
+    return True if caps_subject in allSubjects else False
 
 # checks if given course is valid
 def course_is_valid(subject, course):
+    allCourses = get_courses(subject)
+    return True if course in allCourses else False
+
+# get list of all subjects available
+def get_subjects():
+    url = apiV1 + 'subjects/UBCV'
+    allSubjects = check_json(requests.get(url).json())
+    return [subjectInfo['subject'] for subjectInfo in allSubjects] if allSubjects else []
+
+# get list of all courses available for a subject
+def get_courses(subject):
     caps_subject = subject.upper()
     url = apiV1 + 'courses/' + campus + caps_subject
-    allCourses = requests.get(url).json()
-    return True if course in [courseInfo['course'] for courseInfo in allCourses] else False
+    allCourses = check_json(requests.get(url).json())
+    return [courseInfo['course'] for courseInfo in allCourses] if allCourses else []

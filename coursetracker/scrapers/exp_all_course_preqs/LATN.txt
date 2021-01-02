@@ -1,0 +1,1 @@
+{"LATN 401": [], "LATN 402": [], "LATN 101": [], "LATN 102": ["LATN 101"], "LATN 201": ["LATN 102"], "LATN 202": ["LATN 201"], "LATN 350": ["LATN 202", "LATN 200"], "LATN 351": ["LATN 200", "LATN 202"]}
