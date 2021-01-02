@@ -16,7 +16,7 @@ import ubcexplorer as exp, ubcgrades as gr, ratemyprof as rmp
 # #To ubcgrades local data retrieval
 # print(gr.course_statistics("math", "256"))
 # print(gr.latest_distribution_info("math", "256"))
-print(gr.teaching_team("math", "256"))
+# print(gr.teaching_team("math", "256"))
 
 # #To test valid
 # print(gr.subject_is_valid('cpen'))  # true
