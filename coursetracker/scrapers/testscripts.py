@@ -9,7 +9,7 @@ import ubcexplorer as exp, ubcgrades as gr, ratemyprof as rmp
 # disInfo = gr.latest_distribution_info("math", "101")
 # print([grade if grade else 0 for grade in list(disInfo['grades'].values())])
 
-# #To test course retrieval
+#To test course retrieval
 # print(gr.get_subjects())
 # print(gr.get_courses('cpen'))
 
@@ -19,8 +19,6 @@ import ubcexplorer as exp, ubcgrades as gr, ratemyprof as rmp
 # print(gr.teaching_team("math", "256"))
 
 # #To test valid
-# print(gr.subject_is_valid('cpen'))  # true
-# print(gr.subject_is_valid('cpfden'))  # false
 # print(gr.course_is_valid('cpen', '221'))  # true
 # print(gr.course_is_valid('cpen', '22ds1'))  # false
 

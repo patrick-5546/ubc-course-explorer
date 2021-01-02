@@ -100,25 +100,27 @@ def check_json(j):
 
 apiV1 = 'https://ubcgrades.com/api/v1/'
 
-# checks if given subject is valid
-def subject_is_valid(subject):
-    caps_subject = subject.upper()
-    allSubjects = get_subjects()
-    return True if caps_subject in allSubjects else False
-
 # checks if given course is valid
 def course_is_valid(subject, course):
-    allCourses = get_courses(subject)
-    return True if course in allCourses else False
+    subjectCourses = []
+    try:
+        with open('coursetracker/scrapers/local_data/gr_subject-course-list/' + subject.upper() + '.txt') as json_file:
+            subjectCourses = json.load(json_file)
+    except OSError:
+        pass
+    for courseNum in subjectCourses:
+        if courseNum == course:
+            return True
+    return False
 
 # get list of all subjects available
-def get_subjects():
+def get_api_subjects():
     url = apiV1 + 'subjects/UBCV'
     allSubjects = check_json(requests.get(url).json())
     return [subjectInfo['subject'] for subjectInfo in allSubjects] if allSubjects else []
 
 # get list of all courses available for a subject
-def get_courses(subject):
+def get_api_courses(subject):
     caps_subject = subject.upper()
     url = apiV1 + 'courses/' + campus + caps_subject
     allCourses = check_json(requests.get(url).json())

@@ -32,7 +32,7 @@ def create_course(searchedString):
         subject = searchedString[0:-3].upper()
         course = searchedString[-3:]
 
-    if not gr.subject_is_valid(subject) or not gr.course_is_valid(subject, course):
+    if not gr.course_is_valid(subject, course):
         return None
 
     # TODO: decide whether to get term grade statistics (for high, low, pass, fail, etc.)
