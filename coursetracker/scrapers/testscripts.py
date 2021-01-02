@@ -1,19 +1,25 @@
-#To test nested prereq tree: 256 -> 223 -> 121 -> 120, 100, ...
-# import ubcexplorer as exp
-# print(exp.nested_preq_helper("math 256"))
-# print(len(exp.allCourseData))
-# print(exp.count)
+import ubcexplorer as exp, ubcgrades as gr, ratemyprof as rmp
+
+# #To test nested prereq tree: 256 -> 223 -> 121 -> 120, 100, ...
+print(exp.nested_preq_helper("math 256"))
+print(len(exp.allCourseData))
 # print(exp.course_info("math", "256")['preq'])
 
-#To test distributions
-# import ubcgrades as gr
+# #To test distributions
 # disInfo = gr.distributions("math", "101")
 # print([grade if grade else 0 for grade in list(disInfo['grades'].values())])
 
-#To test rmp data:
-# import ratemyprof as rmp, json
+# #To test course retrieval
+# print(gr.get_subjects())
+# print(gr.get_courses('cpen'))
+
+# #To test valid
+# print(gr.subject_is_valid('cpen'))  # true
+# print(gr.subject_is_valid('cpfden'))  # false
+# print(gr.course_is_valid('cpen', '221'))  # true
+# print(gr.course_is_valid('cpen', '22ds1'))  # false
+
+# #To test rmp data:
 # ubcProfs = []
-# with open('coursetracker/scrapers/rmp_ubc_profs_list.txt') as json_file:
-#     ubcProfs = json.load(json_file)
 # profsList = ['Robert Gateman', 'Tor Aamodt']
-# print(rmp.get_profs_info(ubcProfs, profsList))
+# print(rmp.get_profs_info(profsList))

@@ -1,0 +1,1 @@
+{"ENVR 200": [], "ENVR 300": [], "ENVR 400": ["ENVR 300"], "ENVR 449": ["ENVR 300"], "ENVR 490": [], "ENVR 448": [], "ENVR 410": [], "ENVR 420": ["GEOB 305", "EOSC 329"], "ENVR 430": ["ENVR 300", "BIOL 230"], "ENVR 440": ["ENVR 200", "ASIC 220", "SCIE 220", "GEOG 211"]}
