@@ -1,0 +1,13 @@
+<!--Copied from django source code. Find path using `py -c "import django; print(django.__path__)"`,
+    then navigate to django/contrib/admin/templates/admin-->
+<!--Similarily, can override index.html to order apps on homepage-->
+{% extends "admin/base.html" %}
+
+{% block title %}{{ title }} | {{ site_title|default:_('Django site admin') }}{% endblock %}
+
+<!--Overriding django's default template to change title of admin page-->
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">UBC Course Explorer Administration</a></h1>
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
