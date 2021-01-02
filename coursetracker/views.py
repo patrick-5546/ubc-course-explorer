@@ -65,7 +65,7 @@ def create_course(searchedString):
 
     c = Course(course_name=subject + ' ' + course, average=avg, five_year_average=avg5, standard_deviation=stdev,
                 latest_grade_distribution=distribution, distribution_term=disTerm, professors_info=profs, 
-                prerequisites=preq, corequisites=creq, dependencies=depn, name=name, number_of_credits=cred,
+                prerequisites=preq, corequisites=creq, dependencies=depn, sub_name=name, number_of_credits=cred,
                 course_description=desc, prerequistes_description=prer, corequisites_description=crer, course_link=link)
     c.save()
     return c

@@ -12,7 +12,7 @@ class Course(models.Model):
     prerequisites = models.TextField(default='')  # turn into tree
     corequisites = models.TextField(default='')
     dependencies = models.TextField(default='')
-    name = models.CharField(max_length=200, default='')
+    sub_name = models.CharField(max_length=200, default='')
     number_of_credits = models.CharField(max_length=200, default='0')
     course_description = models.TextField(default='')
     prerequistes_description = models.TextField(default='')

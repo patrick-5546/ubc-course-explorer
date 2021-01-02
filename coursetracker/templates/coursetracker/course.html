@@ -53,7 +53,7 @@
             </div>
             <div class="card-body">
                 <!--grade distribution-->
-                {% include 'coursetracker/chart.html' with chartData=course.distribution %}
+                {% include 'coursetracker/chart.html' with chartData=course.latest_grade_distribution %}
             </div>
         </div>
     </div>
