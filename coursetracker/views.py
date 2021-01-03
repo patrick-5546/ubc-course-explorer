@@ -32,7 +32,8 @@ def course(request, pk):
         
 
         exp = ex.course_info_with_prereq_tree(subject, course)
-        preq = [] if 'preq' not in exp else exp['preq'] 
+        preq = {} if 'preq' not in exp else exp['preq']
+        preq = {subject + ' ' + course: preq}
 
         return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq})
 
