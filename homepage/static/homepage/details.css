@@ -1,8 +1,7 @@
 .grade-info {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: center;
-    align-items: center;
 }
 
 .info-key {
@@ -22,8 +21,7 @@
 .info-details {
     flex: 50%;
     min-width: 200px;
-    text-align: right;
-    margin-right: auto;
+    text-align: left;
 }
 
 .course-row {
@@ -52,4 +50,3 @@ h2.card-title {
     font-size: 2.5em;
     padding-bottom: 0;
 }
-
