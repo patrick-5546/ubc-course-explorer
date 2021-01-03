@@ -30,24 +30,16 @@
             </div>
             <div class="card-body">
                 <h3 class="grade-info">
-                    <span class="info-key">2019W Average:</span>
-                    <span class="info-details">{{ course.average }}</span>
+                    <span class="info-key">Historic Average:</span>
+                    <span class="info-details">{{ course.average|floatformat:"2" }}</span>
                 </h3>
                 <h3 class="grade-info">
-                    <span class="info-key">Five-Year Average:</span>
-                    <span class="info-details">{{ course.five_year_average }}</span>
+                    <span class="info-key">Average (Past 5 Years):</span>
+                    <span class="info-details">{{ course.five_year_average|floatformat:"2" }}</span>
                 </h3>
                 <h3 class="grade-info">
-                    <span class="info-key">Stdev:</span>
-                    <span class="info-details">{{ course.standard_deviation }}</span>
-                </h3>
-                <h3 class="grade-info">
-                    <span class="info-key">Distribution:</span>
-                    <span class="info-details">{{ course.distribution }}</span>
-                </h3>
-                <h3 class="grade-info">
-                    <span class="info-key">Distribution Term:</span>
-                    <span class="info-details">{{ course.distribution_term }}</span>
+                    <span class="info-key">Standard Deviation:</span>
+                    <span class="info-details">{{ course.standard_deviation|floatformat:"2" }}</span>
                 </h3>
             </div>
         </div>
