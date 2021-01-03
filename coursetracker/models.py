@@ -6,10 +6,8 @@ class Course(models.Model):
     average = models.CharField(max_length=200, default='0')
     five_year_average = models.CharField(max_length=200, default='0')
     standard_deviation = models.CharField(max_length=200, default='0')
-    distribution = models.TextField(default='')  # turn into graph
+    distribution = models.TextField(default='')  # for the graph
     distribution_term = models.CharField(max_length=200, default='0')
-    professors_info = models.TextField(default='')  # turn into sortable list
-    prerequisites = models.TextField(default='')  # turn into tree
     corequisites = models.TextField(default='')
     dependencies = models.TextField(default='')
     sub_name = models.CharField(max_length=200, default='')

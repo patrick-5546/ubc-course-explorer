@@ -10,9 +10,7 @@ class CourseAdmin(admin.ModelAdmin):
         ('General Course Statistics', {'fields': ['average', 'five_year_average', 'standard_deviation',
                                                   'number_of_credits']}),
         ('Graphing Information', {'fields': ['distribution_term', 'distribution']}),
-        ('Treechart Data', {'fields': ['prerequisites']}),
-        ('Other Related Courses', {'fields': ['corequisites', 'dependencies']}),
-        ('Professor Ratings', {'fields': ['professors_info']}),
+        ('Related Courses', {'fields': ['corequisites', 'dependencies']})
     ]
     # fields to display in page that displays all questions
     list_display = ('course_name', 'average')
