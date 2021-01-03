@@ -56,3 +56,8 @@ h2.card-title {
     font-size: 2.5em;
     padding-bottom: 0;
 }
+
+.card-body-scroll {
+    height: 200px;
+    overflow-y: scroll;
+}
