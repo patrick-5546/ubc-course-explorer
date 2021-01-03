@@ -21,7 +21,7 @@ python manage.py runserver
 
 ## Modifying `Course` Model
 * If [`Course` fields](https://github.com/patrick-5546/ubc-course-explorer/blob/main/coursetracker/models.py#L5) are modified (added, renamed, deleted), the database will need to be updated: run `python manage.py makemigrations`, then `python manage.py migrate`
-* If `Course` representation is changed (eg. changed `professors_info` field from dictionary to list), run `python manage.py updatecourseobjects` to refresh all the fields of all `Course` objects currently stored in the database
+    * If the field representations are changed without modifying the fields themselves (eg. changed `professors_info` field from dictionary to list), run `python manage.py updatecourseobjects` to refresh all the fields of all `Course` objects currently stored in the database
 
 ## Scripts
 * [`updatescripts.py`](https://github.com/patrick-5546/ubc-course-explorer/blob/main/coursetracker/scrapers/updatescripts.py) is used to sync locally stored data with the APIs: uncomment the code block corresponding to the desired data to sync, then run the file. These will take a while to execute.
