@@ -25,10 +25,10 @@ def course(request, pk):
         except Course.DoesNotExist:
             subAndCourse = pk.split(' ')
             if len(subAndCourse) == 2:
-                subject = subAndCourse[0]
+                subject = subAndCourse[0].upper()
                 course = subAndCourse[1]
             else:
-                subject = pk[0:-3] 
+                subject = pk[0:-3].upper()
                 course = pk[-3:]
 
             if not gr.subject_is_valid(subject) or not gr.course_is_valid(subject, course):
