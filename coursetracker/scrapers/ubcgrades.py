@@ -22,11 +22,22 @@ campus = 'UBCV/'
 #   "subject_title":"English"
 # }
 def course_statistics(subject, course):
-    caps_subject = subject.upper() + '/'
-    url = apiV2 + campus + caps_subject + course
+    subjectCourseInfo = []
+    try:
+        with open('coursetracker/scrapers/local_data/gr_course-statistics/' + subject.upper() + '.txt') as json_file:
+            subjectCourseInfo = json.load(json_file)
+    except OSError:
+        pass
+    for courseInfo in subjectCourseInfo:
+        if courseInfo['course'] == course:
+            return courseInfo
+    return {}
+
+def all_course_statistics(subject):
+    url = apiV2 + campus + subject.upper()
     return check_json(requests.get(url).json())
 
-# return example element for 2019W of SCIE 001 (returns array where each element is a term):
+# return example for 2019W of SCIE 001:
 # {
 #   "campus":"UBCV",
 #   "course":"001",
@@ -37,17 +48,49 @@ def course_statistics(subject, course):
 #   "subject":"SCIE",
 #   "year":"2019"
 # }
-def distributions(subject, course):
-    caps_subject = subject.upper() + '/'
-    url = apiV2 + 'distributions/' + campus + caps_subject + course
+def latest_distribution_info(subject, course):
+    subjectCourseInfo = []
+    try:
+        with open('coursetracker/scrapers/local_data/gr_distributions/' + subject.upper() + '.txt') as json_file:
+            subjectCourseInfo = json.load(json_file)
+    except OSError:
+        pass
+    availableDistributions = []
+    for courseInfo in subjectCourseInfo:
+        if courseInfo['course'] == course:
+            availableDistributions.append(courseInfo)
+    if availableDistributions:
+        # prefer winter term distribution
+        i = len(availableDistributions) - 1
+        dis = availableDistributions[i]
+        while dis['session'] != 'W' and i > 1:
+            i -= 1
+            dis = availableDistributions[i]
+        return availableDistributions[len(availableDistributions) - 1] if i == 0 else dis
+    else:
+        return availableDistributions
+
+def all_distribution_info(subject):
+    url = apiV2 + 'distributions/' + campus + subject.upper()
     return check_json(requests.get(url).json())
 
 # returns a list of all the named educators (profs and TAs) who have taught the course
 def teaching_team(subject, course):
-    caps_subject = subject.upper() + '/'
-    url = apiV2 + 'teaching-team/' + campus + caps_subject + course
-    allProfsInfo = check_json(requests.get(url).json())
+    subjectCourseInfo = []
+    try:
+        with open('coursetracker/scrapers/local_data/gr_teaching-team/' + subject.upper() + '.txt') as json_file:
+            subjectCourseInfo = json.load(json_file)
+    except OSError:
+        pass
+    allProfsInfo = []
+    for courseInfo in subjectCourseInfo:
+        if courseInfo['course'] == course:
+            allProfsInfo.append(courseInfo)
     return [profInfo['name'] for profInfo in allProfsInfo if profInfo['name']] if allProfsInfo else {}
+
+def all_teaching_team(subject):
+    url = apiV2 + 'teaching-team/' + campus + subject.upper()
+    return check_json(requests.get(url).json())
 
 def check_json(j):
     return {} if 'error' in json.dumps(j) else j
@@ -57,16 +100,28 @@ def check_json(j):
 
 apiV1 = 'https://ubcgrades.com/api/v1/'
 
-# checks if given subject is valid
-def subject_is_valid(subject):
-    caps_subject = subject.upper()
-    url = apiV1 + 'subjects/UBCV'
-    allSubjects = requests.get(url).json()
-    return True if caps_subject in [subjectInfo['subject'] for subjectInfo in allSubjects] else False
-
 # checks if given course is valid
 def course_is_valid(subject, course):
+    subjectCourses = []
+    try:
+        with open('coursetracker/scrapers/local_data/gr_subject-course-list/' + subject.upper() + '.txt') as json_file:
+            subjectCourses = json.load(json_file)
+    except OSError:
+        pass
+    for courseNum in subjectCourses:
+        if courseNum == course:
+            return True
+    return False
+
+# get list of all subjects available
+def get_api_subjects():
+    url = apiV1 + 'subjects/UBCV'
+    allSubjects = check_json(requests.get(url).json())
+    return [subjectInfo['subject'] for subjectInfo in allSubjects] if allSubjects else []
+
+# get list of all courses available for a subject
+def get_api_courses(subject):
     caps_subject = subject.upper()
     url = apiV1 + 'courses/' + campus + caps_subject
-    allCourses = requests.get(url).json()
-    return True if course in [courseInfo['course'] for courseInfo in allCourses] else False
+    allCourses = check_json(requests.get(url).json())
+    return [courseInfo['course'] for courseInfo in allCourses] if allCourses else []

@@ -1,10 +1,5 @@
 {% extends 'homepage/main.html' %}
 
-{% comment %} {'preq': [{'preq': [], 'creq': [], 'depn': ['MECH 220', 'MECH 230', 'MECH 232', 'PHYS 410', 'CHBE 230', 'CPEN 211', 'CPEN 221', 'CPEN 223', 'CPSC 259', 'ATSC 313', 'EOSC 213', 'BMEG 310'], '_id': '5ee9b415e749b91b79a7f5e5', 'dept': 'APSC', 'code': 'APSC 160', 'name': 'Introduction to Computation in Engineering Design', 'cred': 3, 'desc': 'Analysis and simulation, laboratory data 
-acquisition and processing, measurement interfaces, engineering tools, computer systems organization, programming languages. Credit will only be given for one of: APSC 160, CPSC 301, or EOSC 
-211.', 'link': 'https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=APSC&course=160'}], 'creq': [], 'depn': ['CPEN 321', 'CPEN 331', 'CPEN 422', 'CPEN 423', 'CPEN 431', 'CPEN 441', 'CPSC 221', 'CPSC 261', 'CPSC 302', 'CPSC 303', 'CPSC 312', 'CPSC 330', 'CPSC 344', 'ENPH 353'], '_id': '5ee9b414e749b91b79a7f33d', 'dept': 'CPEN', 'code': 'CPEN 221', 'name': 'Principles of Software Construction', 'cred': 4, 'desc': 'Design, implementation, reasoning about software systems: abstraction and specification of software, testing, verification, abstract data types, object-oriented design, type hierarchies, concurrent software design.', 'prer': 'APSC 160.', 'link': 'https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=CPEN&course=221', 'distributions': [0, 0, 1, 1, 2, 1, 0, 27, 21, 21, 56, 41, 37, 9, 7, 4], 'stats': {'average': 74.18, 'stdev': 9.06, 'high': 98, 'low': 25, 'pass': 220, 'fail': 4, 'withdrew': 2, 'audit': 0, 'other': 2}, 'instructor': {'name': 'TBA', 'overall rating': 'average', 'rating ': '2.8', 'number of ratings': 74}} {% endcomment %}
-
-
 {% block content %}
 
 {% load static %}
@@ -70,11 +65,11 @@ acquisition and processing, measurement interfaces, engineering tools, computer 
     <div class="course-col">
         <div class="card text-center mb-3">
             <div class= "card-header">
-                <h3 class="card-title">Course Grade Distribution</h3>
+                <h3 class="card-title">Course Grade Distribution for {{ course.distribution_term }}</h3>
             </div>
             <div class="card-body">
                 <!--grade distribution-->
-                {% include 'coursetracker/chart.html' with chartData=course.distributions %}
+                {% include 'coursetracker/chart.html' with chartData=course.distribution %}
             </div>
         </div>
     </div>
@@ -85,3 +80,4 @@ acquisition and processing, measurement interfaces, engineering tools, computer 
 <br>
 
 {% endblock %}
+

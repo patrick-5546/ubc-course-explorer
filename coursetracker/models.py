@@ -6,17 +6,18 @@ class Course(models.Model):
     average = models.CharField(max_length=200, default='0')
     five_year_average = models.CharField(max_length=200, default='0')
     standard_deviation = models.CharField(max_length=200, default='0')
-    distributions = models.TextField(default='')
-    professors = models.TextField(default='')
-    prerequisites = models.TextField(default='')
+    distribution = models.TextField(default='')  # turn into graph
+    distribution_term = models.CharField(max_length=200, default='0')
+    professors_info = models.TextField(default='')  # turn into sortable list
+    prerequisites = models.TextField(default='')  # turn into tree
     corequisites = models.TextField(default='')
     dependencies = models.TextField(default='')
-    name = models.CharField(max_length=200, default='')
+    sub_name = models.CharField(max_length=200, default='')
     number_of_credits = models.CharField(max_length=200, default='0')
     course_description = models.TextField(default='')
     prerequistes_description = models.TextField(default='')
     corequisites_description = models.TextField(default='')
-    link = models.TextField(default='')
+    course_link = models.TextField(default='')
 
     def __str__(self):
         return self.course_name

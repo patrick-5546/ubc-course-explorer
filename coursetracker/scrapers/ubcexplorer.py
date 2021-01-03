@@ -1,14 +1,15 @@
-import requests
+import requests, json
 
 # Gets relevant statistics from ubcexplorer.io. If invalid course, returns:
 #   "Course not found", or "An error has occurred:" + error --> return empty dictionary
 
-api = 'https://ubcexplorer.io/'
 allCourseData = {}
-
-# TODO: consider storing all required information (especially preq) in global variable to increase speed
-# TODO: modify to save node -- [node [child1, [child2, [child21, child22]], child3]
-#       Currently, only saves leaf nodes -- [child1, child21, child22, child3]
+expData = []
+try:
+    with open('coursetracker/scrapers/local_data/exp_courses_list.txt') as json_file:
+        expData = json.load(json_file)
+except OSError:
+    pass
 
 # returns the whole prerequisite tree for a subject, including course information, to use, *****set isFirstCall = True*****
 #
@@ -27,48 +28,53 @@ allCourseData = {}
 #   "crer": "One of MATH 215, MATH 255, MATH 256, MATH 258 and one of MATH 152, MATH 221, MATH 223.",
 #   "link": "https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&dept=MATH&course=210"
 # }
-def course_info_with_prereq_tree(subject, course, isFirstCall=None):
-    global allCourseData
-    # resetting allCourseData every call
-    if isFirstCall is not None:
-        allCourseData = {}
-
-    # obtain information on the course
+def course_info_with_prereq_tree(subject, course):
     courseInfo = course_info(subject, course)
-    if courseInfo:
-        preq = []
-        for pr in courseInfo['preq']:
-            subAndCourse = pr.split(" ")
-            info = course_info(subAndCourse[0], subAndCourse[1])['preq']
-            if info:
-                if pr in allCourseData:
-                    prereqInfo = allCourseData[pr]
-                else:
-                    prereqInfo = preq.append(course_info_with_prereq_tree(subject=subAndCourse[0], course=subAndCourse[1])['preq'])
-                    # cache information so we don't need to query the same course
-                    allCourseData[pr] = prereqInfo
-            else:
-                preq.append(pr)
-
-        courseInfo['preq'] = preq
+    code = subject.upper() + ' ' + course
+    courseInfo['preq'] = nested_preq_helper(code)
     
     return courseInfo
 
+# Returns a dictionary with all the prerequisites required
+#   - Example path: MATH 256 has prerequisite 223 which has prerequisite 121
+#     which has prerequisite 120 which has no prerequisites
+#       - Represented by: {..., MATH 223: {MATH 121: {MATH 120: {}, ...}, ...}}
+def nested_preq_helper(str):
+    global expData
+    global allCourseData
+    
+    subAndCourse = str.split(' ')
+    code = subAndCourse[0].upper() + ' ' + subAndCourse[1]
+    
+    courseInfo = course_info(subAndCourse[0], subAndCourse[1])
+    preq = courseInfo['preq'] if courseInfo else {}
+    if preq:
+        if code in allCourseData:  # load from cache to save time
+            return allCourseData[code]
+        else:
+            nestedPreqs = {course: nested_preq_helper(course) for course in preq}
+            allCourseData[code] = nestedPreqs
+            return nestedPreqs
+    else:
+        return preq
+
+# See course_info_with_prereq tree documentation
+# Differnce is that "preq" field only contains immediate prerequisites
 def course_info(subject, course):
+    global expData
+
     caps_subject = subject.upper()
-    url = api + 'getCourseInfo/' + caps_subject + '%20' + course
+    for courseInfo in expData:
+        if courseInfo['code'] == caps_subject + ' ' + course:
+            return courseInfo
+    return {}
+
+# returns all course info on UBC Explorer
+def courses_info():
+    url = 'https://ubcexplorer.io/getAllCourses/'
     r = requests.get(url)
     try:
-        response = r.json()
-        return response
+        coursesInfo = r.json()
+        return coursesInfo
     except ValueError:
         return {}
-
-# TODO: decide whether to implement this
-"""
-# returns all course data for drop down menus
-def courses():
-    url = api + 'getAllCourses/'
-    r = requests.get(url)
-    return r.json()
-"""
