@@ -80,7 +80,13 @@
             <h2 class="card-title"> {{ course.course_name }} Prerequisite Tree</h2>
         </div>
         <div class="card-body">
-            {% include 'coursetracker/tree.html' %}
+            <ul>
+                <li>
+                    <a href="#"> {{ course.course_name }} </a>
+                    {% include 'coursetracker/tree.html' %}
+                </li>
+            </ul>
+            
         </div>
     </div>
 

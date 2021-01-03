@@ -11,38 +11,32 @@ def search(request):
         return redirect('coursetracker:course', pk=search)
 
 def course(request, pk):
-        c = None
-        try:
-            c = Course.objects.get(course_name__iexact=pk) # case insensitive search
-            #print("getting course")
-        except Course.DoesNotExist:
-            c = create_course(searchedString=pk)
-            #print("creating new course")
-            if not c:
-                return render(request, 'coursetracker/404.html')
-
         subAndCourse = pk.split(' ')
+
         if len(subAndCourse) == 2:
             subject = subAndCourse[0].upper()
             course = subAndCourse[1]
         else:
             subject = pk[0:-3].upper()
             course = pk[-3:]
+        
+        c = None
+        try:
+            c = Course.objects.get(course_name__iexact=pk) # case insensitive search
+            #print("getting course")
+        except Course.DoesNotExist:
+            c = create_course(subject, course)
+            #print("creating new course")
+            if not c:
+                return render(request, 'coursetracker/404.html')
+        
 
         exp = ex.course_info_with_prereq_tree(subject, course)
-        preq = "n/a" if 'preq' not in exp else exp['preq'] 
+        preq = [] if 'preq' not in exp else exp['preq'] 
 
         return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq})
 
-def create_course(searchedString):
-    subAndCourse = searchedString.split(' ')
-    if len(subAndCourse) == 2:
-        subject = subAndCourse[0].upper()
-        course = subAndCourse[1]
-    else:
-        subject = searchedString[0:-3].upper()
-        course = searchedString[-3:]
-
+def create_course(subject, course):
     if not gr.course_is_valid(subject, course):
         return None
 
@@ -64,7 +58,6 @@ def create_course(searchedString):
         return None
 
     exp = ex.course_info_with_prereq_tree(subject, course)
-    preq = "n/a" if 'preq' not in exp else exp['preq'] 
     creq = "n/a" if 'creq' not in exp else exp['creq']
     depn = "n/a" if 'depn' not in exp else exp['depn']
     name = "n/a" if 'name' not in exp else exp['name']
@@ -76,7 +69,7 @@ def create_course(searchedString):
 
     c = Course(course_name=subject + ' ' + course, average=avg, five_year_average=avg5, standard_deviation=stdev,
                 distribution=distribution, distribution_term=disTerm, professors_info=profs, 
-                prerequisites=preq, corequisites=creq, dependencies=depn, sub_name=name, number_of_credits=cred,
+                corequisites=creq, dependencies=depn, sub_name=name, number_of_credits=cred,
                 course_description=desc, prerequistes_description=prer, corequisites_description=crer, course_link=link)
     c.save()
     return c
