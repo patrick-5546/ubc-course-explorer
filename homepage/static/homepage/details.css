@@ -18,6 +18,12 @@
     min-width: unset;
 }
 
+.info-name {
+    flex: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
 .info-details {
     flex: 50%;
     min-width: 200px;

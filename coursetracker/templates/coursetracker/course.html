@@ -50,10 +50,22 @@
     <div class="course-col">
         <div class="card text-center mb-3" id="rmp">
             <div class="card-header">
-                <h3 class="card-title">Course Professor</h3>
+                <h3 class="card-title">Course Professors</h3>
             </div>
             <div class="card-body">
-        
+                {% for name, rating, numratings in professors_info %}
+                <h3 class="grade-info">
+                    <span class="info-name">{{ name }}</span>
+                </h3>
+                <h3 class="grade-info">
+                    <span class="info-key">Overall Rating:</span>
+                    <span class="info-details">{{ rating }}</span>
+                </h3>
+                <h3 class="grade-info">
+                    <span class="info-key">Number of Ratings:</span>
+                    <span class="info-details">{{ numratings }}</span>
+                </h3>
+                {% endfor %}
             </div>
         </div>
     </div>
