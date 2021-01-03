@@ -33,9 +33,14 @@ def course(request, pk):
 
         exp = ex.course_info_with_prereq_tree(subject, course)
         preq = {} if 'preq' not in exp else exp['preq']
-        preq = {subject + ' ' + course: preq}
+        preq = {subject + ' ' + course: preq}  # dictionary for tree chart
 
-        return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq})
+        profsList = gr.teaching_team(subject, course)
+        profs = rmp.get_profs_info(profsList)  # list for sortable list
+        if not profs:
+            return render(request, 'coursetracker/404.html')  # TODO: make separate html page for this
+
+        return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq, 'professors_info': profs})
 
 def create_course(subject, course):
     if not gr.course_is_valid(subject, course):
@@ -51,12 +56,6 @@ def create_course(subject, course):
     disInfo = gr.latest_distribution_info(subject, course)
     distribution = [grade if grade else 0 for grade in list(disInfo['grades'].values())]
     disTerm = disInfo['year'] + disInfo['session']
-    
-    profsList = gr.teaching_team(subject, course)
-    profs = rmp.get_profs_info(profsList)
-    if not profs:
-        print('Unable to read rmp data from file')  # TODO: make separate html page for this
-        return None
 
     exp = ex.course_info_with_prereq_tree(subject, course)
     creq = "n/a" if 'creq' not in exp else exp['creq']
@@ -69,8 +68,8 @@ def create_course(subject, course):
     link = "n/a" if 'link' not in exp else exp['link']
 
     c = Course(course_name=subject + ' ' + course, average=avg, five_year_average=avg5, standard_deviation=stdev,
-                distribution=distribution, distribution_term=disTerm, professors_info=profs, 
-                corequisites=creq, dependencies=depn, sub_name=name, number_of_credits=cred,
-                course_description=desc, prerequistes_description=prer, corequisites_description=crer, course_link=link)
+               distribution=distribution, distribution_term=disTerm, corequisites=creq, dependencies=depn, 
+               sub_name=name, number_of_credits=cred, course_description=desc, prerequistes_description=prer,
+               corequisites_description=crer, course_link=link)
     c.save()
     return c
