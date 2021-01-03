@@ -9,7 +9,7 @@
     min-width: 200px;
     text-align: right;
     margin-left: 40px;
-    margin-right: 20px;
+    margin-right: 5px;
     font-weight: bold;
 }
 
@@ -33,7 +33,7 @@
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    max-width: 27%;
+    max-width: 30%;
 }
 
 .course-col:nth-child(1), .course-col:nth-child(3) {

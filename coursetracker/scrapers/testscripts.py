@@ -6,7 +6,8 @@ import ubcexplorer as exp, ubcgrades as gr, ratemyprof as rmp
 # print(exp.course_info("math", "256")['preq'])
 
 # #To test distributions
-# disInfo = gr.latest_distribution_info("math", "101")
+disInfo = gr.latest_distribution_info("engl", "112")
+print(disInfo)
 # print([grade if grade else 0 for grade in list(disInfo['grades'].values())])
 
 #To test course retrieval
