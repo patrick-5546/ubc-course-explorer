@@ -13,8 +13,9 @@
         </div>
         <div class="card-body">
             <p>{{ course.course_description }}</p>
-            <p>{{ course.prerequistes_description }}</p>
-            <p>{{ course.corequisites_description }}</p>
+            <p><b>Prerequisites:</b> {{ course.prerequistes_description }}</p>
+            <p><b>Corequisites:</b> {{ course.corequisites_description }}</p>
+            <p><b>Number of Credits:</b> {{ course.number_of_credits }}</p>
         </div>
     </div>
 
