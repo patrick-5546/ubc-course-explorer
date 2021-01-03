@@ -13,8 +13,9 @@
         </div>
         <div class="card-body">
             <p>{{ course.course_description }}</p>
-            <p>{{ course.prerequistes_description }}</p>
-            <p>{{ course.corequisites_description }}</p>
+            <p><b>Prerequisites:</b> {{ course.prerequistes_description }}</p>
+            <p><b>Corequisites:</b> {{ course.corequisites_description }}</p>
+            <p><b>Number of Credits:</b> {{ course.number_of_credits }}</p>
         </div>
     </div>
 
@@ -29,7 +30,18 @@
                 <h3 class="card-title">Course Grade Profile</h3>
             </div>
             <div class="card-body">
-                
+                <h3 class="grade-info">
+                    <span class="info-key">Historic Average:</span>
+                    <span class="info-details">{{ course.average|floatformat:"2" }}</span>
+                </h3>
+                <h3 class="grade-info">
+                    <span class="info-key">Average (Past 5 Years):</span>
+                    <span class="info-details">{{ course.five_year_average|floatformat:"2" }}</span>
+                </h3>
+                <h3 class="grade-info">
+                    <span class="info-key">Standard Deviation:</span>
+                    <span class="info-details">{{ course.standard_deviation|floatformat:"2" }}</span>
+                </h3>
             </div>
         </div>
     </div>
@@ -41,7 +53,7 @@
                 <h3 class="card-title">Course Professor</h3>
             </div>
             <div class="card-body">
-                
+        
             </div>
         </div>
     </div>

@@ -2,31 +2,12 @@ import requests, json, math
 
 # Adapted from https://github.com/Rodantny/Rate-My-Professor-Scraper-and-Search
 
-# To use in other files, import ratemyprof and call ratemyprof.ubc.professor_info("FirstName LastName")
-# If professor not found, returns empty dictionary
-#
-# Return example for Robert Gateman:
-# {
-#   'tDept': 'Economics',
-#   'tSid': '1413',
-#   'institution_name': 'University of British Columbia',
-#   'tFname': 'Robert',
-#   'tMiddlename': '',
-#   'tLname': 'Gateman',
-#   'tid': 13305,
-#   'tNumRatings': 1061,
-#   'rating_class': 'good',
-#   'contentType': 'TEACHER',
-#   'categoryType': 'PROFESSOR',
-#   'overall_rating': '3.7'
-# }
 class RateMyProfScraper:
 
     def __init__(self, schoolid):
         self.UniversityId = schoolid
         self.professorlist = self.create_professor_list()
         self.indexnumber = False
-        self.file_to_save_rmp_data = 'coursetracker/scrapers/rmp_ubc_profs_list.txt'
 
     def create_professor_list(self):  # creates List object that include basic information on all Professors from the IDed University
         tempprofessorlist = []
@@ -34,9 +15,9 @@ class RateMyProfScraper:
         num_of_pages = math.ceil(num_of_prof / 20)
         i = 1
         while (i <= num_of_pages):# the loop insert all professor into list
-            page = requests.get("http://www.ratemyprofessors.com/filter/professor/?&page=" + str(
-                i) + "&filter=teacherlastname_sort_s+asc&query=*%3A*&queryoption=TEACHER&queryBy=schoolId&sid=" + str(
-                self.UniversityId))
+            page = requests.get("http://www.ratemyprofessors.com/filter/professor/?&page=" + str(i) +
+                                "&filter=teacherlastname_sort_s+asc&query=*%3A*&queryoption=TEACHER&queryBy=schoolId&sid=" +
+                                str(self.UniversityId))
             temp_jsonpage = json.loads(page.content)
             temp_list = temp_jsonpage['professors']
             tempprofessorlist.extend(temp_list)
@@ -45,30 +26,47 @@ class RateMyProfScraper:
 
     def GetNumOfProfessors(self, id):  # function returns the number of professors in the university of the given ID.
         page = requests.get(
-            "http://www.ratemyprofessors.com/filter/professor/?&page=1&filter=teacherlastname_sort_s+asc&query=*%3A*&queryoption=TEACHER&queryBy=schoolId&sid=" + str(
-                id))  # get request for page
+            "http://www.ratemyprofessors.com/filter/professor/?&page=1&filter=teacherlastname_sort_s+asc&query=*%3A*&queryoption=TEACHER&queryBy=schoolId&sid=" +
+            str(id))  # get request for page
         temp_jsonpage = json.loads(page.content)
-        num_of_prof = temp_jsonpage[
-                            'remaining'] + 20  # get the number of professors
+        num_of_prof = temp_jsonpage['remaining'] + 20  # get the number of professors
         return num_of_prof
     
     def update_rmp_data(self):
-        with open(self.file_to_save_rmp_data, 'w') as outfile:
+        with open('coursetracker/scrapers/local_data/rmp_ubc_profs_list.txt', 'w') as outfile:
             json.dump(self.professorlist, outfile)
+
+'''
+Available data for each prof (eg. Robert Gateman):
+{
+  'tDept': 'Economics',
+  'tSid': '1413',
+  'institution_name': 'University of British Columbia',
+  'tFname': 'Robert',
+  'tMiddlename': '',
+  'tLname': 'Gateman',
+  'tid': 13305,
+  'tNumRatings': 1061,
+  'rating_class': 'good',
+  'contentType': 'TEACHER',
+  'categoryType': 'PROFESSOR',
+  'overall_rating': '3.7'
+}
+'''
 
 # Returns the rating and number of ratings for each professor in a list
 # profsList - list of professor names to get info for
 def get_profs_info(profsList):
     ubcProfs = []
     try:
-        with open('coursetracker/scrapers/rmp_ubc_profs_list.txt') as json_file:
+        with open('coursetracker/scrapers/local_data/rmp_ubc_profs_list.txt') as json_file:
             ubcProfs = json.load(json_file)
     except OSError:
         return None
         
-    profs_info = {}
+    profs_info = []
     for prof in profsList:
         for profInfo in ubcProfs:
             if prof == profInfo['tFname'] + ' ' + profInfo['tLname']:
-                profs_info[prof] = [profInfo['overall_rating'], profInfo['tNumRatings']]
+                profs_info.append([prof, profInfo['overall_rating'], profInfo['tNumRatings']])
     return profs_info
