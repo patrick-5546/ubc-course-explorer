@@ -53,15 +53,16 @@
             </div>
             <div class="card-body">
                 {% for key, val in course.instructor.items %}
-                <div class="grade-info">
+                <h3 class="grade-info">
                     <span class="info-key info-key-sm">{{ key.capitalize }}: </span>
                     <span class="info-details">{{ val }}</span>
-                </div>
+                </h3>
                 {% endfor %}
             </div>
         </div>
     </div>
 
+    <!-- Grade Distribution Chart-->
     <div class="course-col">
         <div class="card text-center mb-3">
             <div class= "card-header">
@@ -75,7 +76,17 @@
     </div>
 
 </div>
-</div>
+
+<div class="course-row"></div>
+
+    <div class="card text-center mb-5 text-white" id="course-details">
+        <div class= "card-header">
+            <h2 class="card-title">Prerequisite Tree</h2>
+        </div>
+        <div class="card-body">
+            
+        </div>
+    </div>
 
 <br>
 
