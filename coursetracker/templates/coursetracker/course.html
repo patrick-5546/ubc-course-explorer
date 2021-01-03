@@ -15,7 +15,6 @@
             <p>{{ course.course_description }}</p>
             <p><b>Prerequisites:</b> {{ course.prerequistes_description }}</p>
             <p><b>Corequisites:</b> {{ course.corequisites_description }}</p>
-            <p><b>Number of Credits:</b> {{ course.number_of_credits }}</p>
         </div>
     </div>
 
@@ -23,7 +22,6 @@
 
 <!--prereq-->
 <div class="course-row">
-
     <div class="course-col">
         <div class="card text-center mb-3" id="prereq">
             <div class= "card-header">
@@ -31,16 +29,22 @@
             </div>
             <div class="card-body">
                 <h3 class="grade-info">
-                    <span class="info-key">Historic Average:</span>
-                    <span class="info-details">{{ course.average|floatformat:"2" }}</span>
-                </h3>
-                <h3 class="grade-info">
                     <span class="info-key">Average (Past 5 Years):</span>
                     <span class="info-details">{{ course.five_year_average|floatformat:"2" }}</span>
                 </h3>
                 <h3 class="grade-info">
                     <span class="info-key">Standard Deviation:</span>
                     <span class="info-details">{{ course.standard_deviation|floatformat:"2" }}</span>
+                </h3>
+
+                <h3 class="grade-info">
+                    <span class="info-key">Standard Deviation:</span>
+                    <span class="info-details">{{ course.highest_average|floatformat:"2" }}</span>
+                </h3>
+
+                <h3 class="grade-info">
+                    <span class="info-key">Lowest Average:</span>
+                    <span class="info-details">{{ course.lowest_average|floatformat:"2" }}</span>
                 </h3>
             </div>
         </div>
@@ -53,7 +57,7 @@
                 <h3 class="card-title">Course Professor</h3>
             </div>
             <div class="card-body">
-        
+                <span class="info-key">Insert Professor Var</span>
             </div>
         </div>
     </div>
