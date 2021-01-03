@@ -1,25 +1,20 @@
 <div class="tree">
   <ul>
     <li>
-      <a href="#">1</a>
+      <a href="#"> {{ course.course_name }} </a>
       <ul>
+        {% with dict=preq.items %} 
+        {% for key, value in dict %}
         <li>
-          <a href="#">2</a>
-        </li>
-        <li>
-          <a href="#">3</a>
-        </li>
-        <li>
-          <a href="#">2</a>
+          <a href="#"> {{ key }} </a>
+          {% if value|length != 0 %}
           <ul>
-            <li>
-              <a href="#">2.1</a>
-            </li>
-            <li>
-              <a href="#">2.2</a>
-            </li>
+            {% include 'coursetracker/tree.html' with dict=value.items %}
           </ul>
+          {% endif %}
         </li>
+        {% endfor %} 
+        {% endwith %}
       </ul>
     </li>
   </ul>

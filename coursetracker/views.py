@@ -21,7 +21,18 @@ def course(request, pk):
             if not c:
                 return render(request, 'coursetracker/404.html')
 
-        return render(request, 'coursetracker/course.html', {'course': c})
+        subAndCourse = pk.split(' ')
+        if len(subAndCourse) == 2:
+            subject = subAndCourse[0].upper()
+            course = subAndCourse[1]
+        else:
+            subject = pk[0:-3].upper()
+            course = pk[-3:]
+
+        exp = ex.course_info_with_prereq_tree(subject, course)
+        preq = "n/a" if 'preq' not in exp else exp['preq'] 
+
+        return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq})
 
 def create_course(searchedString):
     subAndCourse = searchedString.split(' ')
