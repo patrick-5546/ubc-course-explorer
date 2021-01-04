@@ -53,7 +53,7 @@
                 <h3 class="card-title">Course Professors</h3>
             </div>
             <div class="card-body-scroll">
-                {% for name, rating, numratings in professors_info %}
+                {% for name, rating, numratings, sectionstaught in professors_info %}
                 <div class="course-row">
                     <h3 class="grade-info">
                         <span class="info-name">{{ name }}</span>
@@ -65,6 +65,16 @@
                     <h3 class="grade-info">
                         <span class="info-key">Number of Ratings:</span>
                         <span class="info-details">{{ numratings }}</span>
+                    </h3>
+                    <h3 class="grade-info">
+                        <span class="info-key">Sections Taught from 2016-2018:</span>
+                        {% if sectionstaught|length %}
+                            {% for section in sectionstaught %}
+                                <p> {{ section }}, </p>
+                            {% endfor %}
+                        {% else %}
+                            <p>-</p>
+                        {% endif %}
                     </h3>
                 </div>
                 {% endfor %}

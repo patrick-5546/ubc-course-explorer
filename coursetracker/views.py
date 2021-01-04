@@ -36,7 +36,14 @@ def course(request, pk):
         preq = {subject + ' ' + course: preq}  # dictionary for tree chart
 
         profsList = gr.teaching_team(subject, course)
-        profs = rmp.get_profs_info(profsList)  # list for sortable list
+        profsRMPInfo = rmp.get_profs_info(profsList)  # list for sortable list
+        profsSecInfo = gr.recent_sections_taught(profsList, subject, course)
+        profs = []
+        for prof in profsList:
+            if profsRMPInfo[prof] or profsSecInfo[prof]:
+                profs.append([prof, profsRMPInfo[prof][0], profsRMPInfo[prof][1], profsSecInfo[prof]])
+            elif profsSecInfo[prof]:
+                profs.append([prof, '-', '-', profsSecInfo[prof]])
         if not profs:
             return render(request, 'coursetracker/404.html')  # TODO: make separate html page for this
 
