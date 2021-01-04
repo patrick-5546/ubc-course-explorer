@@ -4,43 +4,48 @@ from .models import Course
 from .scrapers import ubcexplorer as ex, ubcgrades as gr, ratemyprof as rmp
 
 # search works as a "buffer" for when we are obtaining data
+
+
 def search(request):
     if request.method == 'GET':
         search = request.GET.get('find')
         #print('search', search)
         return redirect('coursetracker:course', pk=search)
 
+
 def course(request, pk):
-        subAndCourse = pk.split(' ')
+    subAndCourse = pk.split(' ')
 
-        if len(subAndCourse) == 2:
-            subject = subAndCourse[0].upper()
-            course = subAndCourse[1]
-        else:
-            subject = pk[0:-3].upper()
-            course = pk[-3:]
-        
-        c = None
-        try:
-            c = Course.objects.get(course_name__iexact=pk) # case insensitive search
-            #print("getting course")
-        except Course.DoesNotExist:
-            c = create_course(subject, course)
-            #print("creating new course")
-            if not c:
-                return render(request, 'coursetracker/404.html')
-        
+    if len(subAndCourse) == 2:
+        subject = subAndCourse[0].upper()
+        course = subAndCourse[1]
+    else:
+        subject = pk[0:-3].upper()
+        course = pk[-3:]
 
-        exp = ex.course_info_with_prereq_tree(subject, course)
-        preq = {} if 'preq' not in exp else exp['preq']
-        preq = {subject + ' ' + course: preq}  # dictionary for tree chart
+    c = None
+    try:
+        # case insensitive search
+        c = Course.objects.get(course_name__iexact=pk)
+        #print("getting course")
+    except Course.DoesNotExist:
+        c = create_course(subject, course)
+        #print("creating new course")
+        if not c:
+            return render(request, 'coursetracker/404.html')
 
-        profsList = gr.teaching_team(subject, course)
-        profs = rmp.get_profs_info(profsList)  # list for sortable list
-        if not profs:
-            return render(request, 'coursetracker/404.html')  # TODO: make separate html page for this
+    exp = ex.course_info_with_prereq_tree(subject, course)
+    preq = {} if 'preq' not in exp else exp['preq']
+    preq = {subject + ' ' + course: preq}  # dictionary for tree chart
 
-        return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq, 'professors_info': profs})
+    profsList = gr.teaching_team(subject, course)
+    profs = rmp.get_profs_info(profsList)  # list for sortable list
+    if not profs:
+        # TODO: make separate html page for this
+        return render(request, 'coursetracker/404.html')
+
+    return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq, 'professors_info': profs})
+
 
 def create_course(subject, course):
     if not gr.course_is_valid(subject, course):
@@ -48,9 +53,13 @@ def create_course(subject, course):
 
     # TODO: decide whether to get term grade statistics (for high, low, pass, fail, etc.)
     stats = gr.course_statistics(subject, course)
-    avg = stats['average']
     avg5 = stats['average_past_5_yrs']
     stdev = stats['stdev']
+
+    # Jan 3, 2021
+    # Added minimum and maximum grade averages
+    minavg = stats['min_course_avg']
+    maxavg = stats['max_course_avg']
 
     # TODO: consider differentiating between no data and 0
     disInfo = gr.latest_distribution_info(subject, course)
@@ -67,8 +76,8 @@ def create_course(subject, course):
     crer = "n/a" if 'crer' not in exp else exp['crer']
     link = "n/a" if 'link' not in exp else exp['link']
 
-    c = Course(course_name=subject + ' ' + course, average=avg, five_year_average=avg5, standard_deviation=stdev,
-               distribution=distribution, distribution_term=disTerm, corequisites=creq, dependencies=depn, 
+    c = Course(course_name=subject + ' ' + course, five_year_average=avg5, lowest_average=minavg, highest_average=maxavg,
+               standard_deviation=stdev, distribution=distribution, distribution_term=disTerm, corequisites=creq, dependencies=depn,
                sub_name=name, number_of_credits=cred, course_description=desc, prerequistes_description=prer,
                corequisites_description=crer, course_link=link)
     c.save()
