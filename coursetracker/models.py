@@ -1,5 +1,4 @@
 from django.db import models
-import json 
 
 # consider changing engines to be able to use JSONFields
 class Course(models.Model):
@@ -20,5 +19,3 @@ class Course(models.Model):
 
     def __str__(self):
         return self.course_name
-
-
