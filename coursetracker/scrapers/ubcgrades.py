@@ -92,6 +92,26 @@ def all_teaching_team(subject):
     url = apiV2 + 'teaching-team/' + campus + subject.upper()
     return check_json(requests.get(url).json())
 
+# returns a dictionary where the keys are the professor name and the values are a list of sections 
+# taught from 2016-2018
+def recent_sections_taught(profsList, subject, course):
+    caps_subject = subject.upper() + '/'
+    yearsessions = ['2016S/', '2016W', '2017S/', '2017W/', '2018S/' ,'2018W/']
+    profsDict = {prof: [] for prof in profsList}
+    for yearsession in yearsessions:
+        url = apiV1 + 'grades/' + campus + yearsession + caps_subject + course
+        allDistributions = check_json(requests.get(url).json())
+        for prof in profsList:
+            firstLast = prof.split(' ')
+            if len(firstLast) != 2:
+                continue
+            name = firstLast[1] + ', ' + firstLast[0]
+            for distribution in allDistributions:
+                if name in distribution['educators'] and distribution['section'] not in profsDict[prof]:
+                    profsDict[prof].append(distribution['section'])
+    return profsDict
+
+
 def check_json(j):
     return {} if 'error' in json.dumps(j) else j
 
