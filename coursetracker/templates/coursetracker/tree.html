@@ -2,7 +2,7 @@
   <ul>
     {% for key, value in preq.items %}
       <li>
-        <a href="#"> {{ key }} </a>
+        <a href="{{ key }}"> {{ key }} </a>
         {% if value|length %}
           <ul>
             {% include 'coursetracker/tree.html' with preq=value %}
