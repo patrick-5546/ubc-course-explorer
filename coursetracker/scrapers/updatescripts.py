@@ -35,3 +35,4 @@ import ubcexplorer as exp, ubcgrades as gr, ratemyprof as rmp, json
     # if allSubjectCourses:
     #     with open('coursetracker/scrapers/local_data/gr_subject-course-list/' + subject + '.txt', 'w') as outfile:
     #         json.dump(allSubjectCourses, outfile)
+# gr.refresh_all_section_distributions()
