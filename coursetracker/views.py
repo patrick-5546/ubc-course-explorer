@@ -63,8 +63,7 @@ def create_course(subject, course):
 
     # TODO: consider differentiating between no data and 0
     disInfo = gr.latest_distribution_info(subject, course)
-    distribution = [grade if grade else 0 for grade in list(
-        disInfo['grades'].values())]
+    distribution = [grade if grade else 0 for grade in list(disInfo['grades'].values())]
     disTerm = disInfo['year'] + disInfo['session']
 
     exp = ex.course_info_with_prereq_tree(subject, course)
@@ -77,8 +76,8 @@ def create_course(subject, course):
     crer = "n/a" if 'crer' not in exp else exp['crer']
     link = "n/a" if 'link' not in exp else exp['link']
 
-    c = Course(course_name=subject + ' ' + course, five_year_average=avg5, lowest_average=minavg, highest_average=maxavg, standard_deviation=stdev,
-               distribution=distribution, distribution_term=disTerm, corequisites=creq, dependencies=depn,
+    c = Course(course_name=subject + ' ' + course, five_year_average=avg5, lowest_average=minavg, highest_average=maxavg,
+               standard_deviation=stdev, distribution=distribution, distribution_term=disTerm, corequisites=creq, dependencies=depn,
                sub_name=name, number_of_credits=cred, course_description=desc, prerequistes_description=prer,
                corequisites_description=crer, course_link=link)
     c.save()
