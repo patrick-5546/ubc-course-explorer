@@ -4,11 +4,14 @@ from .models import Course
 from .scrapers import ubcexplorer as ex, ubcgrades as gr, ratemyprof as rmp
 
 # search works as a "buffer" for when we are obtaining data
+
+
 def search(request):
     if request.method == 'GET':
         search = request.GET.get('find')
         #print('search', search)
         return redirect('coursetracker:course', pk=search)
+
 
 def course(request, pk):
         subAndCourse = pk.split(' ')
@@ -29,14 +32,20 @@ def course(request, pk):
             #print("creating new course")
             if not c:
                 return render(request, 'coursetracker/404.html')
-        
 
         exp = ex.course_info_with_prereq_tree(subject, course)
         preq = {} if 'preq' not in exp else exp['preq']
         preq = {subject + ' ' + course: preq}  # dictionary for tree chart
 
         profsList = gr.teaching_team(subject, course)
-        profs = rmp.get_profs_info(profsList)  # list for sortable list
+        profsRMPInfo = rmp.get_profs_info(profsList)  # list for sortable list
+        profsSecInfo = gr.recent_sections_taught(profsList, subject, course)
+        profs = []
+        for prof in profsList:
+            if profsRMPInfo[prof]:
+                profs.append([prof, profsRMPInfo[prof][0], profsRMPInfo[prof][1], profsSecInfo[prof]])
+            elif profsSecInfo[prof]:
+                profs.append([prof, '-', '-', profsSecInfo[prof]])
         if not profs:
             return render(request, 'coursetracker/404.html')  # TODO: make separate html page for this
 
@@ -48,9 +57,13 @@ def create_course(subject, course):
 
     # TODO: decide whether to get term grade statistics (for high, low, pass, fail, etc.)
     stats = gr.course_statistics(subject, course)
-    avg = stats['average']
     avg5 = stats['average_past_5_yrs']
     stdev = stats['stdev']
+
+    # Jan 3, 2021
+    # Added minimum and maximum grade averages
+    minavg = stats['min_course_avg']
+    maxavg = stats['max_course_avg']
 
     # TODO: consider differentiating between no data and 0
     disInfo = gr.latest_distribution_info(subject, course)
@@ -67,8 +80,8 @@ def create_course(subject, course):
     crer = "n/a" if 'crer' not in exp else exp['crer']
     link = "n/a" if 'link' not in exp else exp['link']
 
-    c = Course(course_name=subject + ' ' + course, average=avg, five_year_average=avg5, standard_deviation=stdev,
-               distribution=distribution, distribution_term=disTerm, corequisites=creq, dependencies=depn, 
+    c = Course(course_name=subject + ' ' + course, five_year_average=avg5, lowest_average=minavg, highest_average=maxavg,
+               standard_deviation=stdev, distribution=distribution, distribution_term=disTerm, corequisites=creq, dependencies=depn,
                sub_name=name, number_of_credits=cred, course_description=desc, prerequistes_description=prer,
                corequisites_description=crer, course_link=link)
     c.save()

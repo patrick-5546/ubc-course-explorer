@@ -18,6 +18,12 @@
     min-width: unset;
 }
 
+.info-name {
+    flex: 100%;
+    text-align: center;
+    font-weight: bold;
+}
+
 .info-details {
     flex: 50%;
     min-width: 200px;
@@ -49,4 +55,9 @@
 h2.card-title {
     font-size: 2.5em;
     padding-bottom: 0;
+}
+
+.card-body-scroll {
+    height: 400px;
+    overflow-y: scroll;
 }
