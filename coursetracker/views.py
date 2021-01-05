@@ -38,18 +38,21 @@ def course(request, pk):
         preq = {subject + ' ' + course: preq}  # dictionary for tree chart
 
         profsList = gr.teaching_team(subject, course)
-        profsRMPInfo = rmp.get_profs_info(profsList)  # list for sortable list
-        profsSecInfo = gr.recent_sections_taught(profsList, subject, course)
-        profs = []
-        for prof in profsList:
-            if profsRMPInfo[prof]:
-                profs.append([prof, profsRMPInfo[prof][0], profsRMPInfo[prof][1], profsSecInfo[prof]])
-            elif profsSecInfo[prof]:
-                profs.append([prof, '-', '-', profsSecInfo[prof]])
+
+        profs = rmp.get_profs_info(profsList)  # list for sortable list
         if not profs:
             return render(request, 'coursetracker/404.html')  # TODO: make separate html page for this
 
-        return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq, 'professors_info': profs})
+        profsSecInfo = gr.recent_sections_taught(profsList, subject, course)
+        sectionProfs = {}
+        for prof in profsSecInfo:
+            for sec in profsSecInfo[prof]:
+                if sec not in sectionProfs:
+                    sectionProfs[sec] = []
+                sectionProfs[sec].append(prof)
+        sectionProfsSorted = {sec: sectionProfs[sec] for sec in sorted(sectionProfs)}
+
+        return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq, 'professors_info': profs, 'sections_taught': sectionProfsSorted})
 
 def create_course(subject, course):
     if not gr.course_is_valid(subject, course):
