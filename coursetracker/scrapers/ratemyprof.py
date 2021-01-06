@@ -64,9 +64,9 @@ def get_profs_info(profsList):
     except OSError:
         return None
         
-    profs_info = {prof: [] for prof in profsList}
+    profs_info = []
     for prof in profsList:
         for profInfo in ubcProfs:
-            if prof == profInfo['tFname'] + ' ' + profInfo['tLname']:
-                profs_info[prof] = [profInfo['overall_rating'], profInfo['tNumRatings']]
+            if prof == profInfo['tFname'] + ' ' + profInfo['tLname'] and profInfo['tNumRatings'] != 0:
+                profs_info.append([prof, profInfo['overall_rating'], profInfo['tNumRatings']])
     return profs_info
