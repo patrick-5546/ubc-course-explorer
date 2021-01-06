@@ -86,6 +86,7 @@
 <div class="course-row">
     
     <!--ratemyprof-->
+    
     <div class="course-col">
         <div class="card text-center mb-3" id="rmp">
             <div class="card-header">
@@ -94,37 +95,37 @@
             <div class="card-body-scroll">
                 <div class="course-row">
                     <div class="column">
-                    <h3>
-                        <div class="info-details-rmp">Name</div>
-                        <div class="info-details-rmp">_______________________</div>
-                        {% for name, rating, numratings in professors_info %}
-                        <div class="info-details-rmp">{{ name }}</div>
-                        {% endfor %}
-                    </h3>
-                </div>
-                <div class="column">
-                    <h3>
-                        <div class="info-details-rmp">Overall Rating</div>
-                        <div class="info-details-rmp">__________________</div>
-                        {% for name, rating, numratings in professors_info %}
-                        <div class="info-details-rmp">{{ rating }}</div>
-                        {% endfor %}
-                    </h3>
-                </div>
-                <div class="column">
-                    <h3>
-                        <div class="info-details-rmp">Number of Ratings</div>
-                        <div class="info-details-rmp">_______________________</div>
-                        {% for name, rating, numratings in professors_info %}
-                        <div class="info-details-rmp">{{ numratings }}</div>
-                        {% endfor %}
-                    </h3>
+                        <h3>
+                            <div class="info-details-rmp">Name</div>
+                            <div class="info-details-rmp">_______________________</div>
+                            {% for name, rating, numratings in professors_info %}
+                            <div class="info-details-rmp">{{ name }}</div>
+                            {% endfor %}
+                        </h3>
+                    </div>
+                    <div class="column">
+                        <h3>
+                            <div class="info-details-rmp">Overall Rating</div>
+                            <div class="info-details-rmp">__________________</div>
+                            {% for name, rating, numratings in professors_info %}
+                            <div class="info-details-rmp">{{ rating }}</div>
+                            {% endfor %}
+                        </h3>
+                    </div>
+                    <div class="column">
+                        <h3>
+                            <div class="info-details-rmp">Number of Ratings</div>
+                            <div class="info-details-rmp">_______________________</div>
+                            {% for name, rating, numratings in professors_info %}
+                            <div class="info-details-rmp">{{ numratings }}</div>
+                            {% endfor %}
+                        </h3>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-    
+
     <div class="course-col">
         <div class="card text-center mb-3">
             <div class= "card-header">
@@ -133,18 +134,6 @@
             <div class="card-body">
                 <!--grade distribution-->
                 {% include 'coursetracker/chart.html' with chartData=course.distribution %}
-            </div>
-        </div>
-    </div>
-    
-    <!--tree-->
-    <div class="course-col">
-        <div class="card text-center mb-3" id="rmp">
-            <div class= "card-header">
-                <h3 class="card-title">Prerequisite Path</h3>
-            </div>
-            <div class="card-body">
-                <span class="info-details-rmp">{{ preq }}</span>
             </div>
         </div>
     </div>
