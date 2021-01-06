@@ -61,7 +61,7 @@ h2.card-title {
 }
 
 .card-body-scroll {
-    height: 400px;
+    height: 300px;
     overflow-y: scroll;
 }
 

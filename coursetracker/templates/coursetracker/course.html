@@ -63,7 +63,7 @@
             <div class="card-header">
                 <h3 class="card-title">Section Professors from 2016-2018</h3>
             </div>
-            <div class="card-body-scroll">
+            <div class="card-body-scroll prof-card">
                 {% for section, profsList in sections_taught.items %}
                 <div class="course-row">
                     <h3 class="grade-info">
@@ -95,7 +95,7 @@
                 <h3 class="card-title">Course Professors</h3>
             </div>
             <div class="card-body-scroll prof-card">
-                {% for name, rating, numratings, sectionstaught in professors_info %}
+                {% for name, rating, numratings in professors_info %}
                 <div class="course-row">
                     <h3 class="grade-info">
                         <span class="info-name">{{ name }}</span>
