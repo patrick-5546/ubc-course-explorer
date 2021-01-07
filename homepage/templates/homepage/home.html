@@ -5,30 +5,37 @@
 {% load static %}
 
 <html xmlns="http://www.w3.org/1999/xhtml">
+
 <head>
     <title>UBC Path Explorer</title>
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/search.css' %}" />
 
-   
+
 </head>
+
 <body>
     <div class="welcome">
         <h1>Explore your passion
-        
+
         </h1>
 
     </div>
 
     <form class="form-inline wrapper" method="get" action="{% url 'coursetracker:search' %}">
-        <input type="text" class="input" placeholder="Explore courses" aria-label="Search" name="find" required/>
+        <input type="text" class="input" placeholder="Explore courses" aria-label="Search" name="find" required />
         <button class="searchbtn" type="submit"><i class="fas fa-search"></i></button>
     </form>
-    
+
     <div class="footer">
-        <p class="footertext"></p>
+        <p class="footertext">
+            <a href="credits/">
+                About us and Credits
+            </a>
+        </p>
     </div>
 
 </body>
+
 </html>
 
 {% endblock %}
