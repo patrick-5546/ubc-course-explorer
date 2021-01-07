@@ -21,10 +21,10 @@
 .column {
     display: flex;
     flex-direction: column;
-    text-align: center;
-    justify-content: center;
+    text-align: left;
+    justify-content: left;
     max-width: 100px;
-    margin-left: 45px;
+    margin-right: 45px;
 }
 
 .info-details-rmp {
@@ -32,7 +32,7 @@
     min-width: 170px;
     text-align: center;
     justify-content: center;
-    margin-left: 10px;
+    margin-left: 2.5px;
     margin-bottom: 7.5px;
     margin-top: 7.5px;
     font-weight: bold;
@@ -66,7 +66,7 @@
     text-align: center;
     justify-content: center;
     font-weight: bold;
-    margin-left: 50px;
+    margin-left: 20px;
     margin-top: 26px;
     margin-right: 40px;
 }
@@ -105,8 +105,12 @@ h2.card-title {
 }
 
 .card-body-scroll {
-    height: 400px;
+    height: 375px;
     overflow-y: scroll;
+}
+
+.card-body {
+    height: 375px;
 }
 
 /* Padding adjustments for card content */
