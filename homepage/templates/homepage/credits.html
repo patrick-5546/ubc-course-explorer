@@ -1,24 +1,100 @@
 <!--Credits Page linked from homepage-->
 
-<div>
+<head>
+    <title>
+        About/Credits page
+    </title>
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@1&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+    body {
+        background: #272727;
+        margin: 0;
+        display: grid;
+        place-content: center;
+        height: 100vh;
+        font-family: 'Quicksand', 'monospace';
+        color: white;
+    }
+
+    .About-card {
+        position: relative;
+        width: 60%;
+        margin: 0 auto;
+        background: #151515;
+        padding: 2em;
+    }
+
+    .About-card p {
+        margin-bottom: 4vh;
+    }
+
+    .About-card h1 {
+        margin: 0px;
+        margin-bottom: 20px;
+    }
+
+
+    .About-card a {
+        text-decoration: none;
+        border: 3px solid gray;
+        margin-right: 10px;
+        padding: 10px;
+        color: gray;
+        transition-property: color;
+        transition-duration: 250ms;
+        word-wrap: break-word;
+    }
+
+    @media (max-width: 768px) {
+        .About-card a {
+            text-decoration: none;
+            border: 2px solid gray;
+            margin-right: 0px;
+            padding: 5px;
+            color: gray;
+            transition-property: color;
+            transition-duration: 250ms;
+        }
+    }
+
+    .About-card a:hover {
+        color: red;
+    }
+
+    .About-card a:active {
+        color: orange;
+    }
+</style>
+
+<!--Project Information Section-->
+<div class="About-card">
+    <h1>
+        Project Information
+    </h1>
     <p>
-        This project won first place at OakHacks 2020 and has since been maintained and streamlined by the original
-        creators.
-        Below you will find the public repository for this project as well as the links to the APIs that were used in
-        this project.
+        This project won first place at OakHacks 2020 and has since been maintained and streamlined.
+        Below you will find the public Github repository for this project as well as
+        links to the APIs that were used this project.
     </p>
     <a href="https://github.com/patrick-5546/ubc-course-explorer/wiki" target="_blank">Github</a>
 </div>
 
 <!--Creditation links-->
-<div>
-    <ul>
-        <li>
-            <a href="https://ubcgrades.com/" target="_blank">UBC Grades API</a>
-        </li>
-        <li>
-            <a href="https://www.ratemyprofessors.com/campusRatings.jsp?sid=1413" target="_blank">RateMyProfessors
-                API</a>
-        </li>
-    </ul>
+
+<div class="About-card">
+    <h1>
+        Resources used
+    </h1>
+    <p>
+        <a href="https://ubcgrades.com/" target="_blank">UBC Grades API</a>
+
+        <a href="https://www.ratemyprofessors.com/campusRatings.jsp?sid=1413" target="_blank">RateMyProfessors
+            API</a>
+    </p>
 </div>
+
+</html>
