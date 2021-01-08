@@ -46,21 +46,6 @@
     font-weight: bold;
 }
 
-/*Media query for phone size*/
-@media(min-width: 768px) {
-    .course-row {
-    display: flex;
-    flex-direction: row;
-    }
-
-    .course-col {
-        display: flex;
-        flex-direction: column;
-        flex-grow: 1;
-        max-width: 30%;
-    }
-}
-
 .info-name {
     flex: 50%;
     text-align: center;
@@ -102,6 +87,7 @@
     line-height: 1.5em;
     width: 100%;
 }
+
 h2.card-title {
     font-size: 2.5em;
     padding-bottom: 0;
@@ -113,12 +99,12 @@ h2.card-title {
 }
 
 .card-body {
-    height: 375px;
+    height: 375px;   
 }
 
 /* Padding adjustments for card content */
 .stat-card {
-    padding-top: 20px;
+    padding-top: 50px;
 }
 
 .prof-card {

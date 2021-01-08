@@ -56,9 +56,21 @@
             </div>
         </div>
     </div>
+    <!--grade distribution-->
 
+    <div class="course-col">
+        <div class="card text-center mb-3">
+            <div class="card-header">
+                <h3 class="card-title">Course Grade Distribution for {{ course.distribution_term }}</h3>
+            </div>
+            <div class="card-body">
+                {% include 'coursetracker/chart.html' with chartData=course.distribution %}
+            </div>
+        </div>
+    </div>
+</div>
     <!--sections taught-->
-
+<div class="course-row">
     <div class="course-col">
         <div class="card text-center mb-3" id="rmp">
             <div class="card-header">
@@ -81,22 +93,6 @@
                     </h3>
                 </div>
                 {% endfor %}
-            </div>
-        </div>
-    </div>
-
-</div>
-<div class="course-row">
-    
-    <!--grade distribution-->
-
-    <div class="course-col">
-        <div class="card text-center mb-3">
-            <div class="card-header">
-                <h3 class="card-title">Course Grade Distribution for {{ course.distribution_term }}</h3>
-            </div>
-            <div class="card-body">
-                {% include 'coursetracker/chart.html' with chartData=course.distribution %}
             </div>
         </div>
     </div>
