@@ -5,29 +5,31 @@
 {% load static %}
 
 <!--Course details-->
+
 <div class="course-row"></div>
 
-    <div class="card text-center mb-5 text-white" id="course-details">
-        <div class= "card-header">
-            <h2 class="card-title">{{ course.course_name }}</h2>
-        </div>
-        <div class="card-body">
-            <p>{{ course.course_description }}</p>
-            <p><b>Prerequisites:</b> {{ course.prerequistes_description }}</p>
-            <p><b>Corequisites:</b> {{ course.corequisites_description }}</p>
-        </div>
+<div class="card text-center mb-5 text-white" id="course-details">
+    <div class="card-header">
+        <h2 class="card-title">{{ course.course_name }}</h2>
     </div>
+    <div class="card-body">
+        <p>{{ course.course_description }}</p>
+        <p><b>Prerequisites:</b> {{ course.prerequistes_description }}</p>
+        <p><b>Corequisites:</b> {{ course.corequisites_description }}</p>
+    </div>
+</div>
 
 </div>
 
 <!--prereq-->
+
 <div class="course-row">
     <div class="course-col">
         <div class="card text-center mb-3" id="prereq">
-            <div class= "card-header">
+            <div class="card-header">
                 <h3 class="card-title">Course Profile</h3>
             </div>
-            <div class="card-body-scroll">
+            <div class="card-body-scroll stat-card">
                 <h3 class="grade-info">
                     <span class="info-key">Average (Past 5 Years):</span>
                     <span class="info-details">{{ course.five_year_average|floatformat:"2" }}</span>
@@ -61,7 +63,7 @@
             <div class="card-header">
                 <h3 class="card-title">Section Professors from 2016-2018</h3>
             </div>
-            <div class="card-body-scroll">
+            <div class="card-body-scroll prof-card">
                 {% for section, profsList in sections_taught.items %}
                 <div class="course-row">
                     <h3 class="grade-info">
@@ -86,12 +88,13 @@
 <div class="course-row">
     
     <!--ratemyprof-->
+
     <div class="course-col">
         <div class="card text-center mb-3" id="rmp">
             <div class="card-header">
                 <h3 class="card-title">Course Professors</h3>
             </div>
-            <div class="card-body-scroll">
+            <div class="card-body-scroll prof-card">
                 {% for name, rating, numratings in professors_info %}
                 <div class="course-row">
                     <h3 class="grade-info">
@@ -114,7 +117,7 @@
     <!-- Grade Distribution Chart-->
     <div class="course-col">
         <div class="card text-center mb-3">
-            <div class= "card-header">
+            <div class="card-header">
                 <h3 class="card-title">Course Grade Distribution for {{ course.distribution_term }}</h3>
             </div>
             <div class="card-body">
