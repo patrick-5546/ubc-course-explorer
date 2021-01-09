@@ -1,0 +1,191 @@
+<!--Credits Page linked from homepage-->
+
+<head>
+    <title>
+        About/Credits page
+    </title>
+</head>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital@1&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+
+    body {
+        background: #272727;
+        margin: 0;
+        display: grid;
+        place-items: center center;
+        height: 100vh;
+        font-family: 'Quicksand', 'monospace';
+        color: white;
+    }
+
+    .About-card {
+        position: relative;
+        width: 60%;
+        margin: 0 auto;
+        background: #151515;
+        padding: 2em;
+    }
+
+    .About-card p {
+        margin-bottom: 4vh;
+    }
+
+    .About-card h1 {
+        margin: 0px;
+        margin-bottom: 20px;
+    }
+
+
+    .About-card a {
+        text-decoration: none;
+        border: 3px solid gray;
+        margin-right: 10px;
+        padding: 10px;
+        color: gray;
+        transition-property: color;
+        transition-duration: 250ms;
+        word-wrap: break-word;
+    }
+
+    @media (max-width: 768px) {
+        .About-card a {
+            text-decoration: none;
+            border: 2px solid gray;
+            margin-right: 0px;
+            padding: 5px;
+            color: gray;
+            transition-property: color;
+            transition-duration: 250ms;
+        }
+    }
+
+    .About-card a:hover {
+        color: red;
+    }
+
+    .About-card a:active {
+        color: orange;
+    }
+
+    .Contacts {
+        display: grid;
+        place-content: center center;
+        place-items: left;
+        grid-template-columns: 70% 30%;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        padding: 20px;
+    }
+
+    .Contacts * {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .Contact1 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 1;
+        grid-row-end: 1;
+    }
+
+    .Contact2 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 2;
+        grid-row-end: 2;
+    }
+
+    .Contact3 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 3;
+        grid-row-end: 3;
+    }
+
+    .Contact4 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 4;
+        grid-row-end: 4;
+    }
+
+    .Link1 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 1;
+    }
+
+    .Link2 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+        grid-row-start: 2;
+        grid-row-end: 2;
+    }
+
+    .Link3 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+        grid-row-start: 3;
+        grid-row-end: 3;
+    }
+
+    .Link4 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+        grid-row-start: 4;
+        grid-row-end: 4;
+    }
+</style>
+
+<!--Project Information Section-->
+<div class="About-card">
+    <h1>
+        Project Information
+    </h1>
+    <p>
+        This project involved completing and adding extra functionality to our OakHacks 2020 Hackathon project.
+        Below you can find the public Github repositories for this project.
+    </p>
+    <a href="https://github.com/patrick-5546/ubc-course-explorer" target="_blank">Completed Project</a>
+    <a href="https://github.com/ad2969/university-path-explorer" target="_blank">Hackathon Project</a>
+</div>
+
+<!--Creditation links-->
+
+<div class="About-card">
+    <h1>
+        APIs and Code Used
+    </h1>
+    <p>
+        <a href="https://ubcgrades.com/api-reference" target="_blank">UBC Grades</a>
+
+        <a href="https://ubcexplorer.io/api" target="_blank">UBC Explorer</a>
+
+        <a href="https://github.com/Rodantny/Rate-My-Professor-Scraper-and-Search" target="_blank">RateMyProfessors
+            Scraper
+        </a>
+    </p>
+</div>
+
+<div class="About-card">
+    <h1>
+        Contact Us
+    </h1>
+    If you are interested in contributing to this project, or collaborating on another one, feel free to contact us
+    on LinkedIn:
+    <div class="Contacts">
+        <div class="Contact1">Patrick Creighton, Computer Engineering</div>
+        <div class="Link1"><a href="https://www.linkedin.com/in/patrick-5546/" target="_blank">LinkedIn</a></div>
+        <div class="Contact2">Alvin Kam, Business and Computer Science</div>
+        <div class="Link2"><a href="https://www.linkedin.com/in/patrick-5546/" target="_blank">LinkedIn</a></div>
+        <div class="Contact3">Isaac Chung, Cognitive Sciences</div>
+        <div class="Link3"><a href="https://www.linkedin.com/in/patrick-5546/" target="_blank">LinkedIn</a></div>
+        <div class="Contact4">Christopher Fong, Computer Science</div>
+        <div class="Link4"><a href="https://www.linkedin.com/in/patrick-5546/" target="_blank">LinkedIn</a></div>
+    </div>
+</div>
+
+</html>
