@@ -5,14 +5,14 @@
     {% for key, value in preq.items %}
       <li>
         <a href="{{ key }}" tree-node> {{ key }} </a>
+        {% if value|length %}
         <div class="button" button>Button</div>
         <div class="dropdown-content" dropdown>
-        {% if value|length %}
           <ul>
             {% include 'coursetracker/tree.html' with preq=value %}
           </ul>
-        {% endif %}
         </div>
+        {% endif %}
       </li>
     {% endfor %}
   </ul>

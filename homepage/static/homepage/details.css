@@ -63,6 +63,7 @@ h2.card-title {
 .card-body-scroll {
     height: 300px;
     overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 /* Padding adjustments for card content */

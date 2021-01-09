@@ -4,10 +4,10 @@ var buttonElements = document.querySelectorAll('[button]')
 var dropdownElements = document.querySelectorAll('[dropdown]')
 
 buttonElements.forEach(button => {
-    button.addEventListener('click', handleClick)
+    button.addEventListener('click', show)
 })
 
-function handleClick(e) {
+function show(e) {
     console.log("click")
     const buttonClicked = e.target
     var buttonIndex
@@ -17,9 +17,22 @@ function handleClick(e) {
             break
         }
     }
-    if (dropdownElements[i].classList.contains(SHOW_CLASS)) {
-        dropdownElements[i].classList.remove(SHOW_CLASS)
-    } else {
     dropdownElements[i].classList.add(SHOW_CLASS)
+    buttonElements[i].removeEventListener('click', show)
+    buttonElements[i].addEventListener('click', hide)
+}
+
+function hide(e) {
+    console.log("click")
+    const buttonClicked = e.target
+    var buttonIndex
+    for (i = 0; i < 999999; i++) {
+        if (buttonElements[i] == buttonClicked) {
+            buttonIndex = i
+            break
+        }
     }
+    dropdownElements[i].classList.remove(SHOW_CLASS)
+    buttonElements[i].removeEventListener('click', hide)
+    buttonElements[i].addEventListener('click', show)
 }
