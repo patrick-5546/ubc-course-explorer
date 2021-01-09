@@ -14,7 +14,7 @@
 }
 
 .info-key-sm {
-    flex: 30%;
+    flex: 30%; 
     min-width: unset;
 }
 
@@ -88,6 +88,12 @@
     width: 100%;
 }
 
+.card-subtitle {
+    text-align: center;
+    font-size: 1.4em;
+    width: 100%;
+}
+
 h2.card-title {
     font-size: 2.5em;
     padding-bottom: 0;
@@ -96,6 +102,12 @@ h2.card-title {
 .card-body-scroll {
     height: 375px;
     overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.card-body-scroll2 {
+    overflow-y: scroll;
+    overflow-x: scroll;
 }
 
 /* Padding adjustments for card content */

@@ -3,22 +3,17 @@
 {% block content %}
 
 {% load static %}
-
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <title>UBC Path Explorer</title>
     <link rel="stylesheet" type="text/css" href="{% static 'homepage/search.css' %}" />
-
-
 </head>
 
 <body>
     <div class="welcome">
-        <h1>Explore your passion
-
-        </h1>
-
+        <h1 class="welcome-title">Explore your passion</h1>
     </div>
 
     <form class="form-inline wrapper" method="get" action="{% url 'coursetracker:search' %}">

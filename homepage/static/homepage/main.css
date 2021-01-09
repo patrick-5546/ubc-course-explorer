@@ -6,6 +6,7 @@
     background-color: #002145;
     padding-bottom: 2em;
     padding-top: 6em;
+    width: 100%;
 }
 
 #prereq, #dependent, #rmp {
