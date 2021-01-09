@@ -4,8 +4,6 @@ from .models import Course
 from .scrapers import ubcexplorer as ex, ubcgrades as gr, ratemyprof as rmp
 
 # search works as a "buffer" for when we are obtaining data
-
-
 def search(request):
     if request.method == 'GET':
         search = request.GET.get('find')
