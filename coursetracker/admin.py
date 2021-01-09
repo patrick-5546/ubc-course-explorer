@@ -14,7 +14,7 @@ class CourseAdmin(admin.ModelAdmin):
         ('Related Courses', {'fields': ['corequisites', 'dependencies']})
     ]
     # fields to display in page that displays all questions
-    list_display = ('course_name', 'average')
+    list_display = ('course_name', 'five_year_average')
     search_fields = ['course_name']  # search textbox by question_text
 
 
