@@ -5,7 +5,6 @@ from django.db import models
 
 class Course(models.Model):
     course_name = models.CharField(max_length=200, default='')
-    average = models.CharField(max_length=200, default='0')
     five_year_average = models.CharField(max_length=200, default='0')
     # Branch Additions
     lowest_average = models.CharField(max_length=200, default='0')
