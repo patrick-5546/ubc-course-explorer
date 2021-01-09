@@ -15,17 +15,17 @@ def search(request):
 
 def course(request, pk):
         subAndCourse = pk.split(' ')
-
         if len(subAndCourse) == 2:
             subject = subAndCourse[0].upper()
             course = subAndCourse[1]
         else:
             subject = pk[0:-3].upper()
+            #print(subject)
             course = pk[-3:]
+            #print(course)
         
-        c = None
         try:
-            c = Course.objects.get(course_name__iexact=pk) # case insensitive search
+            c = Course.objects.get(course_name__exact=subject + ' ' + course)
             #print("getting course")
         except Course.DoesNotExist:
             c = create_course(subject, course)
