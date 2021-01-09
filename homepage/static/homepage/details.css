@@ -100,9 +100,6 @@ h2.card-title {
 
 .card-body-graph {
     height: 375px; 
-    overflow-y: scroll;
-    overflow-x: scroll;  
-    width: 575px;
 }
 
 /* Padding adjustments for card content */
