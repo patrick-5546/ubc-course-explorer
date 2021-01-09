@@ -133,5 +133,16 @@ right connector from last child*/
 }
 
 .button {
+  font-style: normal;
+  font-family: arial, verdana, tahoma;
   cursor: pointer;
+}
+
+.button:hover,
+.button.clicked:hover {
+  color:orange;
+}
+
+.button.clicked {
+  color:red;
 }

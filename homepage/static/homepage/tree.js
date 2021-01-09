@@ -1,4 +1,5 @@
 var SHOW_CLASS = 'show'
+var CLICKED_CLASS = 'clicked'
 var treeElements = document.querySelectorAll('[tree-node]')
 var buttonElements = document.querySelectorAll('[button]')
 var dropdownElements = document.querySelectorAll('[dropdown]')
@@ -18,8 +19,10 @@ function show(e) {
         }
     }
     dropdownElements[i].classList.add(SHOW_CLASS)
-    buttonElements[i].removeEventListener('click', show)
-    buttonElements[i].addEventListener('click', hide)
+    buttonClicked.classList.add(CLICKED_CLASS)
+    buttonClicked.removeEventListener('click', show)
+    buttonClicked.addEventListener('click', hide)
+    buttonClicked.innerText = '▲'
 }
 
 function hide(e) {
@@ -33,6 +36,8 @@ function hide(e) {
         }
     }
     dropdownElements[i].classList.remove(SHOW_CLASS)
-    buttonElements[i].removeEventListener('click', hide)
-    buttonElements[i].addEventListener('click', show)
+    buttonClicked.classList.remove(CLICKED_CLASS)
+    buttonClicked.removeEventListener('click', hide)
+    buttonClicked.addEventListener('click', show)
+    buttonClicked.innerText = '▼'
 }

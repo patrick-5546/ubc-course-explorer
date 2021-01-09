@@ -6,7 +6,7 @@
       <li>
         <a href="{{ key }}" tree-node> {{ key }} </a>
         {% if value|length %}
-        <div class="button" button>Button</div>
+        <div class="button" button>▼</div>
         <div class="dropdown-content" dropdown>
           <ul>
             {% include 'coursetracker/tree.html' with preq=value %}
