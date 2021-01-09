@@ -21,7 +21,7 @@
 
 </div>
 
-<!--prereq-->
+<!--course profile-->
 
 <div class="course-row">
     <div class="course-col">
@@ -56,8 +56,21 @@
             </div>
         </div>
     </div>
+    <!--grade distribution-->
 
+    <div class="course-col">
+        <div class="card text-center mb-3">
+            <div class="card-header">
+                <h3 class="card-title">Course Grade Distribution for {{ course.distribution_term }}</h3>
+            </div>
+            <div class="card-body">
+                {% include 'coursetracker/chart.html' with chartData=course.distribution %}
+            </div>
+        </div>
+    </div>
+</div>
     <!--sections taught-->
+<div class="course-row">
     <div class="course-col">
         <div class="card text-center mb-3" id="rmp">
             <div class="card-header">
@@ -72,7 +85,7 @@
                     <h3 class="grade-info">
                         {% if profsList|length %}
                             {% for prof in profsList %}
-                                <p> {{ prof }}, </p>
+                                <p> {{ prof }},&nbsp; </p>
                             {% endfor %}
                         {% else %}
                             <p>-</p>
@@ -84,9 +97,6 @@
         </div>
     </div>
 
-</div>
-<div class="course-row">
-    
     <!--ratemyprof-->
 
     <div class="course-col">
@@ -94,37 +104,40 @@
             <div class="card-header">
                 <h3 class="card-title">Course Professors</h3>
             </div>
-            <div class="card-body-scroll prof-card">
-                {% for name, rating, numratings in professors_info %}
+            <div class="card-body-scroll">
                 <div class="course-row">
-                    <h3 class="grade-info">
-                        <span class="info-name">{{ name }}</span>
-                    </h3>
-                    <h3 class="grade-info">
-                        <span class="info-key">Overall Rating:</span>
-                        <span class="info-details">{{ rating }}</span>
-                    </h3>
-                    <h3 class="grade-info">
-                        <span class="info-key">Number of Ratings:</span>
-                        <span class="info-details">{{ numratings }}</span>
-                    </h3>
+                    <div class="column">
+                        <h3>
+                            <div class="info-details-rmp">Name</div>
+                            <div class="info-details-rmp">_______________________</div>
+                            {% for name, rating, numratings in professors_info %}
+                            <div class="info-details-rmp">{{ name }}</div>
+                            {% endfor %}
+                        </h3>
+                    </div>
+                    <div class="column">
+                        <h3>
+                            <div class="info-details-rmp">Overall Rating</div>
+                            <div class="info-details-rmp">__________________</div>
+                            {% for name, rating, numratings in professors_info %}
+                            <div class="info-details-rmp">{{ rating }}</div>
+                            {% endfor %}
+                        </h3>
+                    </div>
+                    <div class="column">
+                        <h3>
+                            <div class="info-details-rmp">Number of Ratings</div>
+                            <div class="info-details-rmp">_______________________</div>
+                            {% for name, rating, numratings in professors_info %}
+                            <div class="info-details-rmp">{{ numratings }}</div>
+                            {% endfor %}
+                        </h3>
+                    </div>
                 </div>
-                {% endfor %}
             </div>
         </div>
     </div>
     
-    <div class="course-col">
-        <div class="card text-center mb-3">
-            <div class="card-header">
-                <h3 class="card-title">Course Grade Distribution for {{ course.distribution_term }}</h3>
-            </div>
-            <div class="card-body">
-                <!--grade distribution-->
-                {% include 'coursetracker/chart.html' with chartData=course.distribution %}
-            </div>
-        </div>
-    </div>
 </div>
 
 {% endblock %}
