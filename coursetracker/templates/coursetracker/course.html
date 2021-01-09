@@ -12,10 +12,11 @@
     <div class="card-header">
         <h2 class="card-title">{{ course.course_name }}</h2>
     </div>
+    <div class="card-subtitle">
+        <p>{{ course.sub_name }}</p>
+    </div>
     <div class="card-body">
         <p>{{ course.course_description }}</p>
-        <p><b>Prerequisites:</b> {{ course.prerequistes_description }}</p>
-        <p><b>Corequisites:</b> {{ course.corequisites_description }}</p>
     </div>
 </div>
 
@@ -136,7 +137,11 @@
         <div class= "card-header">
             <h2 class="card-title"> {{ course.course_name }} Prerequisite Tree</h2>
         </div>
-        <div class="card-body-scroll">
+        <div class="card-body">
+            <p><b>Prerequisites:</b> {{ course.prerequistes_description }}</p>
+            <p><b>Corequisites:</b> {{ course.corequisites_description }}</p>
+        </div>
+        <div class="card-body-scroll2">
             {% include 'coursetracker/tree.html' %}
         </div>
     </div>
