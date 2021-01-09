@@ -4,6 +4,7 @@
 {% block title %}Grade Distribution{% endblock title %}
 
 {% block scripts %}
+
 <script>
 $(document).ready(function(){
 var ctx = document.getElementById('myChart').getContext('2d');
@@ -106,5 +107,5 @@ var myChart = new Chart(ctx, {
 {% endblock scripts %}
 
 {% block content %}
-<canvas id="myChart" width="400" height="400"></canvas>
+<canvas class="chart" id="myChart" width="500px" height="315px"></canvas>
 {% endblock content %}

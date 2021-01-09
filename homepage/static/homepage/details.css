@@ -7,7 +7,7 @@
 .info-key {
     flex: 50%;
     min-width: 200px;
-    text-align: right;
+    text-align: left;
     margin-left: 40px;
     margin-right: 5px;
     font-weight: bold;
@@ -18,10 +18,42 @@
     min-width: unset;
 }
 
-.info-name {
-    flex: 100%;
+.column {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: left;
+    max-width: 100px;
+    margin-right: 45px;
+}
+
+.info-details-rmp {
+    flex: 50%;
+    min-width: 170px;
     text-align: center;
+    justify-content: center;
+    margin-left: 2.5px;
+    margin-bottom: 7.5px;
+    margin-top: 7.5px;
     font-weight: bold;
+}
+
+.info-details-rmp-numratings {
+    flex: 50%;
+    min-width: 150px;
+    text-align: left;
+    justify-content: left;
+    font-weight: bold;
+}
+
+.info-name {
+    flex: 50%;
+    text-align: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 26px;
+    margin-right: 40px;
 }
 
 .info-details {
@@ -45,9 +77,9 @@
     }
 }
 
-.course-col:nth-child(1), .course-col:nth-child(3) {
-    margin-left: 5%;
-    margin-right: 5%;
+.course-col:nth-child(1), .course-col:nth-child(2) {
+    margin-left: 2.5%;
+    margin-right: 2.5%;
 }
 
 .card-title {
@@ -68,7 +100,7 @@ h2.card-title {
 }
 
 .card-body-scroll {
-    height: 300px;
+    height: 375px;
     overflow-y: scroll;
     overflow-x: scroll;
 }
@@ -80,7 +112,7 @@ h2.card-title {
 
 /* Padding adjustments for card content */
 .stat-card {
-    padding-top: 20px;
+    padding-top: 50px;
 }
 
 .prof-card {
