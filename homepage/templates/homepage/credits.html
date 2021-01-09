@@ -14,7 +14,7 @@
         background: #272727;
         margin: 0;
         display: grid;
-        place-content: center;
+        place-items: center center;
         height: 100vh;
         font-family: 'Quicksand', 'monospace';
         color: white;
@@ -68,6 +68,76 @@
     .About-card a:active {
         color: orange;
     }
+
+    .Contacts {
+        display: grid;
+        place-content: center center;
+        place-items: left;
+        grid-template-columns: 70% 30%;
+        grid-template-rows: 1fr 1fr 1fr 1fr;
+        padding: 20px;
+    }
+
+    .Contacts * {
+        margin-top: 40px;
+        text-align: center;
+    }
+
+    .Contact1 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 1;
+        grid-row-end: 1;
+    }
+
+    .Contact2 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 2;
+        grid-row-end: 2;
+    }
+
+    .Contact3 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 3;
+        grid-row-end: 3;
+    }
+
+    .Contact4 {
+        grid-column-start: 1;
+        grid-column-end: 1;
+        grid-row-start: 4;
+        grid-row-end: 4;
+    }
+
+    .Link1 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+        grid-row-start: 1;
+        grid-row-end: 1;
+    }
+
+    .Link2 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+        grid-row-start: 2;
+        grid-row-end: 2;
+    }
+
+    .Link3 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+        grid-row-start: 3;
+        grid-row-end: 3;
+    }
+
+    .Link4 {
+        grid-column-start: 2;
+        grid-column-end: 2;
+        grid-row-start: 4;
+        grid-row-end: 4;
+    }
 </style>
 
 <!--Project Information Section-->
@@ -94,8 +164,9 @@
 
         <a href="https://ubcexplorer.io/api" target="_blank">UBC Explorer</a>
 
-        <a href="https://github.com/Rodantny/Rate-My-Professor-Scraper-and-Search" target="_blank">RateMyProfessors Scraper
-            </a>
+        <a href="https://github.com/Rodantny/Rate-My-Professor-Scraper-and-Search" target="_blank">RateMyProfessors
+            Scraper
+        </a>
     </p>
 </div>
 
@@ -103,19 +174,18 @@
     <h1>
         Contact Us
     </h1>
-    <p>
-        If you are interested in contributing to this project, or collaborating on another one, feel free to contact us on LinkedIn:
-        <ul>
-            <li>Patrick Creighton, Computer Engineering: </li>
-            <a href="https://www.linkedin.com/in/patrick-5546/" target="_blank">LinkedIn</a>
-            <li>Alvin Kam, Business and Computer Science: </li>
-            <a href="https://www.linkedin.com/in/alvin-kam/" target="_blank">LinkedIn</a>
-            <li>Isaac Chung, BSc Cognitive Systems: </li>
-            <a href="https://www.linkedin.com/in/isaac-chung-08/" target="_blank">LinkedIn</a>
-            <li>Christopher Fong Computer Science: </li> 
-            <a href="https://www.linkedin.com/in/christopher-fong-8a8b38193/" target="_blank">LinkedIn</a>
-        </ul>
-    </p>
+    If you are interested in contributing to this project, or collaborating on another one, feel free to contact us
+    on LinkedIn:
+    <div class="Contacts">
+        <div class="Contact1">Patrick Creighton, Computer Engineering</div>
+        <div class="Link1"><a href="https://www.linkedin.com/in/patrick-5546/" target="_blank">LinkedIn</a></div>
+        <div class="Contact2">Alvin Kam, Business and Computer Science</div>
+        <div class="Link2"><a href="https://www.linkedin.com/in/patrick-5546/" target="_blank">LinkedIn</a></div>
+        <div class="Contact3">Isaac Chung, Cognitive Sciences</div>
+        <div class="Link3"><a href="https://www.linkedin.com/in/patrick-5546/" target="_blank">LinkedIn</a></div>
+        <div class="Contact4">Christopher Fong, Computer Science</div>
+        <div class="Link4"><a href="https://www.linkedin.com/in/patrick-5546/" target="_blank">LinkedIn</a></div>
+    </div>
 </div>
 
 </html>
