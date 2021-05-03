@@ -24,9 +24,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '^i!4hjm+#8#f7%thp-bapbf$@*%&pr_6y$%1w#)geaz)s=zog*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["ubc-course-app.herokuapp.com", '127.0.0.1']
 
 
 # Application definition
