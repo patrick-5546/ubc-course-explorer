@@ -3,37 +3,33 @@
 {% block content %}
 
 {% load static %}
-
+<script src="{% static '/homepage/tree.js' %}" type="text/javascript"></script>
 <!--Course details-->
-<div class="course-row"></div>
 
-    <div class="card text-center mb-5 text-white" id="course-details">
-        <div class= "card-header">
-            <h2 class="card-title">{{ course.course_name }}</h2>
-        </div>
-        <div class="card-body">
-            <p>{{ course.course_description }}</p>
-            <p><b>Prerequisites:</b> {{ course.prerequistes_description }}</p>
-            <p><b>Corequisites:</b> {{ course.corequisites_description }}</p>
-            <p><b>Number of Credits:</b> {{ course.number_of_credits }}</p>
-        </div>
+
+<div class="card text-center mb-5 text-white" id="course-details">
+    <div class="card-header">
+        <h2 class="card-title">{{ course.course_name }}</h2>
     </div>
-
+    <div class="card-subtitle">
+        <p>{{ course.sub_name }}</p>
+    </div>
+    <div class="card-body">
+        <p>{{ course.course_description }}</p>
+    </div>
 </div>
 
-<!--prereq-->
-<div class="course-row">
 
+
+<!--course profile-->
+
+<div class="course-row">
     <div class="course-col">
         <div class="card text-center mb-3" id="prereq">
-            <div class= "card-header">
-                <h3 class="card-title">Course Grade Profile</h3>
+            <div class="card-header">
+                <h3 class="card-title">Course Profile</h3>
             </div>
-            <div class="card-body">
-                <h3 class="grade-info">
-                    <span class="info-key">Historic Average:</span>
-                    <span class="info-details">{{ course.average|floatformat:"2" }}</span>
-                </h3>
+            <div class="card-body-scroll stat-card">
                 <h3 class="grade-info">
                     <span class="info-key">Average (Past 5 Years):</span>
                     <span class="info-details">{{ course.five_year_average|floatformat:"2" }}</span>
@@ -42,38 +38,123 @@
                     <span class="info-key">Standard Deviation:</span>
                     <span class="info-details">{{ course.standard_deviation|floatformat:"2" }}</span>
                 </h3>
+
+                <h3 class="grade-info">
+                    <span class="info-key">Highest Historical Section Average:</span>
+                    <span class="info-details">{{ course.highest_average|floatformat:"2" }}</span>
+                </h3>
+
+                <h3 class="grade-info">
+                    <span class="info-key">Lowest Historical Section Average:</span>
+                    <span class="info-details">{{ course.lowest_average|floatformat:"2" }}</span>
+                </h3>
+
+                <h3 class="grade-info">
+                    <span class="info-key">Credits:</span>
+                    <span class="info-details">{{ course.number_of_credits }}</span>
+                </h3>
+            </div>
+        </div>
+    </div>
+    <!--grade distribution-->
+
+    <div class="course-col">
+        <div class="card text-center mb-3">
+            <div class="card-header">
+                <h3 class="card-title">Course Grade Distribution for {{ course.distribution_term }}</h3>
+            </div>
+            <div class="card-body">
+                {% include 'coursetracker/chart.html' with chartData=course.distribution %}
+            </div>
+        </div>
+    </div>
+</div>
+    <!--sections taught-->
+<div class="course-row">
+    <div class="course-col">
+        <div class="card text-center mb-3" id="rmp">
+            <div class="card-header">
+                <h3 class="card-title">Section Professors from 2016-2018</h3>
+            </div>
+            <div class="card-body-scroll prof-card">
+                {% for section, profsList in sections_taught.items %}
+                <div class="course-row">
+                    <h3 class="grade-info">
+                        <span class="info-name">{{ section }}:</span>
+                    </h3>
+                    <h3 class="grade-info">
+                        {% if profsList|length %}
+                            {% for prof in profsList %}
+                                <p> {{ prof }},&nbsp; </p>
+                            {% endfor %}
+                        {% else %}
+                            <p>-</p>
+                        {% endif %}
+                    </h3>
+                </div>
+                {% endfor %}
             </div>
         </div>
     </div>
 
     <!--ratemyprof-->
+
     <div class="course-col">
         <div class="card text-center mb-3" id="rmp">
             <div class="card-header">
-                <h3 class="card-title">Course Professor</h3>
+                <h3 class="card-title">Course Professors</h3>
             </div>
-            <div class="card-body">
-        
-            </div>
-        </div>
-    </div>
-
-    <div class="course-col">
-        <div class="card text-center mb-3">
-            <div class= "card-header">
-                <h3 class="card-title">Course Grade Distribution for {{ course.distribution_term }}</h3>
-            </div>
-            <div class="card-body">
-                <!--grade distribution-->
-                {% include 'coursetracker/chart.html' with chartData=course.distribution %}
+            <div class="card-body-scroll">
+                <div class="course-row">
+                    <div class="column">
+                        <h3>
+                            <div class="info-details-rmp">Name</div>
+                            <div class="info-details-rmp">_______________________</div>
+                            {% for name, rating, numratings in professors_info %}
+                            <div class="info-details-rmp">{{ name }}</div>
+                            {% endfor %}
+                        </h3>
+                    </div>
+                    <div class="column">
+                        <h3>
+                            <div class="info-details-rmp">Overall Rating</div>
+                            <div class="info-details-rmp">__________________</div>
+                            {% for name, rating, numratings in professors_info %}
+                            <div class="info-details-rmp">{{ rating }}</div>
+                            {% endfor %}
+                        </h3>
+                    </div>
+                    <div class="column">
+                        <h3>
+                            <div class="info-details-rmp">Number of Ratings</div>
+                            <div class="info-details-rmp">_______________________</div>
+                            {% for name, rating, numratings in professors_info %}
+                            <div class="info-details-rmp">{{ numratings }}</div>
+                            {% endfor %}
+                        </h3>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
 </div>
-</div>
 
-<br>
+<div class="course-row"></div>
+
+    <!--prerequisite tree-->
+    <div class="card text-center mb-5 text-white" id="course-details">
+        <div class= "card-header">
+            <h2 class="card-title"> {{ course.course_name }} Prerequisite Tree</h2>
+        </div>
+        <div class="card-body">
+            <p><b>Prerequisites:</b> {{ course.prerequistes_description }}</p>
+            <p><b>Corequisites:</b> {{ course.corequisites_description }}</p>
+        </div>
+        <div class="card-body-scroll2">
+            {% include 'coursetracker/tree.html' %}
+        </div>
+    </div>
+
 
 {% endblock %}
-

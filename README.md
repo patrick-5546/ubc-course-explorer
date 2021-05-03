@@ -1,4 +1,20 @@
-# ubc-course-explorer
+# UBC Path Explorer
+Simple web application built with Django. The application aims to provide an one-stop interface for UBC students to find course information, including professor ratings, grade distribution, and nested prerequisite courses, in hopes of helping them better plan out their study path throughout university.
+
+The data was collected from [UBCGrades](https://ubcgrades.com/), [UBC Course Explorer](https://ubcexplorer.io/), and [Rate My Professors](https://www.ratemyprofessors.com/campusRatings.jsp?sid=1413). **RateMyProf local data was last updated January 9th, 2021. The most recent term available from UBCGrades is 2020S for grades, and 2018S for section professors.**
+
+See the [Wiki](https://github.com/patrick-5546/ubc-course-explorer/wiki) for screenshots of the website, updating the RateMyProf data, as well as useful information for developers who want to build on this application.
+
+UBC Course Planner is the result of revising and completing the [Oakhacks 2020 first place project](https://github.com/ad2969/university-path-explorer).
+
+#### Change List
+- Added support for any UBC course offered in the last 25 years
+- Added support for professor ratings of all course professors in the last 25 years
+- Added support vertical aspect ratios
+- Stored data locally to increase speed, enable offline functionality, and reduce dependency on APIs
+- Created scripts to test methods and update local data
+- View recent course professors by section
+- View tree of all nested prerequisites required for a course
 
 ## How to Run
 1. `cd` into the chosen directory and clone the repository
@@ -7,22 +23,14 @@ git clone https://github.com/patrick-5546/ubc-course-explorer
 ```
 2. Install Django: [Django Quick Install Guide](https://docs.djangoproject.com/en/3.1/intro/install/)
 
-3. `cd` into the root directory of the repository and run the server
+3. `cd` into the root directory of the repository. If it is the first time running the application, migrate data
+```
+python manage.py migrate
+```
+4. Run the server
 ```
 python manage.py runserver
 ```
-4. Open the link provided in the terminal to load the site
+5. Open the link provided in the terminal to load the site
 
-5. To load changes: save changes and refresh tab
-
-6. To access the admin page (to view `Course` objects): [Introducing the Django Admin](https://docs.djangoproject.com/en/3.1/intro/tutorial02/#introducing-the-django-admin)
-
-7. To stop running the server: CTRL + C (for Windows systems) in the terminal where step 3 was executed
-
-## Modifying `Course` Model
-* If [`Course` fields](https://github.com/patrick-5546/ubc-course-explorer/blob/main/coursetracker/models.py#L5) are modified (added, renamed, deleted), the database will need to be updated: run `python manage.py makemigrations`, then `python manage.py migrate`
-    * If the field representations are changed without modifying the fields themselves (eg. changed `professors_info` field from dictionary to list), run `python manage.py updatecourseobjects` to refresh all the fields of all `Course` objects currently stored in the database
-
-## Scripts
-* [`updatescripts.py`](https://github.com/patrick-5546/ubc-course-explorer/blob/main/coursetracker/scrapers/updatescripts.py) is used to sync locally stored data with the APIs: uncomment the code block corresponding to the desired data to sync, then run the file. These will take a while to execute.
-* [`testscripts.py`](https://github.com/patrick-5546/ubc-course-explorer/blob/main/coursetracker/scrapers/testscripts.py) is used to test the output of various scraper methods: uncomment the code block corresonding to the desired method(s) to test, modify the parameters as required, then run the file.
+6. To stop running the server: CTRL + C (for Windows systems) in the terminal where step 3 was executed

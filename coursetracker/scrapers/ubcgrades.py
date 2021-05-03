@@ -4,6 +4,7 @@ import requests, json
 #   {"error":"Not Found","message":"Not Found"} --> return an empty dictionary
 
 apiV2 = 'https://ubcgrades.com/api/v2/course-statistics/'
+apiV1 = 'https://ubcgrades.com/api/v1/'
 campus = 'UBCV/'
 
 # return example for ENGL 112:
@@ -92,13 +93,40 @@ def all_teaching_team(subject):
     url = apiV2 + 'teaching-team/' + campus + subject.upper()
     return check_json(requests.get(url).json())
 
+# returns a dictionary where the keys are the professor name and the values are a list of sections 
+# taught from 2016-2018
+def recent_sections_taught(profsList, subject, course):
+    profsDict = {prof: [] for prof in profsList}
+    allDistributions = []
+    try:
+        with open('coursetracker/scrapers/local_data/gr_section_distributions.txt') as json_file:
+            allDistributions = json.load(json_file)
+    except OSError:
+        return profsDict
+    for prof in profsList:
+        firstLast = prof.split(' ')
+        if len(firstLast) != 2:
+            continue
+        name = firstLast[1] + ', ' + firstLast[0]
+        for d in allDistributions:
+            if subject.upper() == d['subject'] and course == d['course'] and name in d['educators'] and d['section'] not in profsDict[prof]:
+                profsDict[prof].append(d['section'])
+    return profsDict
+
+def refresh_all_section_distributions():
+    yearsessions = ['2016S', '2016W', '2017S', '2017W', '2018S' ,'2018W']
+    allDistributions = []
+    for yearsession in yearsessions:
+        url = apiV1 + 'grades/' + campus + yearsession
+        yearsessionDistributions = check_json(requests.get(url).json())
+        if yearsessionDistributions:
+            allDistributions += yearsessionDistributions
+    if allDistributions:
+        with open('coursetracker/scrapers/local_data/gr_section_distributions.txt', 'w') as outfile:
+            json.dump(allDistributions, outfile)
+
 def check_json(j):
     return {} if 'error' in json.dumps(j) else j
-
-# TODO: decide whether to implement drop down menus
-
-
-apiV1 = 'https://ubcgrades.com/api/v1/'
 
 # checks if given course is valid
 def course_is_valid(subject, course):

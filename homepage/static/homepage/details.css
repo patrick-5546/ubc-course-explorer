@@ -7,15 +7,53 @@
 .info-key {
     flex: 50%;
     min-width: 200px;
-    text-align: right;
+    text-align: left;
     margin-left: 40px;
     margin-right: 5px;
     font-weight: bold;
 }
 
 .info-key-sm {
-    flex: 30%;
+    flex: 30%; 
     min-width: unset;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    justify-content: left;
+    max-width: 100px;
+    margin-right: 45px;
+}
+
+.info-details-rmp {
+    flex: 50%;
+    min-width: 170px;
+    text-align: center;
+    justify-content: center;
+    margin-left: 2.5px;
+    margin-bottom: 7.5px;
+    margin-top: 7.5px;
+    font-weight: bold;
+}
+
+.info-details-rmp-numratings {
+    flex: 50%;
+    min-width: 150px;
+    text-align: left;
+    justify-content: left;
+    font-weight: bold;
+}
+
+.info-name {
+    flex: 50%;
+    text-align: center;
+    justify-content: center;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 26px;
+    margin-right: 40px;
 }
 
 .info-details {
@@ -24,21 +62,24 @@
     text-align: left;
 }
 
-.course-row {
+/*Media query for phone size*/
+@media(min-width: 768px) {
+    .course-row {
     display: flex;
     flex-direction: row;
+    }
+
+    .course-col {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1;
+        max-width: 30%;
+    }
 }
 
-.course-col {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
-    max-width: 30%;
-}
-
-.course-col:nth-child(1), .course-col:nth-child(3) {
-    margin-left: 5%;
-    margin-right: 5%;
+.course-col:nth-child(1), .course-col:nth-child(2) {
+    margin-left: 2.5%;
+    margin-right: 2.5%;
 }
 
 .card-title {
@@ -46,7 +87,35 @@
     line-height: 1.5em;
     width: 100%;
 }
+
+.card-subtitle {
+    text-align: center;
+    font-size: 1.4em;
+    width: 100%;
+}
+
 h2.card-title {
     font-size: 2.5em;
     padding-bottom: 0;
+}
+
+.card-body-scroll {
+    height: 375px;
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+.card-body-scroll2 {
+    overflow-y: scroll;
+    overflow-x: scroll;
+}
+
+/* Padding adjustments for card content */
+.stat-card {
+    padding-top: 50px;
+}
+
+.prof-card {
+    padding-left: 20px;
+    padding-top: 20px;
 }

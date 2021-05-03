@@ -7,8 +7,9 @@ class Command(BaseCommand):
 
 
     def handle(self, *args, **options):
-        self.stdout.write('Refreshing all Course objects')
         courseNames = [course.course_name for course in Course.objects.all()]
         Course.objects.all().delete()
         for course in courseNames:
-            create_course(course)
+            code = course.split(' ')
+            create_course(code[0], code[1])
+        self.stdout.write('Successfully refreshed all Course objects')
