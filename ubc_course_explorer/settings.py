@@ -27,10 +27,11 @@ if os.path.isfile(dotenv_file):
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '^i!4hjm+#8#f7%thp-bapbf$@*%&pr_6y$%1w#)geaz)s=zog*')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+# DEBUG = False
+DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
 ALLOWED_HOSTS = ["ubc-course-app.herokuapp.com", '127.0.0.1']
 
@@ -83,9 +84,18 @@ WSGI_APPLICATION = 'ubc_course_explorer.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+import dj_database_url
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': str(os.path.join(BASE_DIR, 'db.sqlite3'))
+    }
+}
 
-DATABASES = {}
-DATABASES['default'] = dj_database_url.config(conn_max_age=600)
+# Heroku: Update database configuration from $DATABASE_URL.
+# DATABASE_URL = 'postgresql://<postgresql>'
+db_from_env = dj_database_url.config(conn_max_age=600)
+DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -138,3 +148,4 @@ django_heroku.settings(locals())
 
 options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
+
