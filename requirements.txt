@@ -4,8 +4,12 @@ charset-normalizer==2.0.3
 dj-database-url==0.5.0
 Django==3.1.13
 django-heroku==0.3.1
+flake8==3.9.2
 idna==3.2
+mccabe==0.6.1
 psycopg2==2.9.1
+pycodestyle==2.7.0
+pyflakes==2.3.1
 python-dotenv==0.18.0
 pytz==2021.1
 requests==2.26.0
