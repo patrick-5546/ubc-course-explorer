@@ -1,56 +1,58 @@
-import json
 from django.shortcuts import redirect, render
 from .models import Course
 from .scrapers import ubcexplorer as ex, ubcgrades as gr, ratemyprof as rmp
 
-# search works as a "buffer" for when we are obtaining data
+
 def search(request):
+    '''Works as a "buffer" for when we are obtaining data'''
     if request.method == 'GET':
         search = request.GET.get('find')
-        #print('search', search)
+        # print('search', search)
         return redirect('coursetracker:course', pk=search)
 
 
 def course(request, pk):
-        subAndCourse = pk.split(' ')
-        if len(subAndCourse) == 2:
-            subject = subAndCourse[0].upper()
-            course = subAndCourse[1]
-        else:
-            subject = pk[0:-3].upper()
-            #print(subject)
-            course = pk[-3:]
-            #print(course)
-        
-        try:
-            c = Course.objects.get(course_name__exact=subject + ' ' + course)
-            #print("getting course")
-        except Course.DoesNotExist:
-            c = create_course(subject, course)
-            #print("creating new course")
-            if not c:
-                return render(request, 'coursetracker/404.html')
+    subAndCourse = pk.split(' ')
+    if len(subAndCourse) == 2:
+        subject = subAndCourse[0].upper()
+        course = subAndCourse[1]
+    else:
+        subject = pk[0:-3].upper()
+        # print(subject)
+        course = pk[-3:]
+        # print(course)
 
-        exp = ex.course_info_with_prereq_tree(subject, course)
-        preq = {} if 'preq' not in exp else exp['preq']
-        preq = {subject + ' ' + course: preq}  # dictionary for tree chart
+    try:
+        c = Course.objects.get(course_name__exact=subject + ' ' + course)
+        # print("getting course")
+    except Course.DoesNotExist:
+        c = create_course(subject, course)
+        # print("creating new course")
+        if not c:
+            return render(request, 'coursetracker/404.html')
 
-        profsList = gr.teaching_team(subject, course)
+    exp = ex.course_info_with_prereq_tree(subject, course)
+    preq = {} if 'preq' not in exp else exp['preq']
+    preq = {subject + ' ' + course: preq}  # dictionary for tree chart
 
-        profs = rmp.get_profs_info(profsList)  # list for sortable list
-        if not profs:
-            return render(request, 'coursetracker/404.html')  # TODO: make separate html page for this
+    profsList = gr.teaching_team(subject, course)
 
-        profsSecInfo = gr.recent_sections_taught(profsList, subject, course)
-        sectionProfs = {}
-        for prof in profsSecInfo:
-            for sec in profsSecInfo[prof]:
-                if sec not in sectionProfs:
-                    sectionProfs[sec] = []
-                sectionProfs[sec].append(prof)
-        sectionProfsSorted = {sec: sectionProfs[sec] for sec in sorted(sectionProfs)}
+    profs = rmp.get_profs_info(profsList)  # list for sortable list
+    if not profs:
+        return render(request, 'coursetracker/404.html')  # TODO: make separate html page for this
 
-        return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq, 'professors_info': profs, 'sections_taught': sectionProfsSorted})
+    profsSecInfo = gr.recent_sections_taught(profsList, subject, course)
+    sectionProfs = {}
+    for prof in profsSecInfo:
+        for sec in profsSecInfo[prof]:
+            if sec not in sectionProfs:
+                sectionProfs[sec] = []
+            sectionProfs[sec].append(prof)
+    sectionProfsSorted = {sec: sectionProfs[sec] for sec in sorted(sectionProfs)}
+
+    return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq, 'professors_info': profs,
+                                                         'sections_taught': sectionProfsSorted})
+
 
 def create_course(subject, course):
     if not gr.course_is_valid(subject, course):
@@ -81,9 +83,9 @@ def create_course(subject, course):
     crer = "n/a" if 'crer' not in exp else exp['crer']
     link = "n/a" if 'link' not in exp else exp['link']
 
-    c = Course(course_name=subject + ' ' + course, five_year_average=avg5, lowest_average=minavg, highest_average=maxavg,
-               standard_deviation=stdev, distribution=distribution, distribution_term=disTerm, corequisites=creq, dependencies=depn,
-               sub_name=name, number_of_credits=cred, course_description=desc, prerequistes_description=prer,
-               corequisites_description=crer, course_link=link)
+    c = Course(course_name=subject + ' ' + course, five_year_average=avg5, lowest_average=minavg,
+               highest_average=maxavg, standard_deviation=stdev, distribution=distribution, distribution_term=disTerm,
+               corequisites=creq, dependencies=depn, sub_name=name, number_of_credits=cred, course_description=desc,
+               prerequistes_description=prer, corequisites_description=crer, course_link=link)
     c.save()
     return c

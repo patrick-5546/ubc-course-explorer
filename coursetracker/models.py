@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class Course(models.Model):
     course_name = models.CharField(max_length=200, default='')
     five_year_average = models.CharField(max_length=200, default='0')

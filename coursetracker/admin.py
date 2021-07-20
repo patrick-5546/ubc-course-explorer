@@ -9,7 +9,7 @@ class CourseAdmin(admin.ModelAdmin):
         ('Descriptions', {'fields': ['sub_name', 'course_description', 'prerequistes_description',
                                      'corequisites_description', 'course_link']}),
         ('Course Profile', {'fields': ['five_year_average', 'standard_deviation',
-                                                  'number_of_credits']}),
+                                       'number_of_credits']}),
         ('Graphing Information', {'fields': ['distribution_term', 'distribution']}),
         ('Related Courses', {'fields': ['corequisites', 'dependencies']})
     ]
