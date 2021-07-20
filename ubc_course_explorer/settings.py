@@ -10,11 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
-from pathlib import Path
+
 import os
+
+import dotenv
 import django_heroku
 import dj_database_url
-import dotenv
+from pathlib import Path
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -84,7 +87,6 @@ WSGI_APPLICATION = 'ubc_course_explorer.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-import dj_database_url
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -148,4 +150,3 @@ django_heroku.settings(locals())
 
 options = DATABASES['default'].get('OPTIONS', {})
 options.pop('sslmode', None)
-

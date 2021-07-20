@@ -1,10 +1,10 @@
-from django.core.management.base import BaseCommand, CommandError
+from django.core.management.base import BaseCommand  # , CommandError
 from coursetracker.models import Course
 from coursetracker.views import create_course
 
+
 class Command(BaseCommand):
     help = 'Refreshes the fields of all Course objects; use after modifying representation'
-
 
     def handle(self, *args, **options):
         courseNames = [course.course_name for course in Course.objects.all()]
