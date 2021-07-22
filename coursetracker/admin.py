@@ -8,13 +8,13 @@ class CourseAdmin(admin.ModelAdmin):
         (None,               {'fields': ['course_name']}),
         ('Descriptions', {'fields': ['sub_name', 'course_description', 'prerequistes_description',
                                      'corequisites_description', 'course_link']}),
-        ('Course Profile', {'fields': ['five_year_average', 'standard_deviation',
-                                       'number_of_credits']}),
+        ('Course Profile', {'fields': ['average', 'five_year_average', 'standard_deviation',
+                                       'number_of_credits', 'lowest_average', 'highest_average']}),
         ('Graphing Information', {'fields': ['distribution_term', 'distribution']}),
         ('Related Courses', {'fields': ['corequisites', 'dependencies']})
     ]
     # fields to display in page that displays all questions
-    list_display = ('course_name', 'five_year_average')
+    list_display = ('course_name', 'average')
     search_fields = ['course_name']  # search textbox by question_text
 
 
