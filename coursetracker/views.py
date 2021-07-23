@@ -16,11 +16,14 @@ def course(request, pk):
     course_name = pk
     course_name_list = pk.split(' ')
     if len(course_name_list) == 2:
-        course_name = f"{course_name_list[0].upper()} {course_name_list[1]}"
+        course_name = f"{course_name_list[0].upper()} {course_name_list[1].upper()}"
+    print(f"*Searching database for {course_name}")
 
     try:
         c = Course.objects.get(course_name__exact=course_name)
+        print(f"*{course_name} found in database")
     except Course.DoesNotExist:
+        print(f"*Course {course_name} does not exist")
         return render(request, 'coursetracker/404.html')
 
     subject, course = course_name.split(' ')
@@ -32,6 +35,7 @@ def course(request, pk):
 
     profs = rmp.get_profs_info(profsList)  # list for sortable list
     if not profs:
+        print(f"*Course {course_name} does not have profs")
         return render(request, 'coursetracker/404.html')  # TODO: make separate html page for this
 
     profsSecInfo = gr.recent_sections_taught(profsList, subject, course)
