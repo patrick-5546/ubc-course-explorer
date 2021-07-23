@@ -69,20 +69,29 @@ def save_course_instance(course_name):
     stdev = stats['stdev']
     minavg = stats['min_course_avg']
     maxavg = stats['max_course_avg']
-    name = stats['course_title']
+    # print(stats)
 
     distribution = GRADE_DISTRS[course_name][0]  # first element in list will be from most recent term
     grades = _order_grades(distribution['grades'])
     term = f"{distribution['year']}{distribution['session']}"
+    name = distribution['course_title']  # more up to date than in stats, as it is from the most recent term
+    # print(distribution)
 
-    info = COURSE_INFO[course_name] if course_name in COURSE_INFO else {}
-    creq = info['creq'] if 'creq' in info else []
-    depn = info['depn'] if 'depn' in info else []
-    cred = info['cred'] if 'cred' in info else 'n/a'
-    desc = info['desc'] if 'desc' in info else 'n/a'
-    prer = info['prer'] if 'prer' in info else 'n/a'
-    crer = info['crer'] if 'crer' in info else 'n/a'
-    link = info['link'] if 'link' in info else 'n/a'
+    # the source for COURSE_INFO does not have details
+    # there are 4 characters in the number/detail if there is a detail
+    subject, course = course_name.split(' ')
+    course_name_no_detail = course_name[:-1] if len(course) == 4 else course_name
+    info = COURSE_INFO[course_name_no_detail] if course_name_no_detail in COURSE_INFO else {}
+    creq = info['creq'] if 'creq' in info and info['creq'] is not None else []
+    depn = info['depn'] if 'depn' in info and info['depn'] is not None else []
+    cred = info['cred'] if 'cred' in info and info['cred'] is not None else 'n/a'
+    desc = info['desc'] if 'desc' in info and info['desc'] is not None else 'n/a'
+    prer = info['prer'] if 'prer' in info and info['prer'] is not None else 'n/a'
+    crer = info['crer'] if 'crer' in info and info['crer'] is not None else 'n/a'
+    # print(info)
+
+    link = ('https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&'
+            f"dept={subject}&course={course}")
 
     try:
         with transaction.atomic():
@@ -92,6 +101,7 @@ def save_course_instance(course_name):
                                   number_of_credits=cred, course_description=desc, prerequistes_description=prer,
                                   corequisites_description=crer, course_link=link)
     except IntegrityError:
+        print(f"\t\tCould not save {course_name} into database")
         pass
 
 
