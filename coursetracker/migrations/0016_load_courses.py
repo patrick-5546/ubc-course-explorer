@@ -22,12 +22,13 @@ GRADE_DISTRS = None
 
 
 def load_courses(apps, schema_editor):
+    '''Saves all courses in AVAIL_COURSES to the database.'''
     # We can't import the Course model directly as it may be a newer
     # version than this migration expects. We use the historical version.
     global Course
     Course = apps.get_model('coursetracker', 'Course')
 
-    print('')
+    print('')  # so that print statements start on new line
     load_data_files()
     for subject, course_labels in AVAIL_COURSES.items():
         print(f"\tLoading database with courses in {subject}")
@@ -48,8 +49,8 @@ class Migration(migrations.Migration):
 
 
 def load_data_files():
+    '''Loads the data files into global variables.'''
     global AVAIL_COURSES, COURSE_INFO, COURSE_STATS, GRADE_DISTRS
-
     AVAIL_COURSES = _load_json(AVAILABLE_COURSES_FN)
     COURSE_INFO = _load_json(COURSE_INFORMATION_FN)
     COURSE_STATS = _load_json(COURSE_STATISTICS_FN)
@@ -57,12 +58,13 @@ def load_data_files():
 
 
 def _load_json(filename):
+    '''Returns the objects stored in a json file.'''
     with open(os.path.join(DATA_DIR_PATH, filename), 'r') as json_file:
         return json.load(json_file)
 
 
 def save_course_instance(course_name):
-    # TODO: need to add average field
+    '''Uses the course's information in the global variables to create and save a Course object to the database.'''
     stats = COURSE_STATS[course_name]
     avg = stats['average']
     avg5 = stats['average_past_5_yrs']
@@ -71,7 +73,6 @@ def save_course_instance(course_name):
     maxavg = stats['max_course_avg']
     name = stats['course_title']
 
-    # TODO: need less bins
     distribution = GRADE_DISTRS[course_name][0]  # first element in list will be from most recent term
     grades = _order_grades(distribution['grades'])
     term = f"{distribution['year']}{distribution['session']}"
@@ -97,7 +98,14 @@ def save_course_instance(course_name):
 
 
 def _order_grades(distribution_dict):
+    '''Returns a list of the grade distribution. There are 11 elements, in the following order:
+        [<50%, 50-54%, 55-59%, 60-63%, 64-67%, 68-71%, 72-75%, 76-79%, 80-84%, 85-89%, 90-100%]
+    '''
     grades = list()
+
+    # distribution_dict.values() is already in increasing order, except '<50%' is at the end
+    #   - might be because it doesn't start with a number
     grades.append(distribution_dict['<50%'])
     grades.extend(list(distribution_dict.values())[:-1])
+
     return grades
