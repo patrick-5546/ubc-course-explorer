@@ -17,8 +17,6 @@ AVAIL_COURSES = None
 COURSE_INFO = None
 COURSE_STATS = None
 GRADE_DISTRS = None
-# create these files in new repo
-# once this is working, figure out prerequisite tree and ubc grades + rmp profs info
 
 
 def load_courses(apps, schema_editor):
