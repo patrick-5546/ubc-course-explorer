@@ -1,6 +1,9 @@
+import json
+
 from django.shortcuts import redirect, render
+
 from .models import Course
-from .scrapers import ubcexplorer as ex, ubcgrades as gr, ratemyprof as rmp
+from .scrapers import ubcexplorer as ex
 
 
 def search(request):
@@ -34,21 +37,9 @@ def course(request, pk):
     preq = {} if 'preq' not in exp else exp['preq']
     preq = {course_name: preq}  # dictionary for tree chart
 
-    profsList = gr.teaching_team(subject, course)
+    sections_teaching_team = json.loads(c.sections_teaching_team)
+    professor_ratings = json.loads(c.professor_ratings)
 
-    profs = rmp.get_profs_info(profsList)  # list for sortable list
-    if not profs:
-        print(f"*Course {course_name} does not have profs")
-        return render(request, 'coursetracker/404.html')  # TODO: make separate html page for this
-
-    profsSecInfo = gr.recent_sections_taught(profsList, subject, course)
-    sectionProfs = {}
-    for prof in profsSecInfo:
-        for sec in profsSecInfo[prof]:
-            if sec not in sectionProfs:
-                sectionProfs[sec] = []
-            sectionProfs[sec].append(prof)
-    sectionProfsSorted = {sec: sectionProfs[sec] for sec in sorted(sectionProfs)}
-
-    return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq, 'professors_info': profs,
-                                                         'sections_taught': sectionProfsSorted})
+    return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq,
+                                                         'sections_teaching_team': sections_teaching_team,
+                                                         'professor_ratings': professor_ratings})

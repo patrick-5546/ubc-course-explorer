@@ -9,7 +9,8 @@ class CourseAdmin(admin.ModelAdmin):
         ('Course Profile', {'fields': ['average', 'five_year_average', 'standard_deviation', 'number_of_credits',
                                        'lowest_average', 'highest_average']}),
         ('Graphing Information', {'fields': ['distribution_term', 'distribution']}),
-        ('Descriptions', {'fields': ['course_description', 'prerequistes_description', 'corequisites_description']})
+        ('Descriptions', {'fields': ['course_description', 'prerequistes_description', 'corequisites_description']}),
+        ('Professor Information', {'fields': ['sections_teaching_team', 'professor_ratings']})
     ]
     # fields to display in page that displays all questions
     list_display = ('course_name', 'average')

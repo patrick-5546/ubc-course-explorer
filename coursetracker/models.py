@@ -16,6 +16,8 @@ class Course(models.Model):
     prerequistes_description = models.TextField(default='err')
     corequisites_description = models.TextField(default='err')
     course_link = models.CharField(max_length=200, default='err')
+    sections_teaching_team = models.TextField(default='err')
+    professor_ratings = models.TextField(default='err')
 
     def __str__(self):
         return self.course_name
