@@ -5,13 +5,11 @@ from .models import Course
 
 class CourseAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None,               {'fields': ['course_name']}),
-        ('Descriptions', {'fields': ['sub_name', 'course_description', 'prerequistes_description',
-                                     'corequisites_description', 'course_link']}),
-        ('Course Profile', {'fields': ['average', 'five_year_average', 'standard_deviation',
-                                       'number_of_credits', 'lowest_average', 'highest_average']}),
+        (None,               {'fields': ['course_name', 'sub_name', 'course_link']}),
+        ('Course Profile', {'fields': ['average', 'five_year_average', 'standard_deviation', 'number_of_credits',
+                                       'lowest_average', 'highest_average']}),
         ('Graphing Information', {'fields': ['distribution_term', 'distribution']}),
-        ('Related Courses', {'fields': ['corequisites', 'dependencies']})
+        ('Descriptions', {'fields': ['course_description', 'prerequistes_description', 'corequisites_description']})
     ]
     # fields to display in page that displays all questions
     list_display = ('course_name', 'average')

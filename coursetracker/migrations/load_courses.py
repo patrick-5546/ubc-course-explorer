@@ -9,50 +9,44 @@ from .ubc_course_explorer_data.scripts.update_data import (
     AVAILABLE_COURSES_FN, COURSE_INFORMATION_FN, COURSE_STATISTICS_FN, GRADE_DISTRIBUTIONS_FN
 )
 
-Course = None  # Course model
 DATA_DIR_PATH = os.path.join(os.path.join('coursetracker', 'migrations'), 'ubc_course_explorer_data')
 
-# Data from files
-AVAIL_COURSES = None
-COURSE_INFO = None
-COURSE_STATS = None
-GRADE_DISTRS = None
 
-
-def load_courses(apps, schema_editor):
+def load_courses_into_db(apps, schema_editor):
     '''Saves all courses in AVAIL_COURSES to the database.'''
     # We can't import the Course model directly as it may be a newer
     # version than this migration expects. We use the historical version.
-    global Course
     Course = apps.get_model('coursetracker', 'Course')
 
     print('')  # so that print statements start on new line
-    load_data_files()
-    for subject, course_labels in AVAIL_COURSES.items():
+    load_courses(Course)
+
+
+def load_courses(Course):
+    avail_courses, course_info, course_stats, grade_distrs = load_data_files()
+    for subject, course_labels in avail_courses.items():
         print(f"\tLoading database with courses in {subject}")
 
         for course_label in course_labels:
-            save_course_instance(f"{subject} {course_label}")
+            save_course_instance(Course, f"{subject} {course_label}", course_info, course_stats, grade_distrs)
 
 
 class Migration(migrations.Migration):
 
+    # manually set to the last automatically generated migration (the ones that start with numbers)
     dependencies = [
-        ('coursetracker', '0015_auto_20210722_1353'),
+        ('coursetracker', '0016_auto_20210723_1634'),
     ]
 
     operations = [
-        migrations.RunPython(load_courses)
+        migrations.RunPython(load_courses_into_db)
     ]
 
 
 def load_data_files():
     '''Loads the data files into global variables.'''
-    global AVAIL_COURSES, COURSE_INFO, COURSE_STATS, GRADE_DISTRS
-    AVAIL_COURSES = _load_json(AVAILABLE_COURSES_FN)
-    COURSE_INFO = _load_json(COURSE_INFORMATION_FN)
-    COURSE_STATS = _load_json(COURSE_STATISTICS_FN)
-    GRADE_DISTRS = _load_json(GRADE_DISTRIBUTIONS_FN)
+    return (_load_json(AVAILABLE_COURSES_FN), _load_json(COURSE_INFORMATION_FN),
+            _load_json(COURSE_STATISTICS_FN), _load_json(GRADE_DISTRIBUTIONS_FN))
 
 
 def _load_json(filename):
@@ -61,9 +55,9 @@ def _load_json(filename):
         return json.load(json_file)
 
 
-def save_course_instance(course_name):
+def save_course_instance(Course, course_name, course_info, course_stats, grade_distrs):
     '''Uses the course's information in the global variables to create and save a Course object to the database.'''
-    stats = COURSE_STATS[course_name]
+    stats = course_stats[course_name]
     avg = stats['average']
     avg5 = stats['average_past_5_yrs']
     stdev = stats['stdev']
@@ -71,19 +65,17 @@ def save_course_instance(course_name):
     maxavg = stats['max_course_avg']
     # print(stats)
 
-    distribution = GRADE_DISTRS[course_name][0]  # first element in list will be from most recent term
+    distribution = grade_distrs[course_name][0]  # first element in list will be from most recent term
     grades = _order_grades(distribution['grades'])
     term = f"{distribution['year']}{distribution['session']}"
     name = distribution['course_title']  # more up to date than in stats, as it is from the most recent term
     # print(distribution)
 
-    # the source for COURSE_INFO does not have details
+    # the source for course_info does not have details
     # there are 4 characters in the number/detail if there is a detail
     subject, course = course_name.split(' ')
     course_name_no_detail = course_name[:-1] if len(course) == 4 else course_name
-    info = COURSE_INFO[course_name_no_detail] if course_name_no_detail in COURSE_INFO else {}
-    creq = info['creq'] if 'creq' in info and info['creq'] is not None else []
-    depn = info['depn'] if 'depn' in info and info['depn'] is not None else []
+    info = course_info[course_name_no_detail] if course_name_no_detail in course_info else {}
     cred = info['cred'] if 'cred' in info and info['cred'] is not None else 'n/a'
     desc = info['desc'] if 'desc' in info and info['desc'] is not None else 'n/a'
     prer = info['prer'] if 'prer' in info and info['prer'] is not None else 'n/a'
@@ -97,9 +89,9 @@ def save_course_instance(course_name):
         with transaction.atomic():
             Course.objects.create(course_name=course_name, average=avg, five_year_average=avg5, lowest_average=minavg,
                                   highest_average=maxavg, standard_deviation=stdev, distribution=grades,
-                                  distribution_term=term, corequisites=creq, dependencies=depn, sub_name=name,
-                                  number_of_credits=cred, course_description=desc, prerequistes_description=prer,
-                                  corequisites_description=crer, course_link=link)
+                                  distribution_term=term, sub_name=name, number_of_credits=cred,
+                                  course_description=desc, prerequistes_description=prer, corequisites_description=crer,
+                                  course_link=link)
     except IntegrityError:
         print(f"\t\tCould not save {course_name} into database")
         pass
