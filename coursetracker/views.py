@@ -12,11 +12,14 @@ def search(request):
 
 
 def course(request, pk):
-    # initializing course_name so that the subject is all caps
-    course_name = pk
-    course_name_list = pk.split(' ')
-    if len(course_name_list) == 2:
-        course_name = f"{course_name_list[0].upper()} {course_name_list[1].upper()}"
+    '''Finds the Course object from the search term 'pk', returning that course's page if it exists.
+
+    Inputs:
+        - pk (str): search term, raw course name; must be in the format '<subject> <number><detail>', case insensitive
+            - Not all course names have details
+            - Examples: MATH 100, APSC 496D
+    '''
+    course_name = pk.upper()
     print(f"*Searching database for {course_name}")
 
     try:
