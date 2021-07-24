@@ -66,7 +66,7 @@ def save_course_instance(Course, course_name, course_info, course_stats, grade_d
     # print(stats)
 
     distribution = grade_distrs[course_name][0]  # first element in list will be from most recent term
-    grades = _order_grades(distribution['grades'])
+    grades = _get_grades_str(distribution['grades'])
     term = f"{distribution['year']}{distribution['session']}"
     name = distribution['course_title']  # more up to date than in stats, as it is from the most recent term
     # print(distribution)
@@ -97,8 +97,8 @@ def save_course_instance(Course, course_name, course_info, course_stats, grade_d
         pass
 
 
-def _order_grades(distribution_dict):
-    '''Returns a list of the grade distribution. There are 11 elements, in the following order:
+def _get_grades_str(distribution_dict):
+    '''Returns a json string of the grade distribution list. There are 11 elements, in the following order:
         [<50%, 50-54%, 55-59%, 60-63%, 64-67%, 68-71%, 72-75%, 76-79%, 80-84%, 85-89%, 90-100%]
     '''
     grades = list()
@@ -108,4 +108,4 @@ def _order_grades(distribution_dict):
     grades.append(distribution_dict['<50%'])
     grades.extend(list(distribution_dict.values())[:-1])
 
-    return grades
+    return json.dumps(grades)
