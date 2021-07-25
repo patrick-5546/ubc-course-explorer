@@ -144,7 +144,7 @@ def _get_prof_ratings_str(sections_teaching_team, prof_info):
             for prof_name_info in prof_name_info_list:
                 _append_prof_rating(prof_ratings, full_name, prof_name_info, is_same_name=True)
 
-    return json.dumps(sorted(prof_ratings))
+    return json.dumps(prof_ratings)
 
 
 def _get_teaching_team_list(sections_teaching_team):
