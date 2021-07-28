@@ -1,0 +1,1 @@
+web: gunicorn ubc_course_explorer.wsgi --log-file -
