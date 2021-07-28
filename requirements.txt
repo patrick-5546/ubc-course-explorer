@@ -10,3 +10,6 @@ urllib3==1.26.6
 
 # Flake8 Python Linter
 flake8
+
+# Docker
+psycopg2-binary>=2.8

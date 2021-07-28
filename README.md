@@ -20,27 +20,46 @@ UBC Course Planner is the result of revising and completing the [Oakhacks 2020 f
 
 ## How to Run
 
+### Python
+
 The following commands are for Windows machines, they might be slightly different for other operating systems
 
-  1. Install Python 3, then clone the repository and its submodules
+1. Install Python 3, then clone the repository and its submodules
 
-        ```sh
-        git clone https://github.com/patrick-5546/ubc-course-explorer.git --recurse-submodules
-        ```
+      ```sh
+      git clone https://github.com/patrick-5546/ubc-course-explorer.git --recurse-submodules
+      ```
 
-  2. Install the required packages in a virtual environment: [Python 3 Virtual Environments](https://gist.github.com/patrick-5546/29e7060139f057d2696d3260a3bb8eeb)
+2. Install the required packages in a virtual environment: [Python 3 Virtual Environments](https://gist.github.com/patrick-5546/29e7060139f057d2696d3260a3bb8eeb)
 
-  3. Apply database migrations
+3. Apply database migrations
 
-        ```sh
-        py manage.py migrate
-        ```
+      ```sh
+      py manage.py migrate
+      ```
 
-  4. Start the application
+4. Start the application
 
-        ```sh
-        py manage.py runserver
-        ```
+      ```sh
+      py manage.py runserver
+      ```
 
-     - The application url can be found in the terminal output
-     - Stop the application with `CTRL+BREAK`
+      - The application homepage can be found at `http://127.0.0.1:8000/`
+      - Stop the application with `CTRL+BREAK`
+
+### Docker
+
+1. Apply database migrations
+
+      ```sh
+      docker-compose run web python manage.py migrate
+      ```
+
+2. Start the application
+
+      ```sh
+      docker-compose up
+      ```
+
+      - The application homepage can be found at `http://127.0.0.1:8000/`
+      - Stop the application with `CTRL+BREAK`
