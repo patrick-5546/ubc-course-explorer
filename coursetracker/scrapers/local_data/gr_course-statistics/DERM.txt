@@ -1,1 +1,0 @@
-[{"average": "", "average_past_5_yrs": "", "campus": "UBCV", "course": "430", "course_title": "CLINIC DERMATLGY", "detail": "", "faculty_title": "Faculty of Medicine", "max_course_avg": "", "min_course_avg": "", "stdev": "", "subject": "DERM", "subject_title": "Clinical Dermatology"}]

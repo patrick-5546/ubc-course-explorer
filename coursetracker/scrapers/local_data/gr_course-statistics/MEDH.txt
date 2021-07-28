@@ -1,1 +1,0 @@
-[{"average": 78.15114537444934, "average_past_5_yrs": "", "campus": "UBCV", "course": "400", "course_title": "HIST OF MEDICINE", "detail": "", "faculty_title": "Faculty of Medicine", "max_course_avg": 81.67, "min_course_avg": 75.45, "stdev": 10.773766484267878, "subject": "MEDH", "subject_title": "History of Medicine and Science"}]

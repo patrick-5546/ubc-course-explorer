@@ -1,1 +1,0 @@
-[{"average": 82.47242424242424, "average_past_5_yrs": "", "campus": "UBCV", "course": "400", "course_title": "HEALTH CARE ETHC", "detail": "", "faculty_title": "Faculty of Medicine", "max_course_avg": 83.38, "min_course_avg": 81.22, "stdev": 6.4588286761379115, "subject": "HCET", "subject_title": "Health Care Ethics"}]

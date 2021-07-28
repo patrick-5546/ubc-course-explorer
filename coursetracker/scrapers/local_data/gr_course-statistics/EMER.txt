@@ -1,1 +1,0 @@
-[{"average": 79.26983805668017, "average_past_5_yrs": "", "campus": "UBCV", "course": "430", "course_title": "EMERGENCY MEDI", "detail": "", "faculty_title": "Faculty of Medicine", "max_course_avg": 79.31, "min_course_avg": 79.23, "stdev": 2.945384423901583, "subject": "EMER", "subject_title": "Emergency Medicine"}]

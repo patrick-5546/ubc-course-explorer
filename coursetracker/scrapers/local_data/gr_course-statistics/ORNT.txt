@@ -1,1 +1,0 @@
-[{"average": 85.0, "average_past_5_yrs": "", "campus": "UBCV", "course": "400", "course_title": "ORNT MED SCH&PRF", "detail": "", "faculty_title": "Faculty of Medicine", "max_course_avg": 85, "min_course_avg": 85, "stdev": 0.0, "subject": "ORNT", "subject_title": "Orientation to Medical School"}]

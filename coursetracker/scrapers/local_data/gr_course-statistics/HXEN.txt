@@ -1,1 +1,0 @@
-[{"average": 74.65259615384616, "average_past_5_yrs": "", "campus": "UBCV", "course": "110", "course_title": "INTR STUDY LIT", "detail": "", "faculty_title": "Faculty of Arts", "max_course_avg": 77.38, "min_course_avg": 65.69, "stdev": 9.249401659492674, "subject": "HXEN", "subject_title": "Herstmonceux English"}]

@@ -1,1 +1,0 @@
-[{"average": 82.636375, "average_past_5_yrs": "", "campus": "UBCV", "course": "401", "course_title": "PRNCP HUMAN BIOL", "detail": "", "faculty_title": "Faculty of Medicine", "max_course_avg": 84.32, "min_course_avg": 79.95, "stdev": 5.171192872152722, "subject": "PRIN", "subject_title": "Principles of Human Biology"}]

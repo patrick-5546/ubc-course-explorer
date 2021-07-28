@@ -1,1 +1,0 @@
-[{"average": "", "average_past_5_yrs": "", "campus": "UBCV", "course": "100", "course_title": "CSP WORKSHOP", "detail": "", "faculty_title": "Faculty of Science", "max_course_avg": "", "min_course_avg": "", "stdev": "", "subject": "CSPW", "subject_title": "Coordinated Science Program Workshop"}]

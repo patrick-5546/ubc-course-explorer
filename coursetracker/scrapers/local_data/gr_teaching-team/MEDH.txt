@@ -1,1 +1,0 @@
-[{"campus": "UBCV", "course": "400", "detail": "", "name": "", "subject": "MEDH", "yearsessions": {"1996W": 1, "1997W": 1, "1998W": 1, "1999W": 1, "2000W": 1, "2001W": 1}}, {"campus": "UBCV", "course": "400", "detail": "", "name": "John M Norris", "subject": "MEDH", "yearsessions": {"2002W": 1}}]

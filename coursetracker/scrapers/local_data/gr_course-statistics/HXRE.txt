@@ -1,1 +1,0 @@
-[{"average": 83.30199999999999, "average_past_5_yrs": "", "campus": "UBCV", "course": "131", "course_title": "WORLD RELIGIONS", "detail": "", "faculty_title": "Faculty of Arts", "max_course_avg": 86.17, "min_course_avg": 79, "stdev": 6.149387142002221, "subject": "HXRE", "subject_title": "Herstmonceux Religious Studies"}]

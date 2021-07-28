@@ -1,1 +1,0 @@
-[{"average": 72.6923076923077, "average_past_5_yrs": "", "campus": "UBCV", "course": "175", "course_title": "WRITING II", "detail": "", "faculty_title": "Faculty of Arts", "max_course_avg": 76.5, "min_course_avg": 70.6, "stdev": 15.609229723599514, "subject": "HXWR", "subject_title": "Herstmonceux Writing"}]
