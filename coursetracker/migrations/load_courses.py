@@ -94,7 +94,7 @@ def save_course_instance(Course, course_name, course_info, course_stats, grade_d
     desc = info['desc'] if 'desc' in info and info['desc'] is not None else 'N/A'
     prer = info['prer'] if 'prer' in info and info['prer'] is not None else 'N/A'
     crer = info['crer'] if 'crer' in info and info['crer'] is not None else 'N/A'
-    preq_tree = json.dumps(_create_preq_tree(course_name_no_detail, course_info))
+    preq_tree = _create_preq_tree_str(course_name_no_detail, course_info)
     # print(info)
 
     link = ('https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&'
@@ -179,6 +179,10 @@ def _append_prof_rating(prof_ratings, prof_name, prof_name_info, is_same_name=Fa
     '''
     prof_key = prof_name if not is_same_name else f"{prof_name} ({prof_name_info['tDept']})"
     prof_ratings.append([prof_key, prof_name_info['overall_rating'], prof_name_info['tNumRatings']])
+
+
+def _create_preq_tree_str(course_name, course_info):
+    return json.dumps(_create_preq_tree(course_name, course_info))
 
 
 def _create_preq_tree(course_name, course_info):
