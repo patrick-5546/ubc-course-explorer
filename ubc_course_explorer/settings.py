@@ -87,13 +87,6 @@ WSGI_APPLICATION = 'ubc_course_explorer.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': str(os.path.join(BASE_DIR, 'db.sqlite3'))
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -107,8 +100,8 @@ DATABASES = {
 
 # Heroku: Update database configuration from $DATABASE_URL.
 # DATABASE_URL = 'postgresql://<postgresql>'
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
+# db_from_env = dj_database_url.config(conn_max_age=600)
+# DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -157,7 +150,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 
 # Activate Django-Heroku.
-django_heroku.settings(locals())
+# django_heroku.settings(locals())
 
-options = DATABASES['default'].get('OPTIONS', {})
-options.pop('sslmode', None)
+# options = DATABASES['default'].get('OPTIONS', {})
+# options.pop('sslmode', None)
