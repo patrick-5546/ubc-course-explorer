@@ -1,1 +1,0 @@
-[{"campus": "UBCV", "course": "500", "detail": "", "name": "", "subject": "DMED", "yearsessions": {"2017W": 1, "2018W": 1}}, {"campus": "UBCV", "course": "500", "detail": "", "name": "Jonathan Festinger", "subject": "DMED", "yearsessions": {"2019W": 1}}, {"campus": "UBCV", "course": "503", "detail": "", "name": "", "subject": "DMED", "yearsessions": {"2017W": 1}}]

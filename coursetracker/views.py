@@ -3,7 +3,6 @@ import json
 from django.shortcuts import redirect, render
 
 from .models import Course
-from .scrapers import ubcexplorer as ex
 
 
 def search(request):
@@ -32,14 +31,10 @@ def course(request, pk):
         print(f"*Course {course_name} does not exist")
         return render(request, 'coursetracker/404.html')
 
-    subject, course = course_name.split(' ')
-    exp = ex.course_info_with_prereq_tree(subject, course)
-    preq = {} if 'preq' not in exp else exp['preq']
-    preq = {course_name: preq}  # dictionary for tree chart
-
     sections_teaching_team = json.loads(c.sections_teaching_team)
     professor_ratings = json.loads(c.professor_ratings)
+    preq_tree = json.loads(c.prerequisite_tree)
 
-    return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq,
+    return render(request, 'coursetracker/course.html', {'course': c, 'preq': preq_tree,
                                                          'sections_teaching_team': sections_teaching_team,
                                                          'professor_ratings': professor_ratings})

@@ -1,1 +1,0 @@
-[{"average": 75.73076923076923, "average_past_5_yrs": 75.625, "campus": "UBCV", "course": "333", "course_title": "Short Fiction in Romance Literatures", "detail": "", "faculty_title": "Faculty of Arts", "max_course_avg": 75.9, "min_course_avg": 75.625, "stdev": 14.115403479303017, "subject": "FHIS", "subject_title": "French, Hispanic and Italian Studies"}]

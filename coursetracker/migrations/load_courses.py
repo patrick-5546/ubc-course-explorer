@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
 
     # manually set to the last automatically generated migration (the ones that start with numbers)
     dependencies = [
-        ('coursetracker', '0017_auto_20210724_1547'),
+        ('coursetracker', '0018_course_prerequisite_tree'),
     ]
 
     operations = [
@@ -94,6 +94,7 @@ def save_course_instance(Course, course_name, course_info, course_stats, grade_d
     desc = info['desc'] if 'desc' in info and info['desc'] is not None else 'N/A'
     prer = info['prer'] if 'prer' in info and info['prer'] is not None else 'N/A'
     crer = info['crer'] if 'crer' in info and info['crer'] is not None else 'N/A'
+    preq_tree = json.dumps(_create_preq_tree(course_name_no_detail, course_info))
     # print(info)
 
     link = ('https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&'
@@ -110,7 +111,7 @@ def save_course_instance(Course, course_name, course_info, course_stats, grade_d
                                   distribution_term=term, sub_name=name, number_of_credits=cred,
                                   course_description=desc, prerequistes_description=prer, corequisites_description=crer,
                                   course_link=link, sections_teaching_team=sections_teaching_team,
-                                  professor_ratings=prof_ratings)
+                                  professor_ratings=prof_ratings, prerequisite_tree=preq_tree)
     except IntegrityError:
         print(f"\t\tCould not save {course_name} into database")
         pass
@@ -178,3 +179,26 @@ def _append_prof_rating(prof_ratings, prof_name, prof_name_info, is_same_name=Fa
     '''
     prof_key = prof_name if not is_same_name else f"{prof_name} ({prof_name_info['tDept']})"
     prof_ratings.append([prof_key, prof_name_info['overall_rating'], prof_name_info['tNumRatings']])
+
+
+def _create_preq_tree(course_name, course_info):
+    '''
+    Receives a Course module and course_info dictionary as parameters, and returns a prerequisite tree dictionary
+    This includes not only the immediate prequisites of the paramater, but also all prerequisites
+    for all courses connected.
+
+    For example, MATH 200 requires MATH 150, and MATH 101.
+        - Additionally, MATH 150 requires MATH 125 (MATH 101 AND MATH 125 have no prequisites).
+        ->{'MATH 150': {'MATH 125': {}, 'MATH 101': {} }}
+    '''
+    immediate_prerequisites = course_info[course_name]['preq'] \
+        if course_name in course_info and 'preq' in course_info[course_name] else {}
+
+    if not immediate_prerequisites:
+        return {}
+    else:
+        preq_tree = {}
+        for preq_course in immediate_prerequisites:
+            preq_tree[preq_course] = _create_preq_tree(preq_course, course_info)
+
+        return preq_tree

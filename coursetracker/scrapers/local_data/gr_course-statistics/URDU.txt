@@ -1,1 +1,0 @@
-[{"average": 80.75, "average_past_5_yrs": "", "campus": "UBCV", "course": "401", "course_title": "READINGS IN URDU", "detail": "", "faculty_title": "Faculty of Arts", "max_course_avg": 80.75, "min_course_avg": 80.75, "stdev": 6.04, "subject": "URDU", "subject_title": "Urdu"}]

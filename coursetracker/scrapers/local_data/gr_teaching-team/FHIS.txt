@@ -1,1 +1,0 @@
-[{"campus": "UBCV", "course": "333", "detail": "", "name": "Elisa Segnini", "subject": "FHIS", "yearsessions": {"2014W": 1, "2015W": 1}}]

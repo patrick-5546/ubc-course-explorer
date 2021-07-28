@@ -1,1 +1,0 @@
-[{"average": 89.2131914893617, "average_past_5_yrs": "", "campus": "UBCV", "course": "599", "course_title": "Thesis for Master of Arts in Children's Literature", "detail": "", "faculty_title": "Faculty of Arts", "max_course_avg": 95.67, "min_course_avg": 83, "stdev": 4.252918745271775, "subject": "CHIL", "subject_title": "Children's Literature"}]

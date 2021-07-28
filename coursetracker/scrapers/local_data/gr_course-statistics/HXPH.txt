@@ -1,1 +1,0 @@
-[{"average": 77.05153846153847, "average_past_5_yrs": "", "campus": "UBCV", "course": "015", "course_title": "ASTRONOMY I", "detail": "", "faculty_title": "Faculty of Arts", "max_course_avg": 81.25, "min_course_avg": 72.25, "stdev": 10.770618669241735, "subject": "HXPH", "subject_title": "Herstmonceux Physics"}]

@@ -10,7 +10,8 @@ class CourseAdmin(admin.ModelAdmin):
                                        'lowest_average', 'highest_average']}),
         ('Graphing Information', {'fields': ['distribution_term', 'distribution']}),
         ('Descriptions', {'fields': ['course_description', 'prerequistes_description', 'corequisites_description']}),
-        ('Professor Information', {'fields': ['sections_teaching_team', 'professor_ratings']})
+        ('Professor Information', {'fields': ['sections_teaching_team', 'professor_ratings']}),
+        ('Prerequisite Tree', {'fields': ['prerequisite_tree']})
     ]
     # fields to display in page that displays all questions
     list_display = ('course_name', 'average')
