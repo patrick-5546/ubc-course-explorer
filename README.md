@@ -20,8 +20,6 @@ UBC Course Planner is the result of revising and completing the [Oakhacks 2020 f
 
 ## How to Run
 
-### Python
-
 The following commands are for Windows machines, they might be slightly different for other operating systems
 
 1. Install Python 3, then clone the repository and its submodules
@@ -29,6 +27,8 @@ The following commands are for Windows machines, they might be slightly differen
       ```sh
       git clone https://github.com/patrick-5546/ubc-course-explorer.git --recurse-submodules
       ```
+
+### Python
 
 2. Install the required packages in a virtual environment: [Python 3 Virtual Environments](https://gist.github.com/patrick-5546/29e7060139f057d2696d3260a3bb8eeb)
 
@@ -49,13 +49,13 @@ The following commands are for Windows machines, they might be slightly differen
 
 ### Docker
 
-1. Apply database migrations
+2. Apply database migrations
 
       ```sh
       docker-compose run web python manage.py migrate
       ```
 
-2. Start the application
+3. Start the application
 
       ```sh
       docker-compose up
