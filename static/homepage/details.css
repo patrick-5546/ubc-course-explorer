@@ -103,11 +103,17 @@ h2.card-title {
     height: 375px;
     overflow-y: scroll;
     overflow-x: scroll;
+    justify-content: center;
 }
 
 .card-body-scroll2 {
-    overflow-y: scroll;
+    height: 500px;
+    width: 1200px;
     overflow-x: scroll;
+    overflow-y: scroll;
+    justify-content: center;
+    margin: auto;
+    white-space: nowrap;
 }
 
 /* Padding adjustments for card content */
