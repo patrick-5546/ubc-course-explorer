@@ -1,1 +1,0 @@
-[{"average": 77.84207547169811, "average_past_5_yrs": "", "campus": "UBCV", "course": "200", "course_title": "INT HUMAN ECOL", "detail": "", "faculty_title": "Faculty of Land and Food Systems", "max_course_avg": 79.89, "min_course_avg": 76.93, "stdev": 9.418248350636544, "subject": "HECO", "subject_title": "Human Ecology"}]

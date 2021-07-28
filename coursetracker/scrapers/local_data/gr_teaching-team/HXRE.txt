@@ -1,1 +1,0 @@
-[{"campus": "UBCV", "course": "131", "detail": "", "name": "", "subject": "HXRE", "yearsessions": {"2006W": 1, "2007W": 1}}]

@@ -17,6 +17,9 @@
     <div class="card-body">
         <p>{{ course.course_description }}</p>
     </div>
+    <div class="card-body">
+        <p>{{ course.course_link }}</p>
+    </div>
 </div>
 
 
@@ -31,7 +34,11 @@
             </div>
             <div class="card-body-scroll stat-card">
                 <h3 class="grade-info">
-                    <span class="info-key">Average (Past 5 Years):</span>
+                    <span class="info-key">Average:</span>
+                    <span class="info-details">{{ course.average|floatformat:"2" }}</span>
+                </h3>
+                <h3 class="grade-info">
+                    <span class="info-key">5-Year Average:</span>
                     <span class="info-details">{{ course.five_year_average|floatformat:"2" }}</span>
                 </h3>
                 <h3 class="grade-info">
@@ -61,7 +68,7 @@
     <div class="course-col">
         <div class="card text-center mb-3">
             <div class="card-header">
-                <h3 class="card-title">Course Grade Distribution for {{ course.distribution_term }}</h3>
+                <h3 class="card-title">Overall Grade Distribution for {{ course.distribution_term }}</h3>
             </div>
             <div class="card-body">
                 {% include 'coursetracker/chart.html' with chartData=course.distribution %}
@@ -74,18 +81,19 @@
     <div class="course-col">
         <div class="card text-center mb-3" id="rmp">
             <div class="card-header">
-                <h3 class="card-title">Section Professors from 2016-2018</h3>
+                <h3 class="card-title">Section Teaching Teams from 2014S to 2020W</h3>
+                <h3 class="card-title">Sorted by recency, then alphabetically</h3>
             </div>
             <div class="card-body-scroll prof-card">
-                {% for section, profsList in sections_taught.items %}
+                {% for section, teaching_team in sections_teaching_team.items %}
                 <div class="course-row">
                     <h3 class="grade-info">
                         <span class="info-name">{{ section }}:</span>
                     </h3>
                     <h3 class="grade-info">
-                        {% if profsList|length %}
-                            {% for prof in profsList %}
-                                <p> {{ prof }},&nbsp; </p>
+                        {% if teaching_team|length %}
+                            {% for person in teaching_team %}
+                                <p> {{ person }},&nbsp; </p>
                             {% endfor %}
                         {% else %}
                             <p>-</p>
@@ -102,7 +110,7 @@
     <div class="course-col">
         <div class="card text-center mb-3" id="rmp">
             <div class="card-header">
-                <h3 class="card-title">Course Professors</h3>
+                <h3 class="card-title">Course Professors from 2014S to 2020W</h3>
             </div>
             <div class="card-body-scroll">
                 <div class="course-row">
@@ -110,7 +118,7 @@
                         <h3>
                             <div class="info-details-rmp">Name</div>
                             <div class="info-details-rmp">_______________________</div>
-                            {% for name, rating, numratings in professors_info %}
+                            {% for name, rating, numratings in professor_ratings %}
                             <div class="info-details-rmp">{{ name }}</div>
                             {% endfor %}
                         </h3>
@@ -119,7 +127,7 @@
                         <h3>
                             <div class="info-details-rmp">Overall Rating</div>
                             <div class="info-details-rmp">__________________</div>
-                            {% for name, rating, numratings in professors_info %}
+                            {% for name, rating, numratings in professor_ratings %}
                             <div class="info-details-rmp">{{ rating }}</div>
                             {% endfor %}
                         </h3>
@@ -128,7 +136,7 @@
                         <h3>
                             <div class="info-details-rmp">Number of Ratings</div>
                             <div class="info-details-rmp">_______________________</div>
-                            {% for name, rating, numratings in professors_info %}
+                            {% for name, rating, numratings in professor_ratings %}
                             <div class="info-details-rmp">{{ numratings }}</div>
                             {% endfor %}
                         </h3>

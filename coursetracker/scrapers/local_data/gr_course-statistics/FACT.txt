@@ -1,1 +1,0 @@
-[{"average": "", "average_past_5_yrs": "", "campus": "UBCV", "course": "001", "course_title": "FACT", "detail": "", "faculty_title": "Faculty of Arts", "max_course_avg": "", "min_course_avg": "", "stdev": "", "subject": "FACT", "subject_title": "Faculty of Arts Commuter Transition Program"}]

@@ -1,1 +1,0 @@
-[{"average": 76.2, "average_past_5_yrs": "", "campus": "UBCV", "course": "440", "course_title": "SE ASIA LANGUAGE", "detail": "B", "faculty_title": "Faculty of Arts", "max_course_avg": 76.2, "min_course_avg": 76.2, "stdev": 6.83, "subject": "SEAL", "subject_title": "Southeast Asian Languages"}]

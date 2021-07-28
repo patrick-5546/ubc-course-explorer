@@ -1,1 +1,0 @@
-[{"average": 84.78571428571429, "average_past_5_yrs": "", "campus": "UBCV", "course": "171", "course_title": "SOC HIST POP MUS", "detail": "", "faculty_title": "Faculty of Arts", "max_course_avg": 85.6, "min_course_avg": 83.25, "stdev": 4.040782891176706, "subject": "HXMU", "subject_title": "Herstmonceux Music"}]
