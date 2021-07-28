@@ -63,7 +63,14 @@ def _load_json(filename):
 
 
 def save_course_instance(Course, course_name, course_info, course_stats, grade_distrs, prof_info, teaching_team):
-    '''Uses the course's information in the global variables to create and save a Course object to the database.'''
+    '''Creates and save a Course object to the database.
+
+    Inputs:
+        - Course (model)
+        - course_name (str): all caps, may have a detail (i.e., APSC 496D), or not (i.e., MATH 210)
+        - course_info, course_stats, grade_distrs, prof_info, teaching_team: read from json files; see the data
+          repository/submodule and its scraper files for more information
+    '''
     stats = course_stats[course_name]
     avg = stats['average']
     avg5 = stats['average_past_5_yrs']
