@@ -85,7 +85,7 @@
                 <h3 class="card-title">Sorted by recency, then alphabetically</h3>
             </div>
             <div class="card-body-scroll prof-card">
-                {% for section, teaching_team in sections_teaching_team.items %}
+                {% for section, teaching_team in course.sections_teaching_team.items %}
                 <div class="course-row">
                     <h3 class="grade-info">
                         <span class="info-name">{{ section }}:</span>
@@ -118,7 +118,7 @@
                         <h3>
                             <div class="info-details-rmp">Name</div>
                             <div class="info-details-rmp">_______________________</div>
-                            {% for name, rating, numratings in professor_ratings %}
+                            {% for name, rating, numratings in course.professor_ratings %}
                             <div class="info-details-rmp">{{ name }}</div>
                             {% endfor %}
                         </h3>

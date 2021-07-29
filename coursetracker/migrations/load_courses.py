@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
 
     # manually set to the last automatically generated migration (the ones that start with numbers)
     dependencies = [
-        ('coursetracker', '0018_course_prerequisite_tree'),
+        ('coursetracker', '0019_auto_20210728_1252'),
     ]
 
     operations = [
@@ -94,15 +94,14 @@ def save_course_instance(Course, course_name, course_info, course_stats, grade_d
     desc = info['desc'] if 'desc' in info and info['desc'] is not None else 'N/A'
     prer = info['prer'] if 'prer' in info and info['prer'] is not None else 'N/A'
     crer = info['crer'] if 'crer' in info and info['crer'] is not None else 'N/A'
-    preq_tree = _create_preq_tree_str(course_name_no_detail, course_info)
+    preq_tree = _create_preq_tree(course_name_no_detail, course_info)
     # print(info)
 
     link = ('https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&'
             f"dept={subject}&course={course}")
 
     sections_teaching_team = teaching_team[course_name] if course_name in teaching_team else {}
-    prof_ratings = _get_prof_ratings_str(sections_teaching_team, prof_info)
-    sections_teaching_team = json.dumps(sections_teaching_team)  # convert to json string after using
+    prof_ratings = _get_prof_ratings(sections_teaching_team, prof_info)
 
     try:
         with transaction.atomic():
@@ -132,8 +131,8 @@ def _get_grades_str(distribution_dict):
     return json.dumps(grades)
 
 
-def _get_prof_ratings_str(sections_teaching_team, prof_info):
-    '''Returns a json string of the professor ratings list. See _append_prof_rating() for the format of each element in
+def _get_prof_ratings(sections_teaching_team, prof_info):
+    '''Returns the professor ratings list. See _append_prof_rating() for the format of each element in
     this list.
     '''
     teaching_team_list = _get_teaching_team_list(sections_teaching_team)
@@ -152,7 +151,7 @@ def _get_prof_ratings_str(sections_teaching_team, prof_info):
             for prof_name_info in prof_name_info_list:
                 _append_prof_rating(prof_ratings, full_name, prof_name_info, is_same_name=True)
 
-    return json.dumps(prof_ratings)
+    return prof_ratings
 
 
 def _get_teaching_team_list(sections_teaching_team):
@@ -179,10 +178,6 @@ def _append_prof_rating(prof_ratings, prof_name, prof_name_info, is_same_name=Fa
     '''
     prof_key = prof_name if not is_same_name else f"{prof_name} ({prof_name_info['tDept']})"
     prof_ratings.append([prof_key, prof_name_info['overall_rating'], prof_name_info['tNumRatings']])
-
-
-def _create_preq_tree_str(course_name, course_info):
-    return json.dumps(_create_preq_tree(course_name, course_info))
 
 
 def _create_preq_tree(course_name, course_info):
