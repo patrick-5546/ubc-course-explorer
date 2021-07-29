@@ -1,0 +1,17 @@
+{% load static %}
+<script src="{% static '/homepage/tree.js' %}" type="text/javascript"></script>
+<div class="tree" id="tree">
+    <ul>
+        <li>
+            <a href="{{ course.course_name }}" tree-node> {{ course.course_name }} </a>
+            {% if preq.items|length %} 
+            <div class="button" button>▼</div>
+            <div class="dropdown-content" dropdown>
+                <ul>
+                    {% include 'coursetracker/tree.html' %}
+                </ul>
+            </div>
+            {% endif %}
+        </li>
+    </ul>
+</div>
