@@ -2,6 +2,7 @@ version: "3.9"
    
 services:
   db:
+    build: .
     container_name: db
     image: postgres
     volumes:
@@ -20,7 +21,6 @@ services:
       - db
   web:
     container_name: web
-    build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/code
