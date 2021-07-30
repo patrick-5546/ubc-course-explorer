@@ -34,27 +34,23 @@ For more about submodules, see the Wiki's [Submodules](https://github.com/patric
 
 The application uses a PostgreSQL database, which needs to be installed and setup.
 
-1. Download PostgreSQL [here](https://www.postgresql.org/download/)
+1. Download the latest version of PostgreSQL for your machine [here](https://www.postgresql.org/download/)
 
-2. After setting up PostgreSQL, update `ubc_course_explorer/.env` with your superuser credentials
+2. Go through the setup prompts, leaving port at its default value of `5432`
+
+3. Update `ubc_course_explorer/.env` with your superuser password
 
 ## How to Run
 
 ### Docker
 
-1. Build the services
-
-      ```sh
-      docker-compose build
-      ```
-
-2. Apply database migrations
+1. Apply database migrations
 
       ```sh
       docker-compose run web python manage.py migrate
       ```
 
-3. Start the application
+2. Start the application
 
       ```sh
       docker-compose up
