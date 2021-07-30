@@ -18,17 +18,36 @@ UBC Course Planner is the result of revising and completing the [Oakhacks 2020 f
 - View recent course professors by section
 - View tree of all nested prerequisites required for a course
 
-## How to Run
+## Setup
 
-The following commands are for Windows machines, they might be slightly different for other operating systems
-
-1. Install Python 3, then clone the repository and its submodules
+First, clone the repository and its submodules with this command
 
       ```sh
       git clone https://github.com/patrick-5546/ubc-course-explorer.git --recurse-submodules
       ```
+### PostgreSQL and local development server
+
+###### _If you are using Docker exclusively with this application then you may skip this step._
+
+Before setting up the Django server, you will need to install and setup a local PostgreSQL client since our application relies on PostgreSQL.
+
+1. Go to [PostgreSQL](https://www.postgresql.org/download/) and download the latest version for your machine. 
+
+2. After setting up Postgres, enter your postgres superuser credentials and secret key into `ubc_course_explorer/.env`. 
+
+###### Note that by default, PostgreSQL will setup a database named 'postgres' (very creative indeed). If you want to use a different database locally, you will need to manually create it.
+
+When you run a local server, the application will automatically parse the env file for your credentials and secret key for use. Make sure to keep this file in your `.gitignore` if you are committing to your forked version. 
+
+
+## How to Run
+
+The following commands are for Windows machines, they might be slightly different for other operating systems
 
 ### Python
+
+1. Install Python 3
+
 
 2. Install the required packages in a virtual environment: [Python 3 Virtual Environments](https://gist.github.com/patrick-5546/29e7060139f057d2696d3260a3bb8eeb)
 
@@ -49,13 +68,13 @@ The following commands are for Windows machines, they might be slightly differen
 
 ### Docker
 
-2. Apply database migrations
+1. Apply database migrations
 
       ```sh
       docker-compose run web python manage.py migrate
       ```
 
-3. Start the application
+2. Start the application
 
       ```sh
       docker-compose up
