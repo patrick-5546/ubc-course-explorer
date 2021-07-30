@@ -9,21 +9,19 @@ def search(request):
     '''Works as a "buffer" for when we are obtaining data'''
     if request.method == 'GET':
         search = request.GET.get('find')
-        # print('search', search)
-        return redirect('coursetracker:course', pk=search)
+        course_name = search.upper()  # make search query uppercase
+        print(f"*Searching database for {course_name}")
+        return redirect('coursetracker:course', course_name)
 
 
-def course(request, pk):
-    '''Finds the Course object from the search term 'pk', returning that course's page if it exists.
+def course(request, course_name):
+    '''Finds the Course object from its course name, returning that course's page if it exists.
 
     Inputs:
-        - pk (str): search term, raw course name; must be in the format '<subject> <number><detail>', case insensitive
+        - course_name (str): must be in the format '<subject> <number><detail>', all caps
             - Not all course names have details
             - Examples: MATH 100, APSC 496D
     '''
-    course_name = pk.upper()
-    print(f"*Searching database for {course_name}")
-
     try:
         c = Course.objects.get(course_name__exact=course_name)
         print(f"*{course_name} found in database")
