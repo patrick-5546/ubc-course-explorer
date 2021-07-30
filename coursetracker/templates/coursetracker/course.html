@@ -127,7 +127,7 @@
                         <h3>
                             <div class="info-details-rmp">Overall Rating</div>
                             <div class="info-details-rmp">__________________</div>
-                            {% for name, rating, numratings in professor_ratings %}
+                            {% for name, rating, numratings in course.professor_ratings %}
                             <div class="info-details-rmp">{{ rating }}</div>
                             {% endfor %}
                         </h3>
@@ -136,7 +136,7 @@
                         <h3>
                             <div class="info-details-rmp">Number of Ratings</div>
                             <div class="info-details-rmp">_______________________</div>
-                            {% for name, rating, numratings in professor_ratings %}
+                            {% for name, rating, numratings in course.professor_ratings %}
                             <div class="info-details-rmp">{{ numratings }}</div>
                             {% endfor %}
                         </h3>

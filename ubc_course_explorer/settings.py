@@ -14,6 +14,14 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 from pathlib import Path
 
+import environ
+
+
+# Initialise environment variables from ubc_course_explorer/.env
+
+env = environ.Env()
+environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '^i!4hjm+#8#f7%thp-bapbf$@*%&pr_6y$%1w#)geaz)s=zog*')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
@@ -83,10 +91,10 @@ WSGI_APPLICATION = 'ubc_course_explorer.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'postgres',
-        'USER': 'postgres',
-        'PASSWORD': 'postgres',
-        'HOST': 'db',
+        'NAME': os.environ.get('DB_NAME') if os.environ.get('DB_NAME') else env('DATABASE_NAME'),
+        'USER': os.environ.get('DB_USER') if os.environ.get('DB_USER') else env('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD') if os.environ.get('DB_PASSWORD') else env('DATABASE_PASS'),
+        'HOST': os.environ.get('DB_HOST') if os.environ.get('DB_HOST') else 'localhost',
         'PORT': 5432,
     }
 }

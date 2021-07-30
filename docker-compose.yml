@@ -8,7 +8,7 @@ services:
     volumes:
       - ./data/db:/var/lib/postgresql/data
     environment:
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=web
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
   migration:
@@ -26,6 +26,11 @@ services:
       - .:/code
     ports:
       - "8000:8000"
+    environment: 
+      - DB_HOST=db
+      - DB_NAME=web
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
     depends_on:
       - db
       - migration
