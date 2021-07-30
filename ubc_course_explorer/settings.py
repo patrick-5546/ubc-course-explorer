@@ -14,8 +14,6 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 import os
 
 import dotenv
-import django_heroku
-import dj_database_url
 from pathlib import Path
 
 
@@ -98,12 +96,6 @@ DATABASES = {
     }
 }
 
-# Heroku: Update database configuration from $DATABASE_URL.
-# DATABASE_URL = 'postgresql://<postgresql>'
-# db_from_env = dj_database_url.config(conn_max_age=600)
-# DATABASES['default'].update(db_from_env)
-
-
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
@@ -147,10 +139,3 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-# Activate Django-Heroku.
-# django_heroku.settings(locals())
-
-# options = DATABASES['default'].get('OPTIONS', {})
-# options.pop('sslmode', None)
