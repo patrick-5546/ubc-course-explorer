@@ -16,10 +16,12 @@ from pathlib import Path
 
 import environ
 
-# Initialise environment variables
+
+# Initialise environment variables from ubc_course_explorer/.env
 
 env = environ.Env()
 environ.Env.read_env()
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -29,8 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    'DJANGO_SECRET_KEY', '^i!4hjm+#8#f7%thp-bapbf$@*%&pr_6y$%1w#)geaz)s=zog*')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
