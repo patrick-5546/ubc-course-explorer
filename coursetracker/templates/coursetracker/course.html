@@ -160,7 +160,7 @@
             <p><b>Corequisites:</b> {{ course.corequisites_description }}</p>
         </div>
         <div class="card-body-scroll2">
-            {% include 'coursetracker/root.html' %}
+            {% include 'coursetracker/root.html' with course=course %}
         </div>
     </div>
 

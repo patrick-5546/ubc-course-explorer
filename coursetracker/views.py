@@ -27,4 +27,4 @@ def course(request, course_name):
         print(f"*Course {course_name} does not exist")
         return render(request, 'coursetracker/404.html')
 
-    return render(request, 'coursetracker/course.html', {'course': c, 'preq': c.prerequisite_tree})
+    return render(request, 'coursetracker/course.html', {'course': c})
