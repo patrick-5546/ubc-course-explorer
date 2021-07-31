@@ -2,7 +2,6 @@ version: "3.9"
    
 services:
   db:
-    build: .
     container_name: db
     image: postgres
     volumes:
@@ -11,17 +10,15 @@ services:
       - POSTGRES_DB=web
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=postgres
-  migration:
-    image: ubc-course-explorer_web
-    container_name: migrations
-    command: python manage.py migrate
-    volumes:
-      - .:/code
-    depends_on:
-      - db
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
   web:
     container_name: web
-    command: python manage.py runserver 0.0.0.0:8000
+    build: .
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
     volumes:
       - .:/code
     ports:
@@ -32,6 +29,5 @@ services:
       - DB_USER=postgres
       - DB_PASSWORD=postgres
     depends_on:
-      - db
-      - migration
-  
+      db:
+        condition: service_healthy

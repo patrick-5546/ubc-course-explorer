@@ -44,13 +44,7 @@ The application uses a PostgreSQL database, which needs to be installed and setu
 
 ### Docker
 
-1. Apply database migrations
-
-      ```sh
-      docker-compose run web python manage.py migrate
-      ```
-
-2. Start the application
+1. Start the application
 
       ```sh
       docker-compose up
