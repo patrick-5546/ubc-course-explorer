@@ -12,31 +12,32 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 
 import os
-
-import dotenv
-import django_heroku
-import dj_database_url
 from pathlib import Path
+
+import environ
+
+
+# Initialise environment variables from ubc_course_explorer/.env
+
+env = environ.Env()
+environ.Env.read_env()
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-dotenv_file = os.path.join(BASE_DIR, ".env")
-if os.path.isfile(dotenv_file):
-    dotenv.load_dotenv(dotenv_file)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '^i!4hjm+#8#f7%thp-bapbf$@*%&pr_6y$%1w#)geaz)s=zog*')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
 DEBUG = os.environ.get('DJANGO_DEBUG', '') != 'False'
 
-ALLOWED_HOSTS = ["ubc-course-app.herokuapp.com", '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -61,7 +62,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'ubc_course_explorer.urls'
@@ -87,17 +87,17 @@ WSGI_APPLICATION = 'ubc_course_explorer.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': str(os.path.join(BASE_DIR, 'db.sqlite3'))
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME') if os.environ.get('DB_NAME') else env('DATABASE_NAME'),
+        'USER': os.environ.get('DB_USER') if os.environ.get('DB_USER') else env('DATABASE_USER'),
+        'PASSWORD': os.environ.get('DB_PASSWORD') if os.environ.get('DB_PASSWORD') else env('DATABASE_PASS'),
+        'HOST': os.environ.get('DB_HOST') if os.environ.get('DB_HOST') else 'localhost',
+        'PORT': 5432,
     }
 }
-
-# Heroku: Update database configuration from $DATABASE_URL.
-# DATABASE_URL = 'postgresql://<postgresql>'
-db_from_env = dj_database_url.config(conn_max_age=600)
-DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -136,17 +136,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
-
+STATIC_ROOT = ''
 STATIC_URL = '/static/'
-
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-# Activate Django-Heroku.
-django_heroku.settings(locals())
-
-options = DATABASES['default'].get('OPTIONS', {})
-options.pop('sslmode', None)
+STATICFILES_DIRS = (os.path.join('static'),)

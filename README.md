@@ -18,29 +18,58 @@ UBC Course Planner is the result of revising and completing the [Oakhacks 2020 f
 - View recent course professors by section
 - View tree of all nested prerequisites required for a course
 
+## Setup
+
+Clone the repository and its submodules
+
+```sh
+git clone https://github.com/patrick-5546/ubc-course-explorer.git --recurse-submodules
+```
+
+For more about submodules, see the Wiki's [Submodules](https://github.com/patrick-5546/ubc-course-explorer/wiki/For-Developers#submodules) section.
+
+### PostgreSQL
+
+*This section is only relevant if you are planning to run the application without using Docker.*
+
+The application uses a PostgreSQL database, which needs to be installed and setup.
+
+1. Download the latest version of PostgreSQL for your machine [here](https://www.postgresql.org/download/)
+
+2. Go through the setup prompts, leaving port at its default value of `5432`
+
+3. Update `ubc_course_explorer/.env` with your superuser password
+
 ## How to Run
+
+### Docker
+
+1. Start the application
+
+      ```sh
+      docker-compose up
+      ```
+
+      - The application homepage can be found at `http://127.0.0.1:8000/`
+      - Stop the application with `CTRL+BREAK`
+
+### Python
 
 The following commands are for Windows machines, they might be slightly different for other operating systems
 
-  1. Install Python 3, then clone the repository and its submodules
+1. Install the required packages in a virtual environment: [Python 3 Virtual Environments](https://gist.github.com/patrick-5546/29e7060139f057d2696d3260a3bb8eeb)
 
-        ```sh
-        git clone https://github.com/patrick-5546/ubc-course-explorer.git --recurse-submodules
-        ```
+2. Apply database migrations
 
-  2. Install the required packages in a virtual environment: [Python 3 Virtual Environments](https://gist.github.com/patrick-5546/29e7060139f057d2696d3260a3bb8eeb)
+      ```sh
+      py manage.py migrate
+      ```
 
-  3. Apply database migrations
+3. Start the application
 
-        ```sh
-        py manage.py migrate
-        ```
+      ```sh
+      py manage.py runserver
+      ```
 
-  4. Start the application
-
-        ```sh
-        py manage.py runserver
-        ```
-
-     - The application url can be found in the terminal output
-     - Stop the application with `CTRL+BREAK`
+      - The application homepage can be found at `http://127.0.0.1:8000/`
+      - Stop the application with `CTRL+BREAK`

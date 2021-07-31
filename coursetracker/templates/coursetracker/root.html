@@ -4,11 +4,11 @@
     <ul>
         <li>
             <a href="{{ course.course_name }}" tree-node> {{ course.course_name }} </a>
-            {% if preq.items|length %} 
+            {% if course.prerequisite_tree.items|length %} 
             <div class="button" button>▼</div>
             <div class="dropdown-content" dropdown>
                 <ul>
-                    {% include 'coursetracker/tree.html' %}
+                    {% include 'coursetracker/tree.html' with preq=course.prerequisite_tree %}
                 </ul>
             </div>
             {% endif %}
