@@ -5,7 +5,7 @@ import os
 
 from django.db import IntegrityError, migrations, transaction
 
-from .ubc_course_explorer_data.update_data import (
+from ubc_course_explorer_data.update_data import (
     AVAILABLE_COURSES_FN,
     COURSE_INFORMATION_FN,
     COURSE_STATISTICS_FN,
@@ -14,7 +14,7 @@ from .ubc_course_explorer_data.update_data import (
     TEACHING_TEAM_FN
 )
 
-DATA_DIR_PATH = os.path.join(os.path.join('coursetracker', 'migrations'), 'ubc_course_explorer_data')
+DATA_DIR_PATH = os.path.join('app', 'ubc_course_explorer_data')
 
 
 def load_courses_into_db(apps, schema_editor):

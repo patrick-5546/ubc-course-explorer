@@ -38,7 +38,9 @@ The application uses a PostgreSQL database, which needs to be installed and setu
 
 2. Go through the setup prompts, leaving port at its default value of `5432`
 
-3. Update `ubc_course_explorer/.env` with your superuser password
+3. Create a database named `ubc_course_explorer` using the default parameters: [PostgreSQL CREATE DATABASE](https://www.postgresqltutorial.com/postgresql-create-database/)
+
+4. Update `ubc_course_explorer/.env` with your superuser password
 
 ## How to Run
 
@@ -62,13 +64,13 @@ The following commands are for Windows machines, they might be slightly differen
 2. Apply database migrations
 
       ```sh
-      py manage.py migrate
+      py app/manage.py migrate
       ```
 
 3. Start the application
 
       ```sh
-      py manage.py runserver
+      py app/manage.py runserver
       ```
 
       - The application homepage can be found at `http://127.0.0.1:8000/`
