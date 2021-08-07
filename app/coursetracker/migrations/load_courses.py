@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
 
     # manually set to the last automatically generated migration (the ones that start with numbers)
     dependencies = [
-        ('coursetracker', '0019_auto_20210728_1252'),
+        ('coursetracker', '0020_auto_20210807_1458'),
     ]
 
     operations = [
@@ -97,11 +97,13 @@ def save_course_instance(Course, course_name, course_info, course_stats, grade_d
     preq_tree = _create_preq_tree(course_name_no_detail, course_info)
     # print(info)
 
-    link = ('https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&'
-            f"dept={subject}&course={course}")
-
     sections_teaching_team = teaching_team[course_name] if course_name in teaching_team else {}
     prof_ratings = _get_prof_ratings(sections_teaching_team, prof_info)
+
+    course_link = ('https://courses.students.ubc.ca/cs/courseschedule?pname=subjarea&tname=subj-course&'
+                   f"dept={subject}&course={course}")
+    profile_link = f"https://ubcgrades.com/statistics-by-course#UBCV-{subject}-{course}"
+    distribution_link = f"https://ubcgrades.com/#UBCV-2020W-{subject}-{course}-OVERALL"
 
     try:
         with transaction.atomic():
@@ -109,8 +111,9 @@ def save_course_instance(Course, course_name, course_info, course_stats, grade_d
                                   highest_average=maxavg, standard_deviation=stdev, distribution=grades,
                                   distribution_term=term, sub_name=name, number_of_credits=cred,
                                   course_description=desc, prerequistes_description=prer, corequisites_description=crer,
-                                  course_link=link, sections_teaching_team=sections_teaching_team,
-                                  professor_ratings=prof_ratings, prerequisite_tree=preq_tree)
+                                  sections_teaching_team=sections_teaching_team, professor_ratings=prof_ratings,
+                                  prerequisite_tree=preq_tree, course_link=course_link, profile_link=profile_link,
+                                  distribution_link=distribution_link)
     except IntegrityError:
         print(f"\t\tCould not save {course_name} into database")
         pass
@@ -177,7 +180,8 @@ def _append_prof_rating(prof_ratings, prof_name, prof_name_info, is_same_name=Fa
                     - For example: 'David Miller (Business)' and 'David Miller (Marketing)' is probably the same person
     '''
     prof_key = prof_name if not is_same_name else f"{prof_name} ({prof_name_info['tDept']})"
-    prof_ratings.append([prof_key, prof_name_info['overall_rating'], prof_name_info['tNumRatings']])
+    rmp_link = f"https://www.ratemyprofessors.com/ShowRatings.jsp?tid={prof_name_info['tid']}"
+    prof_ratings.append([prof_key, prof_name_info['overall_rating'], prof_name_info['tNumRatings'], rmp_link])
 
 
 def _create_preq_tree(course_name, course_info):
