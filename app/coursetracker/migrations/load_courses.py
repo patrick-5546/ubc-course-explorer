@@ -172,7 +172,7 @@ def _get_teaching_team_list(sections_teaching_team):
 
 
 def _append_prof_rating(prof_ratings, prof_name, prof_name_info, is_same_name=False):
-    '''Appends a list: [professor name, overall rating, number of ratings] to prof_ratings.
+    '''Appends a dictionary with the keys: name, rating, number of ratings, and link of a professor to prof_ratings.
         - If is_same_name == True, adds the professor's department to their name
             - This is required because there may be multiple prof_name_info sections for a name
                 - Either the professor was labelled under two deparments, or there are professors with the same name
@@ -181,7 +181,8 @@ def _append_prof_rating(prof_ratings, prof_name, prof_name_info, is_same_name=Fa
     '''
     prof_key = prof_name if not is_same_name else f"{prof_name} ({prof_name_info['tDept']})"
     rmp_link = f"https://www.ratemyprofessors.com/ShowRatings.jsp?tid={prof_name_info['tid']}"
-    prof_ratings.append([prof_key, prof_name_info['overall_rating'], prof_name_info['tNumRatings'], rmp_link])
+    prof_ratings.append({'name': prof_key, 'rating': prof_name_info['overall_rating'],
+                         'num_ratings': prof_name_info['tNumRatings'], 'rmp_profile': rmp_link})
 
 
 def _create_preq_tree(course_name, course_info):
