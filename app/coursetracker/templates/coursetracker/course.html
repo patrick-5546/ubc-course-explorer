@@ -116,7 +116,7 @@
                             <div class="info-details-rmp">Name</div>
                             <div class="info-details-rmp">_______________________</div>
                             {% for prof in course.professor_ratings %}
-                            <a class="info-details-rmp" href={{ rmp_link }} target="_blank">{{ prof.name }}</a>
+                            <a class="info-details-rmp" href={{ prof.rmp_profile }} target="_blank">{{ prof.name }}</a>
                             {% endfor %}
                         </h3>
                     </div>
