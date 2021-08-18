@@ -1,6 +1,8 @@
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
 
 from .models import Course
+from .serializers import CourseSerializer
 
 
 def search(request):
@@ -28,3 +30,21 @@ def course(request, course_name):
         return render(request, 'coursetracker/404.html')
 
     return render(request, 'coursetracker/course.html', {'course': c})
+
+
+def all_courses_api(request):
+    courses = Course.objects.all()
+    serializer = CourseSerializer(courses, many=True)
+    return JsonResponse(serializer.data, safe=False)
+
+
+def course_api(request, course_name):
+    try:
+        c = Course.objects.get(course_name__exact=course_name)
+        print(f"*{course_name} found in database")
+    except Course.DoesNotExist:
+        print(f"*Course {course_name} does not exist")
+        return render(request, 'coursetracker/404.html')
+
+    serializer = CourseSerializer(c)
+    return JsonResponse(serializer.data, json_dumps_params={'indent': 2})
