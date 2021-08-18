@@ -110,10 +110,10 @@ def save_course_instance(Course, course_name, course_info, course_stats, grade_d
             Course.objects.create(course_name=course_name, average=avg, five_year_average=avg5, lowest_average=minavg,
                                   highest_average=maxavg, standard_deviation=stdev, distribution=grades,
                                   distribution_term=term, sub_name=name, number_of_credits=cred,
-                                  course_description=desc, prerequistes_description=prer, corequisites_description=crer,
-                                  sections_teaching_team=sections_teaching_team, professor_ratings=prof_ratings,
-                                  prerequisite_tree=preq_tree, course_link=course_link, profile_link=profile_link,
-                                  distribution_link=distribution_link)
+                                  course_description=desc, prerequisites_description=prer,
+                                  corequisites_description=crer, sections_teaching_team=sections_teaching_team,
+                                  professor_ratings=prof_ratings, prerequisite_tree=preq_tree, course_link=course_link,
+                                  profile_link=profile_link, distribution_link=distribution_link)
     except IntegrityError:
         print(f"\t\tCould not save {course_name} into database")
         pass

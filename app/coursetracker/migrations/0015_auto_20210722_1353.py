@@ -77,7 +77,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='course',
-            name='prerequistes_description',
+            name='prerequisites_description',
             field=models.TextField(default='err'),
         ),
         migrations.AlterField(

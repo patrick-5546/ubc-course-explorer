@@ -10,7 +10,7 @@ class CourseAdmin(admin.ModelAdmin):
                                        'lowest_average', 'highest_average', 'profile_link']}),
         ('Graphing Information', {'fields': ['distribution', 'distribution_term', 'distribution_link']}),
         ('Professor Information', {'fields': ['sections_teaching_team', 'professor_ratings']}),
-        ('Prerequisite Tree Information', {'fields': ['course_description', 'prerequistes_description',
+        ('Prerequisite Tree Information', {'fields': ['course_description', 'prerequisites_description',
                                                       'corequisites_description', 'prerequisite_tree']})
     ]
     # fields to display in page that displays all questions

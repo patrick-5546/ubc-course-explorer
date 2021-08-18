@@ -67,7 +67,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AddField(
             model_name='course',
-            name='prerequistes_description',
+            name='prerequisites_description',
             field=models.TextField(default=''),
         ),
         migrations.AddField(

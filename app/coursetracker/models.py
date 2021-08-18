@@ -55,7 +55,7 @@ class Course(models.Model):
 
     # Prerequisite Tree Information
     course_description = models.TextField(default='err')
-    prerequistes_description = models.TextField(default='err')
+    prerequisites_description = models.TextField(default='err')
     corequisites_description = models.TextField(default='err')
     prerequisite_tree = models.JSONField(default=dict)
 
