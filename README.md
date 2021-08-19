@@ -20,58 +20,62 @@ UBC Course Planner is the result of revising and completing the [Oakhacks 2020 f
 
 ## Setup
 
-Clone the repository and its submodules
+1. Install Docker: [Install Docker Engine](https://docs.docker.com/engine/install/)
 
-```sh
-git clone https://github.com/patrick-5546/ubc-course-explorer.git --recurse-submodules
-```
+2. Clone the repository and its submodules
 
-For more about submodules, see the Wiki's [Submodules](https://github.com/patrick-5546/ubc-course-explorer/wiki/For-Developers#submodules) section.
+    ```sh
+    git clone https://github.com/patrick-5546/ubc-course-explorer.git --recurse-submodules
+    ```
 
-### PostgreSQL
-
-*This section is only relevant if you are planning to run the application without using Docker.*
-
-The application uses a PostgreSQL database, which needs to be installed and setup.
-
-1. Download the latest version of PostgreSQL for your machine [here](https://www.postgresql.org/download/)
-
-2. Go through the setup prompts, leaving port at its default value of `5432`
-
-3. Create a database named `ubc_course_explorer` using the default parameters: [PostgreSQL CREATE DATABASE](https://www.postgresqltutorial.com/postgresql-create-database/)
-
-4. Update `ubc_course_explorer/.env` with your superuser password
+    - For more about submodules, see the Wiki's [Submodules](https://github.com/patrick-5546/ubc-course-explorer/wiki/For-Developers#submodules) section.
 
 ## How to Run
 
-### Docker
+### Development
+
+0. Set up the development environment to receive proper error messages. Potential options:
+
+    1. Develop inside a running Docker container in VS Code: [Developing inside a Container](https://code.visualstudio.com/docs/remote/containers)
+    2. Develop inside a Python virtual environment: [Python 3 Virtual Environments](https://gist.github.com/patrick-5546/29e7060139f057d2696d3260a3bb8eeb)
+    - For either option, `pip install flake8` to get linting messages. Our linting style guide can be found in the Wiki's [Linting](https://github.com/patrick-5546/ubc-course-explorer/wiki/For-Developers#linting) section. If using VS Code, the style guide will be automatically applied from `.vscode/settings.json`.
 
 1. Start the application
 
-      ```sh
-      docker-compose up
-      ```
+    ```sh
+    docker-compose up -d --build
+    ```
 
-      - The application homepage can be found at `http://127.0.0.1:8000/`
-      - Stop the application with `CTRL+BREAK`
+- The application homepage can be found at http://127.0.0.1:8000/
+- Stop the application with `docker-compose down`
+  - Add the `-v` argument to also remove the associated volumes (use when switching between development and production)
 
-### Python
+### Production
 
-The following commands are for Windows machines, they might be slightly different for other operating systems
+Uses [Gunicorn](https://gunicorn.org/) WSGI server and [NGINX](https://www.nginx.com/) reverse proxy.
 
-1. Install the required packages in a virtual environment: [Python 3 Virtual Environments](https://gist.github.com/patrick-5546/29e7060139f057d2696d3260a3bb8eeb)
+0. Ensure that the production files, `.env.prod` and `.env.prod.db`, are in the root directory
 
-2. Apply database migrations
+    - These files are not on GitHub for security reasons
 
-      ```sh
-      py app/manage.py migrate
-      ```
+1. Start the application
 
-3. Start the application
+    ```sh
+    docker-compose -f docker-compose.prod.yml up -d --build
+    ```
 
-      ```sh
-      py app/manage.py runserver
-      ```
+2. Migrate database
 
-      - The application homepage can be found at `http://127.0.0.1:8000/`
-      - Stop the application with `CTRL+BREAK`
+    ```sh
+    docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
+    ```
+
+3. Serve up static files
+
+    ```sh
+    docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
+    ```
+
+- The application homepage can be found at http://127.0.0.1:1337/
+- Stop the application with `docker-compose -f docker-compose.prod.yml down`
+  - Add the `-v` argument to also remove the associated volumes (use when switching between development and production)

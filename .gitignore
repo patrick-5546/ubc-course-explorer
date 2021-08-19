@@ -1,3 +1,8 @@
+# Sensitive production files
+.env.prod
+.env.prod.db
+
+
 # From https://djangowaves.com/tips-tricks/gitignore-for-a-django-project/
 
 # Django #
