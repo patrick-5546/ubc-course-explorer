@@ -11,8 +11,6 @@ then
     echo "PostgreSQL started"
 fi
 
-# can comment these out if no changes to the database were made
-python manage.py flush --no-input
 python manage.py migrate
 
 exec "$@"
