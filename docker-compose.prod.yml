@@ -9,7 +9,7 @@ services:
     command: gunicorn ubc_course_explorer.wsgi:application --bind 0.0.0.0:8000
     # don't need a volume for all the application files in production
     volumes:
-      - static_volume:/home/app/web/static
+      - static_volume:/home/app/web/staticfiles
     # expose port 8000 internally (to nginx); not published to host machine
     expose:
       - 8000
@@ -27,7 +27,7 @@ services:
   nginx:
     build: ./nginx
     volumes:
-      - static_volume:/home/app/web/static
+      - static_volume:/home/app/web/staticfiles
     ports:
       - 1337:80
     depends_on:
