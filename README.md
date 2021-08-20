@@ -34,21 +34,15 @@ UBC Course Planner is the result of revising and completing the [Oakhacks 2020 f
 
 ### Development
 
-0. Set up the development environment to receive proper error messages. Potential options:
-
-    1. Develop inside a running Docker container in VS Code: [Developing inside a Container](https://code.visualstudio.com/docs/remote/containers)
-    2. Develop inside a Python virtual environment: [Python 3 Virtual Environments](https://gist.github.com/patrick-5546/29e7060139f057d2696d3260a3bb8eeb)
-    - For either option, `pip install flake8` to get linting messages. Our linting style guide can be found in the Wiki's [Linting](https://github.com/patrick-5546/ubc-course-explorer/wiki/For-Developers#linting) section. If using VS Code, the style guide will be automatically applied from `.vscode/settings.json`.
-
 1. Start the application
 
     ```sh
-    docker-compose up -d --build
+    docker-compose up --build
     ```
 
 - The application homepage can be found at http://127.0.0.1:8000/
-- Stop the application with `docker-compose down`
-  - Add the `-v` argument to also remove the associated volumes (use when switching between development and production)
+- Stop the application with `CTRL+BREAK`
+  - Run `docker-compose down -v` to remove all containers and volumes before switching to the production environment
 
 ### Production
 
@@ -64,6 +58,8 @@ Uses [Gunicorn](https://gunicorn.org/) WSGI server and [NGINX](https://www.nginx
     docker-compose -f docker-compose.prod.yml up -d --build
     ```
 
+    - The application will not start if it does not follow our Python linting style guide, which can be found in our Wiki's [Linting](https://github.com/patrick-5546/ubc-course-explorer/wiki/For-Developers#linting) section
+
 2. Migrate database
 
     ```sh
@@ -78,4 +74,4 @@ Uses [Gunicorn](https://gunicorn.org/) WSGI server and [NGINX](https://www.nginx
 
 - The application homepage can be found at http://127.0.0.1:1337/
 - Stop the application with `docker-compose -f docker-compose.prod.yml down`
-  - Add the `-v` argument to also remove the associated volumes (use when switching between development and production)
+  - Add the `-v` argument to remove the associated volumes (use when switching to the development environment)

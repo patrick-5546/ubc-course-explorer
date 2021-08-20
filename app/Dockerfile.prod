@@ -18,11 +18,12 @@ ENV PYTHONUNBUFFERED 1
 RUN apk update \
     && apk add postgresql-dev gcc python3-dev musl-dev
 
-# # lint
-# RUN pip install --upgrade pip
-# RUN pip install flake8
-# COPY . .
-# RUN flake8 --exclude .venv,ubc_course_explorer_data --ignore=E501,F401 .
+# lint
+RUN pip install --upgrade pip
+RUN pip install flake8
+COPY . .
+# Match the flake8 command in .github/workflows/flake8.yml
+RUN flake8 . --count --show-source --statistics --max-line-length=120
 
 # install dependencies
 COPY ./requirements.txt .
