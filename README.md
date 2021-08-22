@@ -42,36 +42,5 @@ UBC Course Planner is the result of revising and completing the [Oakhacks 2020 f
 
 - The application homepage can be found at http://127.0.0.1:8000/
 - Stop the application with `CTRL+BREAK`
-  - Run `docker-compose down -v` to remove all containers and volumes before switching to the production environment
-
-### Production
-
-Uses [Gunicorn](https://gunicorn.org/) WSGI server and [NGINX](https://www.nginx.com/) reverse proxy.
-
-0. Ensure that the production files, `.env.prod` and `.env.prod.db`, are in the root directory
-
-    - These files are not on GitHub for security reasons
-
-1. Start the application
-
-    ```sh
-    docker-compose -f docker-compose.prod.yml up -d --build
-    ```
-
-    - The application will not start if it does not follow our Python linting style guide, which can be found in our Wiki's [Linting](https://github.com/patrick-5546/ubc-course-explorer/wiki/For-Developers#linting) section
-
-2. Migrate database
-
-    ```sh
-    docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noinput
-    ```
-
-3. Serve up static files
-
-    ```sh
-    docker-compose -f docker-compose.prod.yml exec web python manage.py collectstatic --no-input --clear
-    ```
-
-- The application homepage can be found at http://127.0.0.1:1337/
-- Stop the application with `docker-compose -f docker-compose.prod.yml down`
-  - Add the `-v` argument to remove the associated volumes (use when switching to the development environment)
+  - Run `docker-compose down` to stop all running containers
+    - Add the `-v` argument to additionally remove all containers and volumes, serving to delete the database
