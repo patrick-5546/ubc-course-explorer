@@ -1,6 +1,7 @@
 version: '3.7'
 
 services:
+  # removed db container because using AWS RDS rather than managing a Postgres container
   web:
     build:
       context: ./app
@@ -9,10 +10,12 @@ services:
     command: gunicorn ubc_course_explorer.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/staticfiles
+    # expose port 8000 internally to nginx-proxy
     expose:
       - 8000
     env_file:
       - ./.env.prod
+  # automatically builds reverse proxy configuration for running containers using virtual hosts for routing
   nginx-proxy:
     container_name: nginx-proxy
     build: nginx
@@ -29,10 +32,12 @@ services:
       - /var/run/docker.sock:/tmp/docker.sock:ro
     depends_on:
       - web
+  # issues SSL certificates for each container proxied by nginx-proxy
   nginx-proxy-letsencrypt:
     image: jrcs/letsencrypt-nginx-proxy-companion
+    # use staging environment for higher rate limitations during development and testing
     env_file:
-      - ./.env.prod.proxy-companion
+      - ./.env.staging.proxy-companion
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
       - certs:/etc/nginx/certs
@@ -43,6 +48,9 @@ services:
 
 volumes:
   static_volume:
+  # stores certificates, private keys, and ACME account keys
   certs:
+  # write http-01 challenge files
   html:
+  # requests for static files will be served from the static folder instead of being proxied to other containers
   vhost:
