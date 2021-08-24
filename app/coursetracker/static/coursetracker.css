@@ -1,0 +1,14 @@
+.main-container {
+	display: grid;
+	grid-template-columns: 1fr 4fr 1fr;
+	place-items: center;
+}
+
+.main-container > * {
+	grid-column: 2;
+}
+
+.bleed {
+	width: 80%;
+	grid-column: 1/4;
+}
