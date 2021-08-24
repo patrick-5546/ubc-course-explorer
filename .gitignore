@@ -1,5 +1,5 @@
 # From https://djangowaves.com/tips-tricks/gitignore-for-a-django-project/
-
+.env.prod
 # Django #
 *.log
 *.pot

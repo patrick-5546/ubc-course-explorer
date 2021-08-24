@@ -32,10 +32,16 @@ UBC Course Planner is the result of revising and completing the [Oakhacks 2020 f
 
 ## How to Run (Development Environment)
 
+- Optional: build the containers in the production environment to check for Python linting errors
+
+  ```sh
+  docker-compose -f docker-compose.prod.yml build
+  ```
+
 1. Start the application
 
     ```sh
-    docker-compose up --build
+    docker-compose up
     ```
 
 - The application homepage can be found at http://127.0.0.1:8000/
