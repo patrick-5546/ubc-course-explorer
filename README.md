@@ -30,9 +30,7 @@ UBC Course Planner is the result of revising and completing the [Oakhacks 2020 f
 
     - For more about submodules, see the Wiki's [Submodules](https://github.com/patrick-5546/ubc-course-explorer/wiki/For-Developers#submodules) section.
 
-## How to Run
-
-### Development
+## How to Run (Development Environment)
 
 1. Start the application
 
