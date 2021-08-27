@@ -79,4 +79,4 @@ jobs:
         ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_IP }} mkdir -p /home/ubuntu/app/app
         ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_IP }} mkdir -p /home/ubuntu/app/nginx
         scp  -o StrictHostKeyChecking=no -r ./.env.prod ./.env.prod.proxy-companion ./.env.staging.proxy-companion ./docker-compose.prod.yml ./docker-compose.staging.yml ubuntu@${{ secrets.EC2_IP }}:/home/ubuntu/app
-        bash ./deploy.sh
+        bash ./deploy.sh ${{ secrets.EC2_IP }}
