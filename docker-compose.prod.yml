@@ -5,7 +5,7 @@ services:
     build:
       context: ./app
       dockerfile: Dockerfile.prod
-    image: 115646757360.dkr.ecr.us-east-2.amazonaws.com/django-ec2:web
+    image: 115646757360.dkr.ecr.us-east-2.amazonaws.com/django-ec2-web
     command: gunicorn ubc_course_explorer.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - static_volume:/home/app/web/staticfiles
@@ -16,7 +16,7 @@ services:
   nginx-proxy:
     container_name: nginx-proxy
     build: nginx
-    image: 115646757360.dkr.ecr.us-east-2.amazonaws.com/django-ec2:nginx-proxy
+    image: 115646757360.dkr.ecr.us-east-2.amazonaws.com/django-ec2-nginx-proxy
     restart: always
     ports:
       - 443:443
