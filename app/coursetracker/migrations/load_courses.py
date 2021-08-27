@@ -14,7 +14,7 @@ from ubc_course_explorer_data.update_data import (
     TEACHING_TEAM_FN
 )
 
-DATA_DIR_PATH = os.path.join('app', 'ubc_course_explorer_data')
+DATA_DIR_PATH = 'ubc_course_explorer_data'
 
 
 def load_courses_into_db(apps, schema_editor):

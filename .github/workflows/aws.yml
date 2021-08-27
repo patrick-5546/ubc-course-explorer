@@ -1,0 +1,82 @@
+# This workflow will build and push a new container image to Amazon ECR,
+# and then will deploy a new task definition to Amazon ECS, on push to main
+#
+# Adapted from https://testdriven.io/blog/deploying-django-to-ec2-with-docker-and-gitlab/
+
+on:
+  push:
+    branches: [ main ]
+
+name: Deploy to Amazon EC2
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Create .env.prod
+      id: create-env-file
+      run: |
+        echo DEBUG=0 >> .env.prod
+        echo SECRET_KEY=${{ secrets.PROD_SECRET_KEY }} >> .env.prod
+        echo DJANGO_ALLOWED_HOSTS=www.ubccourses.software >> .env.prod
+        echo SQL_ENGINE=django.db.backends.postgresql >> .env.prod
+        echo SQL_DATABASE=${{ secrets.PROD_SQL_DATABASE }} >> .env.prod
+        echo SQL_USER=${{ secrets.PROD_SQL_USER }} >> .env.prod
+        echo SQL_PASSWORD=${{ secrets.PROD_SQL_PASSWORD }} >> .env.prod
+        echo SQL_HOST=${{ secrets.PROD_SQL_HOST }} >> .env.prod
+        echo SQL_PORT=${{ secrets.PROD_SQL_PORT }} >> .env.prod
+        echo DATABASE=postgres >> .env.prod
+        echo VIRTUAL_HOST=www.ubccourses.software >> .env.prod
+        echo VIRTUAL_PORT=8000 >> .env.prod
+        echo LETSENCRYPT_HOST=www.ubccourses.software >> .env.prod
+
+    - name: Configure AWS credentials
+      id: login-aws
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-2
+
+    - name: Login to ECR
+      id: login-ecr
+      uses: docker/login-action@v1
+      with:
+        registry: 115646757360.dkr.ecr.us-east-2.amazonaws.com
+
+    - name: Push Docker images
+      id: push-images
+      run: |
+        # Use docker-compose.prod.yml for deployment, or
+        # docker-compose.staging.yml to test changes
+        # - check that deploy.sh with the same docker compose file
+        # - will fail if there are flake8 errors
+        # - the argument --pull will attempt to a pull a new version
+        #   of the image
+        docker-compose -f docker-compose.staging.yml build --pull
+        docker-compose -f docker-compose.staging.yml push
+
+    - name: Deploy application on EC2 instance
+      id: deploy-app
+      run: |
+        # Make the required application directories,
+        # copy the required files to the instance,
+        # and run the deployment script
+        mkdir -p ~/.ssh
+        echo "${{ secrets.PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+        cat ~/.ssh/id_rsa
+        chmod 700 ~/.ssh/id_rsa
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/id_rsa
+        ssh-keyscan ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
+        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_IP }} mkdir -p /home/ubuntu/app
+        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_IP }} mkdir -p /home/ubuntu/app/app
+        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_IP }} mkdir -p /home/ubuntu/app/nginx
+        scp  -o StrictHostKeyChecking=no -r ./.env.prod ./.env.prod.proxy-companion ./.env.staging.proxy-companion ./docker-compose.prod.yml ./docker-compose.staging.yml ubuntu@${{ secrets.EC2_IP }}:/home/ubuntu/app
+        bash ./deploy.sh ${{ secrets.EC2_IP }}

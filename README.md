@@ -20,58 +20,31 @@ UBC Course Planner is the result of revising and completing the [Oakhacks 2020 f
 
 ## Setup
 
-Clone the repository and its submodules
+1. Install Docker: [Install Docker Engine](https://docs.docker.com/engine/install/)
 
-```sh
-git clone https://github.com/patrick-5546/ubc-course-explorer.git --recurse-submodules
-```
+2. Clone the repository and its submodules
 
-For more about submodules, see the Wiki's [Submodules](https://github.com/patrick-5546/ubc-course-explorer/wiki/For-Developers#submodules) section.
+    ```sh
+    git clone https://github.com/patrick-5546/ubc-course-explorer.git --recurse-submodules
+    ```
 
-### PostgreSQL
+    - For more about submodules, see the Wiki's [Submodules](https://github.com/patrick-5546/ubc-course-explorer/wiki/For-Developers#submodules) section.
 
-*This section is only relevant if you are planning to run the application without using Docker.*
+## How to Run (Development Environment)
 
-The application uses a PostgreSQL database, which needs to be installed and setup.
+- Optional: build the containers in the production environment to check for Python linting errors
 
-1. Download the latest version of PostgreSQL for your machine [here](https://www.postgresql.org/download/)
-
-2. Go through the setup prompts, leaving port at its default value of `5432`
-
-3. Create a database named `ubc_course_explorer` using the default parameters: [PostgreSQL CREATE DATABASE](https://www.postgresqltutorial.com/postgresql-create-database/)
-
-4. Update `ubc_course_explorer/.env` with your superuser password
-
-## How to Run
-
-### Docker
+  ```sh
+  docker-compose -f docker-compose.prod.yml build
+  ```
 
 1. Start the application
 
-      ```sh
-      docker-compose up
-      ```
+    ```sh
+    docker-compose up
+    ```
 
-      - The application homepage can be found at `http://127.0.0.1:8000/`
-      - Stop the application with `CTRL+BREAK`
-
-### Python
-
-The following commands are for Windows machines, they might be slightly different for other operating systems
-
-1. Install the required packages in a virtual environment: [Python 3 Virtual Environments](https://gist.github.com/patrick-5546/29e7060139f057d2696d3260a3bb8eeb)
-
-2. Apply database migrations
-
-      ```sh
-      py app/manage.py migrate
-      ```
-
-3. Start the application
-
-      ```sh
-      py app/manage.py runserver
-      ```
-
-      - The application homepage can be found at `http://127.0.0.1:8000/`
-      - Stop the application with `CTRL+BREAK`
+- The application homepage can be found at http://127.0.0.1:8000/
+- Stop the application with `CTRL+BREAK`
+  - Run `docker-compose down` to stop all running containers
+    - Add the `-v` argument to additionally remove all containers and volumes, serving to delete the database
