@@ -1,7 +1,7 @@
 # This workflow will build and push a new container image to Amazon ECR,
 # and then will deploy a new task definition to Amazon ECS, on push to main
 #
-# Adapted from GitLab CI given in https://testdriven.io/blog/deploying-django-to-ec2-with-docker-and-gitlab/
+# Adapted from https://testdriven.io/blog/deploying-django-to-ec2-with-docker-and-gitlab/
 
 on:
   push:
@@ -36,14 +36,6 @@ jobs:
         echo VIRTUAL_PORT=8000 >> .env.prod
         echo LETSENCRYPT_HOST=www.ubccourses.software >> .env.prod
 
-    - name: Build Docker images
-      id: build-images
-      run: |
-        # Use docker-compose.prod.yml for deployment, or
-        # docker-compose.staging.yml to test changes
-        # - will fail if there are flake8 errors
-        docker-compose -f docker-compose.staging.yml build
-
     - name: Configure AWS credentials
       id: login-aws
       uses: aws-actions/configure-aws-credentials@v1
@@ -58,11 +50,33 @@ jobs:
       with:
         registry: 115646757360.dkr.ecr.us-east-2.amazonaws.com
 
-    - name: Push images to ECR
-      id: push-ecr
+    - name: Push Docker images
+      id: push-images
       run: |
         # Use docker-compose.prod.yml for deployment, or
         # docker-compose.staging.yml to test changes
+        # - check that deploy.sh with the same docker compose file
+        # - will fail if there are flake8 errors
+        # - the argument --pull will attempt to a pull a new version
+        #   of the image
+        docker-compose -f docker-compose.staging.yml build --pull
         docker-compose -f docker-compose.staging.yml push
 
-    # next, deploy on EC2 instance
+    - name: Deploy application on EC2 instance
+      id: deploy-app
+      run: |
+        # Make the required application directories,
+        # copy the required files to the instance,
+        # and run the deployment script
+        mkdir -p ~/.ssh
+        echo "${{ secrets.PRIVATE_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+        cat ~/.ssh/id_rsa
+        chmod 700 ~/.ssh/id_rsa
+        eval "$(ssh-agent -s)"
+        ssh-add ~/.ssh/id_rsa
+        ssh-keyscan ${{ secrets.EC2_IP }} >> ~/.ssh/known_hosts
+        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_IP }} mkdir -p /home/ubuntu/app
+        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_IP }} mkdir -p /home/ubuntu/app/app
+        ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_IP }} mkdir -p /home/ubuntu/app/nginx
+        scp  -o StrictHostKeyChecking=no -r ./.env.prod ./.env.prod.proxy-companion ./.env.staging.proxy-companion ./docker-compose.prod.yml ./docker-compose.staging.yml ubuntu@${{ secrets.EC2_IP }}:/home/ubuntu/app
+        bash ./deploy.sh
