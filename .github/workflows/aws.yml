@@ -61,8 +61,8 @@ jobs:
         # - will fail if there are flake8 errors
         # - the argument --pull will attempt to a pull a new version
         #   of the image
-        docker-compose -f docker-compose.staging.yml build --pull
-        docker-compose -f docker-compose.staging.yml push
+        docker-compose -f docker-compose.prod.yml build --pull
+        docker-compose -f docker-compose.prod.yml push
 
     - name: Deploy application on EC2 instance
       id: deploy-app
